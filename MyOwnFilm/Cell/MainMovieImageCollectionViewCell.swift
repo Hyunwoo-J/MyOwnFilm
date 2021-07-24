@@ -17,13 +17,13 @@ class MainMovieImageCollectionViewCell: UICollectionViewCell {
         
         movieName.text = movieData.title
         
-        MovieDataSource.shared.loadImage(from: movieData.poster_path) { img in
-            if let img = img {
-                self.movieImageView.image = img
-            } else {
-                self.movieImageView.image = UIImage(named: "Default Image")
-            }
-        }
+//        MovieDataSource.shared.loadImage(from: movieData.poster_path) { img in
+//            if let img = img {
+//                self.movieImageView.image = img
+//            } else {
+//                self.movieImageView.image = UIImage(named: "Default Image")
+//            }
+//        }
     }
     
     
