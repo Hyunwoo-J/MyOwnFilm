@@ -13,13 +13,14 @@ class MovieDataSource {
     private init() { }
     
     
-    var movieList = [MovieData.Results]()
+    var nowPlayingMovieList = [MovieData.Results]()
+    var popularMovieList = [MovieData.Results]()
     
     let cache = NSCache<NSURL, UIImage>()
     
     
-    func loadImage(from urlString: String, completion: @escaping (UIImage?) -> ()) {
-        let baseURL = "https://image.tmdb.org/t/p/w500/\(urlString)"
+    func loadImage(from urlString: String, posterImageSize: String, completion: @escaping (UIImage?) -> ()) {
+        let baseURL = "https://image.tmdb.org/t/p/\(posterImageSize)/\(urlString)"
         
         guard let url = NSURL(string: baseURL) else {
             DispatchQueue.main.async {
@@ -52,9 +53,8 @@ class MovieDataSource {
         }
     }
     
-    
-    func fetchMovie(completion: @escaping () -> ()) {
-        let urlStr = "https://api.themoviedb.org/3/movie/popular?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR"
+    func fetchNowPlayingMovie(by date: String, completion: @escaping () -> ()) {
+        let urlStr = "https://api.themoviedb.org/3/movie/now_playing?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&region=KR&release_lte=\(date)"
 
         let url = URL(string: urlStr)!
 
@@ -83,7 +83,51 @@ class MovieDataSource {
                 let decoder = JSONDecoder()
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
-                self.movieList.append(contentsOf: movieData.results)
+                self.nowPlayingMovieList.append(contentsOf: movieData.results)
+                self.nowPlayingMovieList.sort { $0.release_date > $1.release_date }
+            } catch {
+                print(error)
+            }
+
+        }
+        
+        task.resume()
+        
+    }
+    
+    
+    func fetchPopularMovie(by date: String, completion: @escaping () -> ()) {
+        let urlStr = "https://api.themoviedb.org/3/movie/popular?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&region=KR&release_lte=\(date)"
+
+        let url = URL(string: urlStr)!
+
+        let session = URLSession.shared
+
+        let task = session.dataTask(with: url) { data, response, error in
+            defer {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+            
+            if let error = error {
+                print(error)
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let movieData = try decoder.decode(MovieData.self, from: data)
+                
+                self.popularMovieList.append(contentsOf: movieData.results)
+                self.popularMovieList.sort { $0.release_date > $1.release_date }
             } catch {
                 print(error)
             }
