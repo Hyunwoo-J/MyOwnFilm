@@ -15,7 +15,7 @@
             <objects>
                 <viewController storyboardIdentifier="MainScreenViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="MainScreenViewController" customModule="MyOwnFilm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxi-S8-JZ6">
@@ -36,22 +36,22 @@
                                     <constraint firstItem="8ll-mZ-qE4" firstAttribute="leading" secondItem="zxi-S8-JZ6" secondAttribute="leading" constant="30" id="rYX-uB-LQf"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YCg-ea-QVh">
-                                <rect key="frame" x="0.0" y="84" width="414" height="812"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YCg-ea-QVh">
+                                <rect key="frame" x="0.0" y="84" width="414" height="1216"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MainScreenFirstSectionTableViewCell" rowHeight="645" id="Fi2-io-8OB" customClass="MainScreenFirstSectionTableViewCell" customModule="MyOwnFilm" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="645"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MainScreenFirstSectionTableViewCell" rowHeight="580" id="Fi2-io-8OB" customClass="MainScreenFirstSectionTableViewCell" customModule="MyOwnFilm" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="580"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fi2-io-8OB" id="4yd-n1-vze">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="645"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="580"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="iWc-gC-S8I">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="625"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="560"/>
                                                     <subviews>
                                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eEj-iF-pel">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="625"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="560"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="520" id="uaq-lX-bpn"/>
@@ -64,7 +64,7 @@
                                                             </collectionViewFlowLayout>
                                                             <cells>
                                                                 <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MainScreenFirstSectionCollectionViewCell" id="L0n-v4-7Pk" customClass="MainScreenFirstSectionCollectionViewCell" customModule="MyOwnFilm" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="47.5" width="410" height="530"/>
+                                                                    <rect key="frame" x="0.0" y="15" width="410" height="530"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Xdk-zT-nwm">
                                                                         <rect key="frame" x="0.0" y="0.0" width="410" height="530"/>
@@ -126,6 +126,79 @@
                                             <outlet property="firstSectionCollectionView" destination="eEj-iF-pel" id="RUe-Ri-mnK"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubMovieTableViewCell" rowHeight="288" id="pcz-jp-19b" customClass="SubMovieTableViewCell" customModule="MyOwnFilm" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="630" width="414" height="288"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pcz-jp-19b" id="lcz-Qr-tDJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="288"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mtr-7Q-zqY">
+                                                    <rect key="frame" x="20" y="26" width="394" height="252"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="코미디" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cr1-8S-ZbO">
+                                                            <rect key="frame" x="0.0" y="0.0" width="394" height="47"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lSP-cg-8C2">
+                                                            <rect key="frame" x="0.0" y="57" width="394" height="195"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="195" id="sMe-qN-6DJ"/>
+                                                            </constraints>
+                                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="goW-ro-ApZ">
+                                                                <size key="itemSize" width="130" height="193"/>
+                                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                            </collectionViewFlowLayout>
+                                                            <cells>
+                                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubMovieCollectionViewCell" id="puV-vl-K7W" customClass="SubMovieCollectionViewCell" customModule="MyOwnFilm" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="1" width="130" height="193"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="WXe-B6-guy">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="130" height="193"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <subviews>
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FdT-lt-9Pc">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="173"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" secondItem="FdT-lt-9Pc" secondAttribute="height" multiplier="2:3" id="6yk-8o-DLb"/>
+                                                                                    <constraint firstAttribute="width" constant="130" id="LzJ-bo-u5d"/>
+                                                                                </constraints>
+                                                                            </imageView>
+                                                                        </subviews>
+                                                                        <constraints>
+                                                                            <constraint firstItem="FdT-lt-9Pc" firstAttribute="top" secondItem="WXe-B6-guy" secondAttribute="top" id="77w-n2-rbe"/>
+                                                                            <constraint firstItem="FdT-lt-9Pc" firstAttribute="leading" secondItem="WXe-B6-guy" secondAttribute="leading" id="MNP-Wg-9AU"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="FdT-lt-9Pc" secondAttribute="trailing" id="mAk-a4-EzN"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="FdT-lt-9Pc" secondAttribute="bottom" constant="20" symbolic="YES" id="oJY-p2-dTH"/>
+                                                                        </constraints>
+                                                                    </collectionViewCellContentView>
+                                                                    <size key="customSize" width="130" height="193"/>
+                                                                    <connections>
+                                                                        <outlet property="subMovieImage" destination="FdT-lt-9Pc" id="n6R-1U-Rd9"/>
+                                                                    </connections>
+                                                                </collectionViewCell>
+                                                            </cells>
+                                                        </collectionView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mtr-7Q-zqY" firstAttribute="leading" secondItem="lcz-Qr-tDJ" secondAttribute="leadingMargin" id="1Gj-i6-wQC"/>
+                                                <constraint firstItem="mtr-7Q-zqY" firstAttribute="top" secondItem="lcz-Qr-tDJ" secondAttribute="topMargin" constant="15" id="EjG-YV-fPa"/>
+                                                <constraint firstAttribute="trailing" secondItem="mtr-7Q-zqY" secondAttribute="trailing" id="bfL-0Q-YwV"/>
+                                                <constraint firstAttribute="bottom" secondItem="mtr-7Q-zqY" secondAttribute="bottom" constant="10" id="gQP-1c-cbQ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="movieClassificationLabel" destination="cr1-8S-ZbO" id="y6b-ck-rXn"/>
+                                            <outlet property="subMovieCollectionView" destination="lSP-cg-8C2" id="WEF-5g-ECK"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="Y6W-OH-hqX" id="a8I-xV-sfF"/>
@@ -145,13 +218,14 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="2aN-hq-YAX"/>
+                    <size key="freeformSize" width="414" height="1300"/>
                     <connections>
-                        <outlet property="firstSectionTableView" destination="YCg-ea-QVh" id="bHr-IQ-ORp"/>
+                        <outlet property="MainScreenTableView" destination="YCg-ea-QVh" id="bHr-IQ-ORp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="42.028985507246382" y="295.98214285714283"/>
+            <point key="canvasLocation" x="1.4492753623188408" y="430.58035714285711"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="h3q-oG-9md">
@@ -201,7 +275,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WsE-uL-xhP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="42" y="1051"/>
+            <point key="canvasLocation" x="26" y="1390"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="WK3-Rg-3tZ">
@@ -395,7 +469,7 @@
                                 <rect key="frame" x="0.0" y="592" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SubMovieTableViewCell" rowHeight="288" id="0tP-c7-vfX" customClass="SubMovieTableViewCell" customModule="MyOwnFilm" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="288" id="0tP-c7-vfX">
                                         <rect key="frame" x="0.0" y="50" width="414" height="288"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0tP-c7-vfX" id="5Mm-cy-WPz">
