@@ -11,8 +11,6 @@ class MainScreenFirstSectionTableViewCell: UITableViewCell {
 
     @IBOutlet weak var firstSectionCollectionView: UICollectionView!
     
-    var nowPlayingMovieList = [MovieData.Results]()
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
