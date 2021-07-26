@@ -28,11 +28,13 @@ class MovieDetailViewController: CommonViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+        MovieDataSource.shared.loadImage(from: MovieDataSource.shared.nowPlayingMovieList[index!].poster_path, posterImageSize: PosterImageSize.w780.rawValue) { img in
+            if let img = img {
+                self.movieImage.image = img
+            }
+        }
     }
-    
-
-
-
 }
+
+
+

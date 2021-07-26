@@ -9,26 +9,45 @@ import UIKit
 
 class MainScreenViewController: CommonViewController {
 
-    @IBOutlet weak var MainScreenTableView: UITableView!
+    @IBOutlet weak var mainScreenTableView: UITableView!
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let cell = sender as? UITableViewCell, let indexPath = MainScreenTableView.indexPath(for: cell) {
+//            if let vc = segue.destination as? MovieDetailViewController {
+//                vc.index = index
+//            }
+//        }
+//    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 백그라운드 컬러 변경
+        view.backgroundColor = .black
+        mainScreenTableView.backgroundColor = .black
+        
         print(Date().releaseDate)
         
-        MovieDataSource.shared.fetchNowPlayingMovie(by: Date().releaseDate) {
-            
-            self.MainScreenTableView.reloadData()
+        MovieDataSource.shared.fetchMovie(by: Date().releaseDate) {
+            self.mainScreenTableView.reloadData()
         }
         
-        MovieDataSource.shared.fetchPopularMovie(by: Date().releaseDate) {
-            
-            self.MainScreenTableView.reloadData()
-        }
         
-        MovieDataSource.shared.fetchActionMovie(by: Date().releaseDate) {
+        
+    }
+    
+    
+}
+
+
+
+extension MainScreenViewController: CollectionViewCellDelegate {
+    func collectionView(collectionviewCell: MainScreenFirstSectionCollectionViewCell?, index: Int, didTappedInTableViewCell: MainScreenFirstSectionTableViewCell) {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController {
+            vc.index = index
             
-            self.MainScreenTableView.reloadData()
+            show(vc, sender: nil)
         }
     }
 }
@@ -55,9 +74,10 @@ extension MainScreenViewController: UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "MainScreenFirstSectionTableViewCell", for: indexPath) as! MainScreenFirstSectionTableViewCell
             
+            cell.cellDelegate = self
+            
             let target = MovieDataSource.shared.nowPlayingMovieList
             cell.configure(with: target)
-            
             
             return cell
             

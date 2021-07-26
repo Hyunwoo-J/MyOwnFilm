@@ -53,6 +53,29 @@ class MovieDataSource {
         }
     }
     
+    let group = DispatchGroup()
+    
+    func fetchMovie(by date: String, completion: @escaping () -> ()) {
+        group.enter()
+        fetchNowPlayingMovie(by: date) {
+            self.group.leave()
+        }
+        
+        group.enter()
+        fetchPopularMovie(by: date) {
+            self.group.leave()
+        }
+        
+        group.enter()
+        fetchActionMovie(by: date) {
+            self.group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            completion()
+        }
+    }
+    
     func fetchNowPlayingMovie(by date: String, completion: @escaping () -> ()) {
         let urlStr = "https://api.themoviedb.org/3/movie/now_playing?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&region=KR&release_lte=\(date)"
 

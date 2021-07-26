@@ -14,6 +14,9 @@ class SubMovieCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        // 백그라운드 컬러 변경
+        backgroundColor = .black
+        
     }
 
 }

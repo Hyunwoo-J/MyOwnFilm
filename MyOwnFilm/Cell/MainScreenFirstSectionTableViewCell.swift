@@ -7,12 +7,22 @@
 
 import UIKit
 
+protocol CollectionViewCellDelegate: AnyObject {
+    func collectionView(collectionviewCell: MainScreenFirstSectionCollectionViewCell?, index: Int, didTappedInTableViewCell: MainScreenFirstSectionTableViewCell)
+}
+
 class MainScreenFirstSectionTableViewCell: UITableViewCell {
 
+    weak var cellDelegate: CollectionViewCellDelegate?
+    
     @IBOutlet weak var firstSectionCollectionView: UICollectionView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // 백그라운드 컬러 변경
+        backgroundColor = .black
+        firstSectionCollectionView.backgroundColor = .black
         
         firstSectionCollectionView.dataSource = self
         firstSectionCollectionView.delegate = self
@@ -30,6 +40,12 @@ class MainScreenFirstSectionTableViewCell: UITableViewCell {
 
 
 extension MainScreenFirstSectionTableViewCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainScreenFirstSectionCollectionViewCell", for: indexPath) as! MainScreenFirstSectionCollectionViewCell
+        
+        self.cellDelegate?.collectionView(collectionviewCell: cell, index: indexPath.item, didTappedInTableViewCell: self)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MovieDataSource.shared.nowPlayingMovieList.count
     }

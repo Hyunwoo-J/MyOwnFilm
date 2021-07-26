@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class SubMovieTableViewCell: UITableViewCell {
     
     @IBOutlet weak var movieClassificationLabel: UILabel!
@@ -16,6 +17,10 @@ class SubMovieTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // 백그라운드 컬러 변경
+        backgroundColor = .black
+        subMovieCollectionView.backgroundColor = .black
         
         subMovieCollectionView.dataSource = self
     }
@@ -37,7 +42,6 @@ extension SubMovieTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubMovieCollectionViewCell", for: indexPath) as! SubMovieCollectionViewCell
-        
         
         let movieList = MovieDataSource.shared.popularMovieList
         let moviePosterPath = movieList[indexPath.item].poster_path
