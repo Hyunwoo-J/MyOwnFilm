@@ -9,22 +9,31 @@ import Foundation
 
 struct MovieData: Codable {
     struct Results: Codable {
-        let genre_ids: [Int]
+        private let backdrop_path: String?
+        var backdropPath: String {
+            return backdrop_path ?? "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png" // 기본값을 넣어주는 코드
+        }
         
-        let overview: String
-        let release_date: String
-        let title: String
-        let poster_path: String
+        private let genre_ids: [Int]?
+        var genreIds: [Int] {
+            return genre_ids ?? []
+        }
         
-        // 특정 키가 없는 경우 기본값 설정
-        init(from decoder: Decoder) throws {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            genre_ids = (try? values.decode(Array<Int>.self, forKey: .genre_ids)) ?? []
-            overview = (try? values.decode(String.self, forKey: .overview)) ?? ""
-            release_date = (try? values.decode(String.self, forKey: .release_date)) ?? "날짜를 불러올 수 없습니다."
-            title = (try? values.decode(String.self, forKey: .title)) ?? ""
-            // 기본 이미지 바꿔야 함
-            poster_path = (try? values.decode(String.self, forKey: .poster_path)) ?? "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
+        private let overview: String?
+        var overviewStr: String {
+            return overview ?? ""
+        }
+        private let release_date: String?
+        var releaseDate: String {
+            return release_date ?? ""
+        }
+        private let title: String?
+        var titleStr: String {
+            return title ?? ""
+        }
+        private let poster_path: String?
+        var posterPath: String {
+            return poster_path ?? "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
         }
     }
     

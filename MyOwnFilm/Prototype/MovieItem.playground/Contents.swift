@@ -2,6 +2,7 @@ import UIKit
 
 struct MovieData: Codable {
     struct Results: Codable {
+        let backdrop_path: String
         let genre_ids: [Int]
 
         let overview: String
@@ -10,6 +11,7 @@ struct MovieData: Codable {
         
         init(from decoder: Decoder) throws {
             let values = try decoder.container(keyedBy: CodingKeys.self)
+            backdrop_path = (try? values.decode(String.self, forKey: .backdrop_path)) ?? ""
             genre_ids = (try? values.decode(Array<Int>.self, forKey: .genre_ids)) ?? []
             overview = (try? values.decode(String.self, forKey: .overview)) ?? ""
             release_date = (try? values.decode(String.self, forKey: .release_date)) ?? "날짜를 불러올 수 없습니다."

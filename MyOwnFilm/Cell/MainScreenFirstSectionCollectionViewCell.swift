@@ -14,8 +14,8 @@ class MainScreenFirstSectionCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var releaseDateLabel: UILabel!
     
     func configure(with movieData: MovieData.Results) {
-        movieTitleLabel.text = movieData.title
-        releaseDateLabel.text = movieData.release_date
+        movieTitleLabel.text = movieData.titleStr
+        releaseDateLabel.text = movieData.releaseDate
     }
     
     override func awakeFromNib() {
