@@ -12,6 +12,7 @@ class MovieDataSource {
     static let shared = MovieDataSource()
     private init() { }
     
+    var movieLists = [[MovieData.Results]]()
     var nowPlayingMovieList = [MovieData.Results]()
     var popularMovieList = [MovieData.Results]()
     var actionMoveList = [MovieData.Results]()
@@ -149,7 +150,8 @@ class MovieDataSource {
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
                 self.popularMovieList.append(contentsOf: movieData.results)
-                self.popularMovieList.sort { $0.release_date > $1.release_date }
+                self.popularMovieList.sort { $0.releaseDate > $1.releaseDate }
+                self.movieLists.append(self.popularMovieList)
             } catch {
                 print(error)
             }
@@ -192,6 +194,7 @@ class MovieDataSource {
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
                 self.actionMoveList.append(contentsOf: movieData.results)
+                self.movieLists.append(self.actionMoveList)
 //                self.actionMoveList.sort { $0.release_date < $1.release_date }
             } catch {
                 print(error)

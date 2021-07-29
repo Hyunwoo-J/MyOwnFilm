@@ -11,14 +11,8 @@ class MainScreenViewController: CommonViewController {
 
     @IBOutlet weak var mainScreenTableView: UITableView!
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if let cell = sender as? UITableViewCell, let indexPath = MainScreenTableView.indexPath(for: cell) {
-//            if let vc = segue.destination as? MovieDetailViewController {
-//                vc.index = index
-//            }
-//        }
-//    }
-    
+    // 영화 구분 타이틀
+    let titleList = ["인기작", "액션"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +26,7 @@ class MainScreenViewController: CommonViewController {
         MovieDataSource.shared.fetchMovie(by: Date().releaseDate) {
             self.mainScreenTableView.reloadData()
         }
-        
-        
-        
     }
-    
-    
 }
 
 
@@ -65,7 +54,7 @@ extension MainScreenViewController: UITableViewDataSource {
             return 1
         }
         
-        return 2
+        return MovieDataSource.shared.movieLists.count
     }
     
     
@@ -84,22 +73,10 @@ extension MainScreenViewController: UITableViewDataSource {
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubMovieTableViewCell", for: indexPath) as! SubMovieTableViewCell
             
-            switch indexPath.row {
-            case 0:
-                let target = MovieDataSource.shared.popularMovieList
-                cell.configure(with: target, text: "인기작")
-                
-                return cell
-                
-            case 1:
-                let target = MovieDataSource.shared.actionMoveList
-                cell.configure(with: target, text: "액션")
-                
-                return cell
-                
-            default:
-                fatalError()
-            }
+            let target = MovieDataSource.shared.movieLists[indexPath.row]
+            cell.configure(with: target, text: titleList[indexPath.row])
+            
+            return cell
             
         default:
             fatalError()
