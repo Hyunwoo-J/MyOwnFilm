@@ -22,7 +22,7 @@ class RoundedView: UIView {
     
     
     func setup() {
-        layer.cornerRadius = 30
+        layer.cornerRadius = frame.height / 2
     }
     
     

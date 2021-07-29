@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 fileprivate let formatter = DateFormatter()
 
 extension Date {
