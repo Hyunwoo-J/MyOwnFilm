@@ -31,7 +31,7 @@ class MainScreenFirstSectionTableViewCell: UITableViewCell {
     
     func configure(with movieData: [MovieData.Results]) {
     
-        
+
         firstSectionCollectionView.reloadData()
     }
 }
@@ -40,6 +40,7 @@ class MainScreenFirstSectionTableViewCell: UITableViewCell {
 
 
 extension MainScreenFirstSectionTableViewCell: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainScreenFirstSectionCollectionViewCell", for: indexPath) as! MainScreenFirstSectionCollectionViewCell
         
@@ -54,7 +55,7 @@ extension MainScreenFirstSectionTableViewCell: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainScreenFirstSectionCollectionViewCell", for: indexPath) as! MainScreenFirstSectionCollectionViewCell
         
         let movieList = MovieDataSource.shared.nowPlayingMovieList
-        let moviePosterPath = movieList[indexPath.item].poster_path
+        let moviePosterPath = movieList[indexPath.item].posterPath
         
         MovieDataSource.shared.loadImage(from: moviePosterPath, posterImageSize: PosterImageSize.w500.rawValue) { img in
             if let img = img {
@@ -77,6 +78,11 @@ extension MainScreenFirstSectionTableViewCell: UICollectionViewDataSource {
 
 extension MainScreenFirstSectionTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionView.frame.size
+        let width = contentView.frame.size.width
+        let height = (width / 2) * 3
+
+
+        return CGSize(width: width, height: height)
+//        return collectionView.frame.size
     }
 }
