@@ -8,19 +8,29 @@
 import UIKit
 
 class MovieDetailViewController: CommonViewController {
-
+    
     @IBOutlet weak var backgroundmovieImage: UIImageView!
     
     @IBOutlet weak var storyLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    
+    // 이전 화면에서의 데이터를 가져오기 위한 변수
     var index: Int?
+    var image: UIImage?
+    var movieData = [MovieData.Results]()
+    
+    
+    /// 상태바를 흰색으로 바꾸기 위해 추가한 메소드
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? MemoViewController {
             vc.index = index
+            vc.movieData = movieData
         }
     }
     
@@ -29,6 +39,16 @@ class MovieDetailViewController: CommonViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let image = image {
+            backgroundmovieImage.image = image
+        } else {
+            backgroundmovieImage.image = UIImage(named: "Default Image")
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,23 +58,20 @@ class MovieDetailViewController: CommonViewController {
         [storyLabel, titleLabel, dateLabel].forEach { $0?.textColor = .white }
         
         
+        
         if let index = index {
-            MovieDataSource.shared.loadImage(from: MovieDataSource.shared.nowPlayingMovieList[index].posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
-                if let img = img {
-                    self.backgroundmovieImage.image = img
-                } else {
-                    self.backgroundmovieImage.image = UIImage(named: "Default Image")
-                }
-            }
-            
-            
-            let movieData = MovieDataSource.shared.nowPlayingMovieList[index]
-            storyLabel.text = movieData.overviewStr
-            titleLabel.text = movieData.titleStr
-            dateLabel.text = movieData.releaseDate
+            storyLabel.text = movieData[index].overviewStr
+            titleLabel.text = movieData[index].titleStr
+            dateLabel.text = movieData[index].releaseDate
         }
+        
+        
+        
+        
+        
     }
 }
+
 
 
 
