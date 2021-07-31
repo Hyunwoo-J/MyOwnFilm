@@ -16,7 +16,7 @@ class SubMovieCollectionViewCell: UICollectionViewCell {
         
         // 백그라운드 컬러 변경
         backgroundColor = .black
-        layer.cornerRadius = 8
+        layer.cornerRadius = 6
         
     }
 

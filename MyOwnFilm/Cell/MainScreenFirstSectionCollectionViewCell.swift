@@ -21,6 +21,6 @@ class MainScreenFirstSectionCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         backgroundColor = .black
         
-        firstSectionImage.layer.cornerRadius = 15
+        firstSectionImage.layer.cornerRadius = 16
     }
 }

@@ -29,9 +29,9 @@ class MainScreenFirstSectionTableViewCell: UITableViewCell {
     }
     
     
+    /// <#Description#>
+    /// - Parameter movieData: MainScreenViewController에서 받을 영화 데이터 배열
     func configure(with movieData: [MovieData.Results]) {
-    
-
         firstSectionCollectionView.reloadData()
     }
 }

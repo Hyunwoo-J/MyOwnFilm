@@ -15,11 +15,19 @@ class MovieDataSource {
     var movieLists = [[MovieData.Results]]()
     var nowPlayingMovieList = [MovieData.Results]()
     var popularMovieList = [MovieData.Results]()
-    var actionMoveList = [MovieData.Results]()
+    var actionMovieList = [MovieData.Results]()
+    var comedyMovieList = [MovieData.Results]()
+    var ramanceMovieList = [MovieData.Results]()
+    var fantasyMovieList = [MovieData.Results]()
     
     let cache = NSCache<NSURL, UIImage>()
     
     
+    /// 백그라운드에서 이미지를 다운로드하는 메소드
+    /// - Parameters:
+    ///   - urlString: 받아온 영화 API에서 내려온 포스터, 배경이미지 URL
+    ///   - posterImageSize: 포스터 이미지 사이즈(PosterImageSize 열거형으로 사이즈를 따로 정의해놨다.)
+    ///   - completion: 이미지를 다운로드 받고 실행할 코드를 받을 파라미터
     func loadImage(from urlString: String, posterImageSize: String, completion: @escaping (UIImage?) -> ()) {
         let baseURL = "https://image.tmdb.org/t/p/\(posterImageSize)/\(urlString)"
         
@@ -54,8 +62,13 @@ class MovieDataSource {
         }
     }
     
+    // fetchMovie에서 사용할 DispatchGroup
     let group = DispatchGroup()
     
+    ///  API를 모두 호출하고 나서 테이블뷰를 업데이트 하기 위해 생성한 메소드
+    /// - Parameters:
+    ///   - date: 영화를 불러올 기준 날짜
+    ///   - completion: API를 불러오고 나서 호출할 코드를 받을 파라미터
     func fetchMovie(by date: String, completion: @escaping () -> ()) {
         group.enter()
         fetchNowPlayingMovie(by: date) {
@@ -72,11 +85,30 @@ class MovieDataSource {
             self.group.leave()
         }
         
+        group.enter()
+        fetchComedyMovie(by: date) {
+            self.group.leave()
+        }
+        
+        group.enter()
+        fetchRomanceMovie(by: date) {
+            self.group.leave()
+        }
+        
+        group.enter()
+        fetchFantasyMovie() {
+            self.group.leave()
+        }
+        
         group.notify(queue: .main) {
             completion()
         }
     }
     
+    /// 현재 상영중인 영화 API를 받아오는 메소드
+    /// - Parameters:
+    ///   - date: 영화를 불러올 기준 날짜
+    ///   - completion: API를 불러오고 나서 호출할 코드를 받을 파라미터
     func fetchNowPlayingMovie(by date: String, completion: @escaping () -> ()) {
         let urlStr = "https://api.themoviedb.org/3/movie/now_playing?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&region=KR&release_lte=\(date)"
 
@@ -118,7 +150,10 @@ class MovieDataSource {
         
     }
     
-    
+    /// 인기작 영화 API를 받아오는 메소드
+    /// - Parameters:
+    ///   - date: 영화를 불러올 기준 날짜
+    ///   - completion: API를 불러오고 나서 호출할 코드를 받을 파라미터
     func fetchPopularMovie(by date: String, completion: @escaping () -> ()) {
         let urlStr = "https://api.themoviedb.org/3/movie/popular?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&region=KR&release_lte=\(date)"
 
@@ -162,7 +197,10 @@ class MovieDataSource {
         
     }
     
-    
+    /// 액션 영화 API를 받아오는 메소드
+    /// - Parameters:
+    ///   - date: 영화를 불러올 기준 날짜
+    ///   - completion: API를 불러오고 나서 호출할 코드를 받을 파라미터
     func fetchActionMovie(by date: String, completion: @escaping () -> ()) {
         let urlStr = "https://api.themoviedb.org/3/genre/28/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&release_lte=\(date)"
 
@@ -193,9 +231,146 @@ class MovieDataSource {
                 let decoder = JSONDecoder()
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
-                self.actionMoveList.append(contentsOf: movieData.results)
-                self.movieLists.append(self.actionMoveList)
-//                self.actionMoveList.sort { $0.release_date < $1.release_date }
+                self.actionMovieList.append(contentsOf: movieData.results)
+                self.movieLists.append(self.actionMovieList)
+            } catch {
+                print(error)
+            }
+
+        }
+        
+        task.resume()
+        
+    }
+    
+    /// 코미디 영화 API를 받아오는 메소드
+    /// - Parameters:
+    ///   - date: 영화를 불러올 기준 날짜
+    ///   - completion: API를 불러오고 나서 호출할 코드를 받을 파라미터
+    func fetchComedyMovie(by date: String, completion: @escaping () -> ()) {
+        let urlStr = "https://api.themoviedb.org/3/genre/35/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&release_lte=\(date)"
+
+        let url = URL(string: urlStr)!
+
+        let session = URLSession.shared
+
+        let task = session.dataTask(with: url) { data, response, error in
+            defer {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+            
+            if let error = error {
+                print(error)
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let movieData = try decoder.decode(MovieData.self, from: data)
+                
+                self.comedyMovieList.append(contentsOf: movieData.results)
+                self.movieLists.append(self.comedyMovieList)
+            } catch {
+                print(error)
+            }
+
+        }
+        
+        task.resume()
+        
+    }
+    
+    /// 로맨스 영화 API를 받아오는 메소드
+    /// - Parameters:
+    ///   - date: 영화를 불러올 기준 날짜
+    ///   - completion: API를 불러오고 나서 호출할 코드를 받을 파라미터
+    func fetchRomanceMovie(by date: String, completion: @escaping () -> ()) {
+        let urlStr = "https://api.themoviedb.org/3/genre/10749/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&release_lte=\(date)"
+
+        let url = URL(string: urlStr)!
+
+        let session = URLSession.shared
+
+        let task = session.dataTask(with: url) { data, response, error in
+            defer {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+            
+            if let error = error {
+                print(error)
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let movieData = try decoder.decode(MovieData.self, from: data)
+                
+                self.ramanceMovieList.append(contentsOf: movieData.results)
+                self.movieLists.append(self.ramanceMovieList)
+            } catch {
+                print(error)
+            }
+
+        }
+        
+        task.resume()
+        
+    }
+    
+    /// 판타지 영화 API를 받아오는 메소드
+    /// - Parameters:
+    ///   - date: 영화를 불러올 기준 날짜
+    ///   - completion: API를 불러오고 나서 호출할 코드를 받을 파라미터
+    func fetchFantasyMovie(completion: @escaping () -> ()) { // by date: String
+        let urlStr = "https://api.themoviedb.org/3/genre/14/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&" // release_lte=\(date)
+
+        let url = URL(string: urlStr)!
+
+        let session = URLSession.shared
+
+        let task = session.dataTask(with: url) { data, response, error in
+            defer {
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }
+            
+            if let error = error {
+                print(error)
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let movieData = try decoder.decode(MovieData.self, from: data)
+                
+                self.fantasyMovieList.append(contentsOf: movieData.results)
+                self.movieLists.append(self.fantasyMovieList)
             } catch {
                 print(error)
             }

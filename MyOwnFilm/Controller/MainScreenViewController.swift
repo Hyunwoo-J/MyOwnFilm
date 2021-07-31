@@ -12,7 +12,7 @@ class MainScreenViewController: CommonViewController {
     @IBOutlet weak var mainScreenTableView: UITableView!
     
     // 영화 구분 타이틀
-    let titleList = ["인기작", "액션"]
+    let titleList = ["인기작", "액션", "코미디", "로맨스", "판타지"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +23,11 @@ class MainScreenViewController: CommonViewController {
         
         print(Date().releaseDate)
         
+        
         MovieDataSource.shared.fetchMovie(by: Date().releaseDate) {
             self.mainScreenTableView.reloadData()
         }
+        
     }
 }
 
