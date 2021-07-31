@@ -4,7 +4,7 @@ struct MovieData: Codable {
     struct Results: Codable {
         let backdrop_path: String
         let genre_ids: [Int]
-
+        
         let overview: String
         let release_date: String
         let title: String
@@ -22,6 +22,42 @@ struct MovieData: Codable {
     let results: [Results]
     
 }
+
+let urlStr1 = "https://api.themoviedb.org/3/search/movie?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&page=1&include_adult=false&query=" + "곡성"
+let urlWithPercentEscapes = urlStr1.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+let url1 = URL(string: urlWithPercentEscapes!)!
+
+let session1 = URLSession.shared
+
+let task1 = session1.dataTask(with: url1) { data, response, error in
+    
+    if let error = error {
+        print(error)
+    }
+    
+    guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+        return
+    }
+    
+    guard let data = data else {
+        return
+    }
+    
+    do {
+        let decoder = JSONDecoder()
+        let movieData = try decoder.decode(MovieData.self, from: data)
+        
+        dump(movieData)
+    } catch {
+        print(error)
+    }
+    
+}
+
+task1.resume()
+
+
+
 
 let urlStr = "https://api.themoviedb.org/3/movie/popular?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR"
 
@@ -50,6 +86,6 @@ let task = session.dataTask(with: url) { data, response, error in
     } catch {
         print(error)
     }
-
+    
 }
 task.resume()
