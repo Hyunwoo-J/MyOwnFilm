@@ -21,7 +21,7 @@ class MovieDetailViewController: CommonViewController {
     var movieData = [MovieData.Results]()
     
     
-    /// 상태바를 흰색으로 바꾸기 위해 추가한 메소드
+    /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -56,7 +56,6 @@ class MovieDetailViewController: CommonViewController {
         view.backgroundColor = .black
         
         [storyLabel, titleLabel, dateLabel].forEach { $0?.textColor = .white }
-        
         
         
         if let index = index {
