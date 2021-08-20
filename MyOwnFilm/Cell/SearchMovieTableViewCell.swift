@@ -8,45 +8,47 @@
 import UIKit
 
 class SearchMovieTableViewCell: UITableViewCell {
+    /// 영화 포스터를 넣을 이미지뷰
+    @IBOutlet weak var movieImageView: UIImageView!
+    /// 영화 제목을 넣을 레이블
+    @IBOutlet weak var titleLabel: UILabel!
+    /// 개봉 일자를 넣을 레이블
+    @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var directorLabel: UILabel!
+    @IBOutlet weak var actorLabel: UILabel!
     
-    @IBOutlet weak var movieImage: UIImageView!
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var releaseDate: UILabel!
-    @IBOutlet weak var director: UILabel!
-    @IBOutlet weak var actor: UILabel!
-    
-    // 공간을 나누기 위해 추가한 뷰
+    /// 공간을 나누기 위해 추가한 뷰
     @IBOutlet weak var firstView: UIView!
     @IBOutlet weak var secondView: UIView!
     
     
+    /// 테이블뷰셀에 표시할 내용을 설정합니다.
+    /// - Parameter movieData: SearchMovieTableViewCell에서 받을 영화 데이터
     func configure(with movieData: MovieData.Results) {
-        title.text = movieData.titleStr
-        releaseDate.text = movieData.releaseDate
+        titleLabel.text = movieData.titleStr
+        releaseDateLabel.text = movieData.releaseDate
         
-        
-        MovieDataSource.shared.loadImage(from: movieData.posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
+        MovieImageSource.shared.loadImage(from: movieData.posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
             if let img = img {
-                self.movieImage.image = img
+                self.movieImageView.image = img
             } else {
-                self.movieImage.image = UIImage(named: "Default Image")
+                self.movieImageView.image = UIImage(named: "Default Image")
             }
-            
         }
     }
     
     
+    /// 초기화 작업을 실행합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
+        /// 백그라운드 색상 설정
         backgroundColor = .black
-        firstView.backgroundColor = .clear
-        secondView.backgroundColor = .clear
+        [firstView, secondView].forEach { $0?.backgroundColor = .clear }
         
-        [title, releaseDate, director, actor].forEach {
+        /// 텍스트 색상 설정
+        [titleLabel, releaseDateLabel, directorLabel, actorLabel].forEach {
             $0?.textColor = .white
         }
     }
-    
-    
 }
 

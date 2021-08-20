@@ -12,57 +12,24 @@ class MovieDataSource {
     static let shared = MovieDataSource()
     private init() { }
     
+    /// 영화 결과를 저장하기 위한 2차원 배열
     var movieLists = [[MovieData.Results]]()
+    /// 검색한 영화 리스트
     var searchMovieList = [MovieData.Results]()
+    /// 현재 상영중인 영화 리스트
     var nowPlayingMovieList = [MovieData.Results]()
+    /// 인기있는 영화 리스트
     var popularMovieList = [MovieData.Results]()
+    /// 액션 영화 리스트
     var actionMovieList = [MovieData.Results]()
+    /// 코메디 영화 리스트
     var comedyMovieList = [MovieData.Results]()
+    /// 로맨스 영화 리스트
     var ramanceMovieList = [MovieData.Results]()
+    /// 판타지 영화 리스트
     var fantasyMovieList = [MovieData.Results]()
     
-    let cache = NSCache<NSURL, UIImage>()
-    
-    
-    /// 백그라운드에서 이미지를 다운로드합니다.
-    /// - Parameters:
-    ///   - urlString: 받아온 영화 API에서 내려온 포스터, 배경이미지 URL
-    ///   - posterImageSize: 포스터 이미지 사이즈. (PosterImageSize 열거형으로 사이즈를 따로 정의해놨습니다)
-    ///   - completion: 이미지를 다운로드 받고 실행할 코드
-    func loadImage(from urlString: String, posterImageSize: String, completion: @escaping (UIImage?) -> ()) {
-        let baseURL = "https://image.tmdb.org/t/p/\(posterImageSize)/\(urlString)"
-        
-        guard let url = NSURL(string: baseURL) else {
-            DispatchQueue.main.async {
-                completion(nil)
-            }
-            return
-        }
-        
-        if let image = cache.object(forKey: url) {
-            completion(image)
-            print("Cache Memory")
-        } else {
-            DispatchQueue.global().async {
-                do {
-                    let data = try Data(contentsOf: url as URL)
-                    let image = UIImage(data: data)
-                    print("Download Image")
-                    
-                    // 캐시에 이미지 저장
-                    guard let image = image else { return }
-                    self.cache.setObject(image, forKey: url)
-                    
-                    DispatchQueue.main.async {
-                        completion(image)
-                    }
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
-    
+    /// Prefetch를 위한 변수
     var page = 0
     private var isFetching = false
     private var hasMore = true
@@ -79,12 +46,11 @@ class MovieDataSource {
         
         let urlStr = "https://api.themoviedb.org/3/search/movie?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&page=\(page)&include_adult=false&query=\(movieName)"
         
-        // 한글 입력도 가능하게 해주는 메소드
+        /// 한글 입력도 가능하게 설정
         let urlWithPercentEscapes = urlStr.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
         
         let url = URL(string: urlWithPercentEscapes!)!
         
-
         let session = URLSession.shared
 
         let task = session.dataTask(with: url) { data, response, error in
@@ -122,15 +88,12 @@ class MovieDataSource {
                 self.hasMore = false
                 print(error)
             }
-
         }
-        
         task.resume()
-        
     }
     
     
-    // fetchMovie에서 사용할 DispatchGroup
+    /// fetchMovie에서 사용할 DispatchGroup
     let group = DispatchGroup()
     
     ///  요청한 API 응답을 모두 받고나서 테이블뷰를 업데이트합니다.
@@ -173,6 +136,7 @@ class MovieDataSource {
         }
     }
     
+    
     /// 현재 상영중인 영화 API
     /// - Parameters:
     ///   - date: 영화를 불러올 기준 날짜
@@ -213,9 +177,7 @@ class MovieDataSource {
                 print(error)
             }
         }
-        
         task.resume()
-        
     }
     
     /// 인기작 영화 API를 받아옵니다.
@@ -258,12 +220,10 @@ class MovieDataSource {
             } catch {
                 print(error)
             }
-
         }
-        
         task.resume()
-        
     }
+    
     
     /// 액션 영화 API를 받아옵니다.
     /// - Parameters:
@@ -306,10 +266,9 @@ class MovieDataSource {
             }
 
         }
-        
         task.resume()
-        
     }
+    
     
     /// 코미디 영화 API를 받아옵니다.
     /// - Parameters:
@@ -352,10 +311,9 @@ class MovieDataSource {
             }
 
         }
-        
         task.resume()
-        
     }
+    
     
     /// 로맨스 영화 API를 받아옵니다.
     /// - Parameters:
@@ -398,10 +356,9 @@ class MovieDataSource {
             }
 
         }
-        
         task.resume()
-        
     }
+    
     
     /// 판타지 영화 API를 받아옵니다.
     /// - Parameters:
@@ -442,10 +399,7 @@ class MovieDataSource {
             } catch {
                 print(error)
             }
-
         }
-        
         task.resume()
-        
     }
 }
