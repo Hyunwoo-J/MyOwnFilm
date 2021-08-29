@@ -110,7 +110,7 @@ extension SearchViewController: UITableViewDelegate {
                 }
             }
             
-            vc.movieData = MovieDataSource.shared.searchMovieList
+            vc.movieList = MovieDataSource.shared.searchMovieList
             show(vc, sender: nil)
         }
     }

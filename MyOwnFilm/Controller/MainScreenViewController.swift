@@ -12,7 +12,6 @@ class MainScreenViewController: CommonViewController {
     /// 영화 구분 타이틀
     let titleList = ["인기작", "액션", "코미디", "로맨스", "판타지"]
     
-    
     /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -55,7 +54,34 @@ extension MainScreenViewController: CollectionViewCellDelegate {
                 vc.image = img
             }
             
-            vc.movieData = MovieDataSource.shared.nowPlayingMovieList
+            vc.movieList = MovieDataSource.shared.nowPlayingMovieList
+            
+            show(vc, sender: nil)
+        }
+    }
+}
+
+
+
+
+extension MainScreenViewController: SubCollectionViewCellDelegate {
+    /// 델리게이트에게 선택된 테이블뷰 셀에 있는 컬렉션뷰의 인덱스를 알립니다.
+    /// - Parameters:
+    ///   - collectionviewCell: 이 메소드를 호출하는 컬렉션뷰
+    ///   - index: 컬렉션뷰의 인덱스
+    ///   - didTappedInTableViewCell: 선택된 테이블뷰 셀
+    func collectionView(collectionviewCell: SubMovieCollectionViewCell?, index: Int, didTappedInTableViewCell: SubMovieTableViewCell) {
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController {
+            vc.index = index
+            
+            guard let movieList = didTappedInTableViewCell.movie else { return }
+            
+            
+            MovieImageSource.shared.loadImage(from: movieList[index].posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
+                vc.image = img
+            }
+            
+            vc.movieList = movieList
             
             show(vc, sender: nil)
         }
@@ -106,6 +132,8 @@ extension MainScreenViewController: UITableViewDataSource {
             
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubMovieTableViewCell", for: indexPath) as! SubMovieTableViewCell
+            
+            cell.cellDelegate = self
             
             let target = MovieDataSource.shared.movieLists[indexPath.row]
             cell.configure(with: target, text: titleList[indexPath.row])

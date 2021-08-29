@@ -7,8 +7,16 @@
 
 import UIKit
 
+protocol SubCollectionViewCellDelegate: AnyObject {
+    /// 컬렉션뷰 셀의 인덱스를 MainScreenViewController에 전달해줄 메소드
+    func collectionView(collectionviewCell: SubMovieCollectionViewCell?, index: Int, didTappedInTableViewCell: SubMovieTableViewCell)
+}
+
+
+
 
 class SubMovieTableViewCell: UITableViewCell {
+    weak var cellDelegate: SubCollectionViewCellDelegate?
     /// 영화 분류 텍스트를 넣을 레이블
     @IBOutlet weak var movieClassificationLabel: UILabel!
     /// 두번째 섹션의 컬렉션뷰
@@ -24,6 +32,7 @@ class SubMovieTableViewCell: UITableViewCell {
         subMovieCollectionView.backgroundColor = .black
         
         subMovieCollectionView.dataSource = self
+        subMovieCollectionView.delegate = self
     }
     
     
@@ -63,10 +72,9 @@ extension SubMovieTableViewCell: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubMovieCollectionViewCell", for: indexPath) as! SubMovieCollectionViewCell
         
         guard let movie = movie else { return UICollectionViewCell() }
-        let movieList = movie[indexPath.row].posterPath
-        let moviePosterPath = movieList
+        let posterPath = movie[indexPath.item].posterPath
         
-        MovieImageSource.shared.loadImage(from: moviePosterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
+        MovieImageSource.shared.loadImage(from: posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
             if let img = img {
                 cell.subMovieImageView.image = img
             } else {
@@ -75,5 +83,19 @@ extension SubMovieTableViewCell: UICollectionViewDataSource {
         }
         
         return cell
+    }
+}
+
+
+
+
+extension SubMovieTableViewCell: UICollectionViewDelegate {
+    /// - Parameters: 델리게이트에게 셀이 선택되었음을 알립니다.
+    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - indexPath: 선택한 셀의 IndexPath
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubMovieCollectionViewCell", for: indexPath) as! SubMovieCollectionViewCell
+        
+        cellDelegate?.collectionView(collectionviewCell: cell, index: indexPath.item, didTappedInTableViewCell: self)
     }
 }

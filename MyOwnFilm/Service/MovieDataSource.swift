@@ -19,15 +19,15 @@ class MovieDataSource {
     /// 현재 상영중인 영화 리스트
     var nowPlayingMovieList = [MovieData.Results]()
     /// 인기있는 영화 리스트
-    var popularMovieList = [MovieData.Results]()
+    private var popularMovieList = [MovieData.Results]()
     /// 액션 영화 리스트
-    var actionMovieList = [MovieData.Results]()
+    private var actionMovieList = [MovieData.Results]()
     /// 코메디 영화 리스트
-    var comedyMovieList = [MovieData.Results]()
+    private var comedyMovieList = [MovieData.Results]()
     /// 로맨스 영화 리스트
-    var ramanceMovieList = [MovieData.Results]()
+    private var ramanceMovieList = [MovieData.Results]()
     /// 판타지 영화 리스트
-    var fantasyMovieList = [MovieData.Results]()
+    private var fantasyMovieList = [MovieData.Results]()
     
     /// Prefetch를 위한 변수
     var page = 0

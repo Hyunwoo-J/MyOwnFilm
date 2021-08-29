@@ -20,7 +20,7 @@ class MovieDetailViewController: CommonViewController {
     /// 이전 화면에서의 데이터를 가져오기 위한 변수
     var index: Int?
     var image: UIImage?
-    var movieData = [MovieData.Results]()
+    var movieList = [MovieData.Results]()
     
     
     /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
@@ -36,7 +36,7 @@ class MovieDetailViewController: CommonViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? MemoViewController {
             vc.index = index
-            vc.movieData = movieData
+            vc.movieList = movieList
         }
     }
     
@@ -45,6 +45,7 @@ class MovieDetailViewController: CommonViewController {
     /// - Parameter sender: 버튼
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     
@@ -52,7 +53,6 @@ class MovieDetailViewController: CommonViewController {
     /// - Parameter animated: 애니메이션
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if let image = image {
             backgroundmovieImage.image = image
         } else {
@@ -70,13 +70,9 @@ class MovieDetailViewController: CommonViewController {
         
         /// 인덱스가 있다면 레이블에 관련 텍스트를 넣어줍니다.
         if let index = index {
-            storyLabel.text = movieData[index].overviewStr
-            titleLabel.text = movieData[index].titleStr
-            dateLabel.text = movieData[index].releaseDate
+            storyLabel.text = movieList[index].overviewStr
+            titleLabel.text = movieList[index].titleStr
+            dateLabel.text = movieList[index].releaseDate
         }
     }
 }
-
-
-
-

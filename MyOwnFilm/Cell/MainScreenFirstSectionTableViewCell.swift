@@ -13,6 +13,8 @@ protocol CollectionViewCellDelegate: AnyObject {
 }
 
 
+
+
 class MainScreenFirstSectionTableViewCell: UITableViewCell {
     weak var cellDelegate: CollectionViewCellDelegate?
     /// 첫번째 섹션의 컬렉션뷰
@@ -87,7 +89,7 @@ extension MainScreenFirstSectionTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainScreenFirstSectionCollectionViewCell", for: indexPath) as! MainScreenFirstSectionCollectionViewCell
         
-        self.cellDelegate?.collectionView(collectionviewCell: cell, index: indexPath.item, didTappedInTableViewCell: self)
+        cellDelegate?.collectionView(collectionviewCell: cell, index: indexPath.item, didTappedInTableViewCell: self)
     }
 }
 
