@@ -80,7 +80,6 @@ extension MainScreenViewController: SubCollectionViewCellDelegate {
             MovieImageSource.shared.loadImage(from: movieList[index].posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
                 vc.image = img
             }
-            
             vc.movieList = movieList
             
             show(vc, sender: nil)

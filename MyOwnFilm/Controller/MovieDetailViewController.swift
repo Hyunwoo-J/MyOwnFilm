@@ -53,10 +53,16 @@ class MovieDetailViewController: CommonViewController {
     /// - Parameter animated: 애니메이션
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        backgroundmovieImage.isHidden = true
+        
         if let image = image {
             backgroundmovieImage.image = image
         } else {
             backgroundmovieImage.image = UIImage(named: "Default Image")
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.backgroundmovieImage.isHidden = false
         }
     }
     
