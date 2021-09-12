@@ -49,11 +49,7 @@ extension MainScreenViewController: CollectionViewCellDelegate {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController {
             vc.index = index
             
-            let nowPlayingData = MovieDataSource.shared.nowPlayingMovieList[index]
-            MovieImageSource.shared.loadImage(from: nowPlayingData.posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
-                vc.image = img
-            }
-            
+            vc.movieData = MovieDataSource.shared.nowPlayingMovieList[index]
             vc.movieList = MovieDataSource.shared.nowPlayingMovieList
             
             show(vc, sender: nil)
@@ -76,10 +72,7 @@ extension MainScreenViewController: SubCollectionViewCellDelegate {
             
             guard let movieList = didTappedInTableViewCell.movie else { return }
             
-            
-            MovieImageSource.shared.loadImage(from: movieList[index].posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
-                vc.image = img
-            }
+            vc.movieData = movieList[index]
             vc.movieList = movieList
             
             show(vc, sender: nil)

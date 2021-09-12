@@ -19,8 +19,18 @@ class MovieDetailViewController: CommonViewController {
     
     /// 이전 화면에서의 데이터를 가져오기 위한 변수
     var index: Int?
-    var image: UIImage?
+    var movieData: MovieData.Results?
     var movieList = [MovieData.Results]()
+    
+    /// window에 추가할 DimView
+    lazy var dimView: UIView = {
+        let v = UIView()
+        v.frame = self.view.bounds
+        v.backgroundColor = .black
+        v.alpha = 0.6
+        
+        return v
+    }()
     
     
     /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
@@ -34,7 +44,11 @@ class MovieDetailViewController: CommonViewController {
     ///   - segue: seuge에 관련되 뷰 컨트롤러에 대한 정보를 포함한 개체
     ///   - sender: segue를 시작한 개체
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        /// window에 dimming View를 추가
+        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
+        
         if let vc = segue.destination as? MemoViewController {
+            window.addSubview(self.dimView)
             vc.index = index
             vc.movieList = movieList
         }
@@ -53,16 +67,22 @@ class MovieDetailViewController: CommonViewController {
     /// - Parameter animated: 애니메이션
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        backgroundmovieImage.isHidden = true
-        
-        if let image = image {
-            backgroundmovieImage.image = image
+        // 다운로드
+        if let movieData = movieData {
+            MovieImageSource.shared.loadImage(from: movieData.backdropPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
+                self.backgroundmovieImage.image = img
+            }
         } else {
-            backgroundmovieImage.image = UIImage(named: "Default Image")
+            self.backgroundmovieImage.image = UIImage(named: "Default Image")
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.backgroundmovieImage.isHidden = false
+        NotificationCenter.default.addObserver(forName: .memoWillCancelled, object: nil, queue: .main) {[weak self] _ in
+            guard let self = self else { return }
+            
+            /// DimView 제거
+            UIView.animate(withDuration: 0.3) {
+                self.removeViewFromWindow()
+            }
         }
     }
     
@@ -79,6 +99,17 @@ class MovieDetailViewController: CommonViewController {
             storyLabel.text = movieList[index].overviewStr
             titleLabel.text = movieList[index].titleStr
             dateLabel.text = movieList[index].releaseDate
+        }
+    }
+    
+    
+    /// window에 추가된 DimView를 제거합니다.
+    func removeViewFromWindow() {
+        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
+        
+        for view in window.subviews as [UIView] where view == dimView {
+            view.removeFromSuperview()
+            break
         }
     }
 }
