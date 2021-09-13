@@ -103,14 +103,9 @@ extension SearchViewController: UITableViewDelegate {
             print(vc)
             #endif
             
-            let searchMovieData = MovieDataSource.shared.searchMovieList[indexPath.row]
-            MovieImageSource.shared.loadImage(from: searchMovieData.posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
-                if let img = img {
-                    vc.image = img
-                }
-            }
-            
+            vc.movieData = MovieDataSource.shared.searchMovieList[indexPath.row]
             vc.movieList = MovieDataSource.shared.searchMovieList
+            
             show(vc, sender: nil)
         }
     }
