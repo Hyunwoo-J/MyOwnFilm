@@ -10,10 +10,16 @@ import UIKit
 // 공통적인 기능을 구현하는 컨트롤러
 class CommonViewController: UIViewController {
     // TODO: 알러트 메서드, 백그라운드를 바꾸는 메서드 추가
-    /// 초기화 작업을 실행합니다.
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    
+    /// window에 추가할 DimView
+    lazy var dimView: UIView = {
+        let v = UIView()
+        v.frame = self.view.bounds
+        v.backgroundColor = .black
+        v.alpha = 0.6
+        
+        return v
+    }()
     
     
     /// 경고창을 출력합니다.
@@ -29,6 +35,17 @@ class CommonViewController: UIViewController {
         alert.addAction(alertAction)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    
+    /// window에 추가된 DimView를 제거합니다.
+    func removeViewFromWindow() {
+        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
+        
+        for view in window.subviews as [UIView] where view == dimView {
+            view.removeFromSuperview()
+            break
+        }
     }
     
     

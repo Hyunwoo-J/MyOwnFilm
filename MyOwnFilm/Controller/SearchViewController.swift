@@ -93,7 +93,7 @@ extension SearchViewController: UITableViewDelegate {
     ///   - indexPath: 선택한 셀의 IndexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        // 다른 스토리보드에 있는 뷰컨트롤러에 접근하기 위해 스토리보드 상수 생성
+        /// 다른 스토리보드에 있는 뷰컨트롤러에 접근하기 위해 스토리보드 상수 생성
         let storyboard = UIStoryboard(name: "MainScreen", bundle: nil)
         
         if let vc = storyboard.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController {
