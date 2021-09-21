@@ -134,7 +134,6 @@ extension SearchViewController: UISearchBarDelegate {
         
         MovieDataSource.shared.fetchQueryMovie(about: hasText) {
             self.movieTableView.reloadData()
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.movieTableView.alpha = 1.0
             }
