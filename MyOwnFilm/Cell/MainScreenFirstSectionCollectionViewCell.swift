@@ -20,8 +20,9 @@ class MainScreenFirstSectionCollectionViewCell: UICollectionViewCell {
     /// - Parameter movieData: MainScreenFirstSectionTableViewCell에서 받을 영화 데이터 배열
     func configure(with movieData: MovieData.Results) {
         movieTitleLabel.text = movieData.titleStr
-        releaseDateLabel.text = movieData.releaseDate
+        releaseDateLabel.text = movieData.releaseDate.userDate
     }
+    
     
     /// 초기화 작업을 실행합니다.
     override func awakeFromNib() {

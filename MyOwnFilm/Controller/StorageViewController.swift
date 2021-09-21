@@ -32,8 +32,16 @@ class StorageViewController: CommonViewController {
         print(#function)
         storageCollectionView.reloadData()
     }
+    
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        if storageCollectionView != nil {
+            storageCollectionView.reloadData()
+        }
+    }
 }
-
 
 
 
@@ -55,7 +63,6 @@ extension StorageViewController: UICollectionViewDataSource {
 
 
 
-
 extension StorageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "MainScreen", bundle: nil)
@@ -74,13 +81,26 @@ extension StorageViewController: UICollectionViewDelegate {
 
 
 
-
 extension StorageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return . zero }
         
-        let width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 2
-        let height = width * 1.5
+        // iPad
+        if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
+            let width = (collectionView.frame.width - ((flowLayout.minimumInteritemSpacing * 4) + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 5
+            let height = width * 1.5
+            
+            return CGSize(width: Int(width), height: Int(height))
+        }
+        
+        var width: CGFloat = (collectionView.frame.width - (flowLayout.minimumInteritemSpacing + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 2
+        var height = width * 1.5
+        
+        // 가로 모드
+        if view.frame.width > view.frame.height {
+            width = (collectionView.frame.width - ((flowLayout.minimumInteritemSpacing * 3) + flowLayout.sectionInset.left + flowLayout.sectionInset.right)) / 4
+            height = width * 1.5
+        }
         
         return CGSize(width: Int(width), height: Int(height))
     }

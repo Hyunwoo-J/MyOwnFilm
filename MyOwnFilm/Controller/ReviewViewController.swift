@@ -165,7 +165,8 @@ class ReviewViewController: CommonViewController {
         
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
             let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy.MM.dd"
+            formatter.locale = Locale(identifier: "ko_kr")
+            formatter.dateFormat = "yyyy년 MM월 dd일 EEEE"
             let date = formatter.string(from: datePicker.date)
             
             self.dateLabel.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: nil)

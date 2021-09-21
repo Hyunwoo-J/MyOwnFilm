@@ -17,3 +17,18 @@ extension Date {
         return formatter.string(from: self)
     }
 }
+
+
+
+extension String {
+    var userDate: String? {
+        let dateComp = self.components(separatedBy: "-")
+        guard dateComp.count == 3 else { return nil}
+        
+        let year = dateComp[0]
+        let month = dateComp[1]
+        let day = dateComp[2]
+        
+        return "\(year)년 \(month)월 \(day)일"
+    }
+}
