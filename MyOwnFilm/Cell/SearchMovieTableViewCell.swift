@@ -26,7 +26,7 @@ class SearchMovieTableViewCell: UITableViewCell {
     /// - Parameter movieData: SearchMovieTableViewCell에서 받을 영화 데이터
     func configure(with movieData: MovieData.Results) {
         titleLabel.text = movieData.titleStr
-        releaseDateLabel.text = movieData.releaseDate.userDate
+        releaseDateLabel.text = movieData.releaseDate.toManagerDate()?.toUserDateStringForMovieData()
         storyLabel.text = movieData.overviewStr
         
         var genreArray = [MovieGenre]()

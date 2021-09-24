@@ -64,7 +64,7 @@ class MovieDetailViewController: CommonViewController {
         if let index = index {
             storyLabel.text = movieList[index].overviewStr
             titleLabel.text = movieList[index].titleStr
-            dateLabel.text = movieList[index].releaseDate
+            dateLabel.text = movieList[index].releaseDate.toManagerDate()?.toUserDateStringForMovieData()
         }
         
         // 다운로드

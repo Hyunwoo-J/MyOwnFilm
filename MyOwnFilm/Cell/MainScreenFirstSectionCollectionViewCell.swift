@@ -20,7 +20,7 @@ class MainScreenFirstSectionCollectionViewCell: UICollectionViewCell {
     /// - Parameter movieData: MainScreenFirstSectionTableViewCell에서 받을 영화 데이터 배열
     func configure(with movieData: MovieData.Results) {
         movieTitleLabel.text = movieData.titleStr
-        releaseDateLabel.text = movieData.releaseDate.userDate
+        releaseDateLabel.text = movieData.releaseDate.toManagerDate()?.toUserDateStringForMovieData()
     }
     
     

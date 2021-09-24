@@ -59,7 +59,7 @@ class ReviewViewController: CommonViewController {
             }
             
             starPointView.rating = movieData.starPoint
-            dateLabel.text = movieData.date
+            dateLabel.text = movieData.date.toUserDateString()
             placeTextField.text = movieData.place
             friendTextField.text = movieData.friend
             memoTextView.text = movieData.memo
@@ -116,14 +116,15 @@ class ReviewViewController: CommonViewController {
     
     @IBAction func saveReview(_ sender: Any) {
         guard let index = index else { return }
-
+        
         let target = movieList[index]
         let review = MovieReview(reviewId: UUID(),
                                  movieTitle: target.titleStr,
                                  posterPath: target.posterPath,
                                  backdropPath: target.backdropPath,
+                                 releaseDate: target.releaseDate.toManagerDate() ?? Date(),
                                  starPoint: starPointView.rating,
-                                 date: dateLabel.text ?? "",
+                                 date: dateLabel.text?.toManagerMemoDate() ?? Date(),
                                  place: placeTextField.text ?? "",
                                  friend: friendTextField.text ?? "",
                                  memo: memoTextView.text)
@@ -164,14 +165,11 @@ class ReviewViewController: CommonViewController {
         datePicker.bottomAnchor.constraint(equalTo: dateAlert.view.bottomAnchor, constant: -100).isActive = true
         
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "ko_kr")
-            formatter.dateFormat = "yyyy년 MM월 dd일 EEEE"
-            let date = formatter.string(from: datePicker.date)
+            guard let date = datePicker.date.releaseDate.toManagerDate() else { return }
             
             self.dateLabel.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: nil)
             
-            self.dateLabel.text = date
+            self.dateLabel.text = date.toUserDateString()
         }
         dateAlert.addAction(okAction)
         

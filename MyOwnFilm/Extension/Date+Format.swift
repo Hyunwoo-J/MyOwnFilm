@@ -7,13 +7,30 @@
 
 import Foundation
 
+
 fileprivate let formatter = DateFormatter()
+
+
 
 extension Date {
     /// 지정된 형식으로 날짜를 반환
     var releaseDate: String {
-        formatter.dateFormat = "yyyy-M-d"
+        formatter.dateFormat = "yyyy-MM-dd"
         
+        return formatter.string(from: self)
+    }
+    
+    func toUserDateString() -> String {
+        formatter.dateFormat = "yyyy년 MM월 dd일 EEEE"
+        formatter.locale = Locale(identifier: "ko_kr")
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        return formatter.string(from: self)
+    }
+    
+    func toUserDateStringForMovieData() -> String {
+        formatter.dateFormat = "yyyy년 MM월 dd일"
+        formatter.locale = Locale(identifier: "ko_kr")
+        formatter.timeZone = TimeZone(identifier: "UTC")
         return formatter.string(from: self)
     }
 }
@@ -21,14 +38,23 @@ extension Date {
 
 
 extension String {
-    var userDate: String? {
-        let dateComp = self.components(separatedBy: "-")
-        guard dateComp.count == 3 else { return nil}
-        
-        let year = dateComp[0]
-        let month = dateComp[1]
-        let day = dateComp[2]
-        
-        return "\(year)년 \(month)월 \(day)일"
+    func toManagerDate() -> Date? {
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        if let date = formatter.date(from: self) {
+            return date
+        } else {
+            return nil
+        }
+    }
+    
+    func toManagerMemoDate() -> Date? {
+        formatter.dateFormat = "yyyy년 MM월 dd일 EEEE"
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        if let date = formatter.date(from: self) {
+            return date
+        } else {
+            return nil
+        }
     }
 }

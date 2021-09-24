@@ -12,11 +12,13 @@ struct MovieReview {
     let movieTitle: String
     let posterPath: String
     let backdropPath: String
+    let releaseDate: Date
     let starPoint: Double
-    let date: String
+    let date: Date
     let place: String
     let friend: String
     let memo: String
     
     static var movieReviewList = [MovieReview]()
+    static var recentlyMovieReviewList = [MovieReview]()
 }
