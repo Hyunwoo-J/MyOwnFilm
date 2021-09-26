@@ -7,20 +7,24 @@
 
 import UIKit
 
+
+/// 보관함 화면 컬렉션뷰 셀
 class StorageCollectionViewCell: UICollectionViewCell {
+    /// 날짜를 넣을 레이블
     @IBOutlet weak var dateLabel: UILabel!
+    
+    /// 본 장소를 넣을 레이블
     @IBOutlet weak var placeLabel: UILabel!
+    
+    /// 영화 이미지를 넣을 이미지뷰
     @IBOutlet weak var movieImageView: UIImageView!
+    
+    /// UI 작업을 위해 넣은 컨테이너뷰
     @IBOutlet weak var containerView: UIView!
     
     
-    override func awakeFromNib() {
-        movieImageView.layer.cornerRadius = 6
-        containerView.backgroundColor = .darkGray
-        [dateLabel, placeLabel].forEach { $0?.textColor = .white }
-    }
-    
-    
+    /// 컬렉션뷰셀에 표시할 내용을 설정합니다.
+    /// - Parameter movieData: StorageCollectionViewCell에서 받을 영화 데이터
     func configure(with movieData: MovieReview) {
         dateLabel.text = movieData.date.toUserDateString()
         placeLabel.text = movieData.place
@@ -32,5 +36,15 @@ class StorageCollectionViewCell: UICollectionViewCell {
                 self.movieImageView.image = UIImage(named: "Default Image")
             }
         }
+    }
+    
+    
+    /// 초기화 작업을 실행합니다.
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        movieImageView.layer.cornerRadius = 6
+        containerView.backgroundColor = .darkGray
+        [dateLabel, placeLabel].forEach { $0?.textColor = .white }
     }
 }

@@ -7,10 +7,9 @@
 
 import UIKit
 
-// 공통적인 기능을 구현하는 컨트롤러
+
+/// 공통적인 기능을 구현하는 뷰컨트롤러 클래스
 class CommonViewController: UIViewController {
-    // TODO: 알러트 메서드, 백그라운드를 바꾸는 메서드 추가
-    
     /// window에 추가할 DimView
     lazy var dimView: UIView = {
         let v = UIView()

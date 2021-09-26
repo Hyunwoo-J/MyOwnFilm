@@ -7,10 +7,16 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+
+/// 검색 화면과 관련된 뷰컨트롤러 클래스
+class SearchViewController: CommonViewController {
+    /// 서치바
     @IBOutlet weak var searchBar: UISearchBar!
+    
+    /// 영화를 표시할 테이블뷰
     @IBOutlet weak var movieTableView: UITableView!
     
+    /// 검색어를 저장할 변수
     var text = ""
     
     /// 상태바를 흰색으로 바꾸기 위해 추가한 메소드
@@ -22,16 +28,15 @@ class SearchViewController: UIViewController {
     /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// 화면에 진입했을 때 키보드 올리기
+        // 화면에 진입했을 때 키보드 올리기
         searchBar.becomeFirstResponder()
         
-        /// 전체 백그라운드 컬러를 검정색으로 설정
+        // 전체 백그라운드 컬러를 검정색으로 설정
         [view, movieTableView].forEach {
             $0?.backgroundColor = .black
         }
     }
 }
-
 
 
 
@@ -53,7 +58,6 @@ extension SearchViewController: UITableViewDataSourcePrefetching {
         }
     }
 }
-
 
 
 
@@ -85,7 +89,6 @@ extension SearchViewController: UITableViewDataSource {
 
 
 
-
 extension SearchViewController: UITableViewDelegate {
     /// 델리게이트에게 셀이 선택되었음을 알립니다.
     /// - Parameters:
@@ -110,7 +113,6 @@ extension SearchViewController: UITableViewDelegate {
         }
     }
 }
-
 
 
 

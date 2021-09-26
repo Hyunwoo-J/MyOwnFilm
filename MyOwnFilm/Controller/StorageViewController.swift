@@ -7,15 +7,30 @@
 
 import UIKit
 
+
+/// 보관함 화면 관련 뷰컨트롤러 클래스
 class StorageViewController: CommonViewController {
-    var isRecentlyMovieButtonSelected = false
-    
+    /// 기록한 영화를 표시할 컬렉션뷰
     @IBOutlet weak var storageCollectionView: UICollectionView!
-    @IBOutlet weak var recentlyMovieButton: UIButton!
-    @IBOutlet weak var recentlyMovieBottomView: UIView!
-    @IBOutlet weak var allMovieBottomView: UIView!
+    
+    /// 모든 영화를 표시하는 버튼
     @IBOutlet weak var allMovieButton: UIButton!
     
+    /// 전체 영화 레이블 밑에 표시할 뷰
+    @IBOutlet weak var allMovieBottomView: UIView!
+    
+    /// 최근 저장할 영화를 표시하는 버튼
+    @IBOutlet weak var recentlyMovieButton: UIButton!
+    
+    /// 최근 저장한 영화 레이블 밑에 표시할 뷰
+    @IBOutlet weak var recentlyMovieBottomView: UIView!
+    
+    /// 최근 저장한 영화 버튼이 선택됐는지 알기 위해 추가한 변수
+    var isRecentlyMovieButtonSelected = false
+    
+    
+    /// 선택된 버튼에 따라 영화 데이터를 표시합니다.
+    /// - Parameter sender: 버튼
     @IBAction func movieButtonTapped(_ sender: UIButton) {
         defer {
             DispatchQueue.main.async {
@@ -42,6 +57,8 @@ class StorageViewController: CommonViewController {
     }
     
     
+    /// 정렬 버튼을 누르면 정렬과 관련된 액션시트를 표시합니다.
+    /// - Parameter sender: 정렬 버튼
     @IBAction func alignmentButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -71,8 +88,10 @@ class StorageViewController: CommonViewController {
     }
     
     
+    /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .black
         storageCollectionView.backgroundColor = .darkGray
         
@@ -81,7 +100,7 @@ class StorageViewController: CommonViewController {
         NotificationCenter.default.addObserver(forName: .memoWillCancelled, object: nil, queue: .main) {[weak self] _ in
             guard let self = self else { return }
             
-            /// DimView 제거
+            // DimView 제거
             UIView.animate(withDuration: 0.3) {
                 self.removeViewFromWindow()
             }
@@ -89,6 +108,8 @@ class StorageViewController: CommonViewController {
     }
     
     
+    /// 뷰가 나타나기 전에 호출됩니다.
+    /// - Parameter animated: 애니메이션 사용 여부
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -97,6 +118,10 @@ class StorageViewController: CommonViewController {
     }
     
     
+    /// 뷰의 사이즈가 변경되면 호출됩니다.
+    /// - Parameters:
+    ///   - size: 뷰의 새로운 사이즈
+    ///   - coordinator: 사이즈 변경을 관리하는 코디네이터 객체
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -109,6 +134,11 @@ class StorageViewController: CommonViewController {
 
 
 extension StorageViewController: UICollectionViewDataSource {
+    /// 데이터소스 객체에게 지정된 섹션에 아이템 수를 물어봅니다.
+    /// - Parameters:
+    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - section: 컬렉션뷰 섹션을 식별하는 Index 번호
+    /// - Returns: 섹션 아이템의 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isRecentlyMovieButtonSelected {
             return MovieReview.recentlyMovieReviewList.count
@@ -118,6 +148,11 @@ extension StorageViewController: UICollectionViewDataSource {
     }
     
     
+    /// 데이터소스 객체에게 지정된 위치에 해당하는 셀에 데이터를 요청합니다.
+    /// - Parameters:
+    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
+    /// - Returns: 설정한 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StorageCollectionViewCell", for: indexPath) as! StorageCollectionViewCell
         
@@ -138,6 +173,10 @@ extension StorageViewController: UICollectionViewDataSource {
 
 
 extension StorageViewController: UICollectionViewDelegate {
+    /// 델리게이트에게 지정된 인덱스패스에 있는 항목이 선택되었음을 알립니다.
+    /// - Parameters:
+    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "MainScreen", bundle: nil)
         
@@ -156,6 +195,12 @@ extension StorageViewController: UICollectionViewDelegate {
 
 
 extension StorageViewController: UICollectionViewDelegateFlowLayout {
+    /// 델리게이트에게 지정된 아이템의 셀 크기를 요청합니다.
+    /// - Parameters:
+    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - collectionViewLayout: 정보를 요청하는 레이아웃 객체
+    ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
+    /// - Returns: 지정된 아이템의 너비와 높이(사이즈)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return . zero }
         

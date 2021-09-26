@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+/// MainScreenTableViewCell 안에 있는 CollectionViewCell과 관련된 델리게이트 프로토콜
 protocol CollectionViewCellDelegate: AnyObject {
     /// 컬렉션뷰 셀의 인덱스를 MainScreenViewController에 전달해줄 메소드
     func collectionView(collectionviewCell: MainScreenFirstSectionCollectionViewCell?, index: Int, didTappedInTableViewCell: MainScreenFirstSectionTableViewCell)
@@ -14,32 +16,35 @@ protocol CollectionViewCellDelegate: AnyObject {
 
 
 
-
+/// 첫번째 섹션 테이블뷰 셀
 class MainScreenFirstSectionTableViewCell: UITableViewCell {
-    weak var cellDelegate: CollectionViewCellDelegate?
     /// 첫번째 섹션의 컬렉션뷰
     @IBOutlet weak var firstSectionCollectionView: UICollectionView!
+    
+    /// CollectionViewCellDelegate 변수
+    weak var cellDelegate: CollectionViewCellDelegate?
+    
+    
+    /// 테이블뷰셀을 reload합니다.
+    /// - Parameter movieData: MainScreenViewController에서 받을 영화 데이터 배열
+    func configure(with movieData: [MovieData.Result]) {
+        firstSectionCollectionView.reloadData()
+    }
     
     
     /// 초기화 작업을 실행합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
-        /// 백그라운드 색상 설정
+        
+        // 백그라운드 색상 설정
         backgroundColor = .black
         firstSectionCollectionView.backgroundColor = .black
         
+        // firstSectionCollectionView의 델리게이트, 데이터소스 지정
         firstSectionCollectionView.dataSource = self
         firstSectionCollectionView.delegate = self
     }
-    
-    
-    /// 테이블뷰셀을 reload합니다.
-    /// - Parameter movieData: MainScreenViewController에서 받을 영화 데이터 배열
-    func configure(with movieData: [MovieData.Results]) {
-        firstSectionCollectionView.reloadData()
-    }
 }
-
 
 
 
@@ -81,7 +86,6 @@ extension MainScreenFirstSectionTableViewCell: UICollectionViewDataSource {
 
 
 
-
 extension MainScreenFirstSectionTableViewCell: UICollectionViewDelegate {
     /// - Parameters: 델리게이트에게 셀이 선택되었음을 알립니다.
     ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
@@ -92,7 +96,6 @@ extension MainScreenFirstSectionTableViewCell: UICollectionViewDelegate {
         cellDelegate?.collectionView(collectionviewCell: cell, index: indexPath.item, didTappedInTableViewCell: self)
     }
 }
-
 
 
 

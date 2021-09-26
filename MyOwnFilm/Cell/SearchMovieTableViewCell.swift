@@ -7,24 +7,34 @@
 
 import UIKit
 
+
+/// 검색 화면 테이블뷰 셀
 class SearchMovieTableViewCell: UITableViewCell {
     /// 영화 포스터를 넣을 이미지뷰
     @IBOutlet weak var movieImageView: UIImageView!
+    
     /// 영화 제목을 넣을 레이블
     @IBOutlet weak var titleLabel: UILabel!
+    
     /// 개봉 일자를 넣을 레이블
     @IBOutlet weak var releaseDateLabel: UILabel!
+    
+    /// 장르를 넣을 레이블
     @IBOutlet weak var genreLabel: UILabel!
+    
+    /// 영화 줄거리를 넣을 레이블
     @IBOutlet weak var storyLabel: UILabel!
     
-    /// 공간을 나누기 위해 추가한 뷰
+    /// 공간을 나누기 위해 추가한 뷰 중 첫번째 뷰
     @IBOutlet weak var firstView: UIView!
+    
+    /// 공간을 나누기 위해 추가한 뷰 중 두번째 뷰
     @IBOutlet weak var secondView: UIView!
     
     
     /// 테이블뷰셀에 표시할 내용을 설정합니다.
     /// - Parameter movieData: SearchMovieTableViewCell에서 받을 영화 데이터
-    func configure(with movieData: MovieData.Results) {
+    func configure(with movieData: MovieData.Result) {
         titleLabel.text = movieData.titleStr
         releaseDateLabel.text = movieData.releaseDate.toManagerDate()?.toUserDateStringForMovieData()
         storyLabel.text = movieData.overviewStr
@@ -38,54 +48,54 @@ class SearchMovieTableViewCell: UITableViewCell {
             }
         }
         
-        var str = ""
-        for i in genreArray {
-            var a = ""
+        var genreText = ""
+        for genre in genreArray {
+            var movieGenre = ""
             
-            switch i {
+            switch genre {
             case .action:
-                a = "액션 "
+                movieGenre = "액션 "
             case .adventure:
-                a = "모험 "
+                movieGenre = "모험 "
             case .animation:
-                a = "애니메이션 "
+                movieGenre = "애니메이션 "
             case .comedy:
-                a = "코메디 "
+                movieGenre = "코메디 "
             case .crime:
-                a = "범죄 "
+                movieGenre = "범죄 "
             case .documentary:
-                a = "다큐멘터리 "
+                movieGenre = "다큐멘터리 "
             case .drama:
-                a = "드라마 "
+                movieGenre = "드라마 "
             case .family:
-                a = "가족 "
+                movieGenre = "가족 "
             case .fantasy:
-                a = "판타지 "
+                movieGenre = "판타지 "
             case .history:
-                a = "역사 "
+                movieGenre = "역사 "
             case .horror:
-                a = "공포 "
+                movieGenre = "공포 "
             case .music:
-                a = "음악 "
+                movieGenre = "음악 "
             case .mystery:
-                a = "미스터리 "
+                movieGenre = "미스터리 "
             case .romance:
-                a = "로맨스 "
+                movieGenre = "로맨스 "
             case .scienceFiction:
-                a = "SF "
+                movieGenre = "SF "
             case .tvMovie:
-                a = "TV 영화 "
+                movieGenre = "TV 영화 "
             case .thriller:
-                a = "스릴러 "
+                movieGenre = "스릴러 "
             case .war:
-                a = "전쟁 "
+                movieGenre = "전쟁 "
             case .western:
-                a = "서부 "
+                movieGenre = "서부 "
             }
             
-            str.append(a)
+            genreText.append(movieGenre)
         }
-        genreLabel.text = str
+        genreLabel.text = genreText
         
         MovieImageSource.shared.loadImage(from: movieData.posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
             if let img = img {
@@ -100,11 +110,12 @@ class SearchMovieTableViewCell: UITableViewCell {
     /// 초기화 작업을 실행합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
-        /// 백그라운드 색상 설정
+        
+        // 백그라운드 색상 설정
         backgroundColor = .black
         [firstView, secondView].forEach { $0?.backgroundColor = .clear }
         
-        /// 텍스트 색상 설정
+        // 텍스트 색상 설정
         [titleLabel, releaseDateLabel, genreLabel, storyLabel].forEach {
             $0?.textColor = .white
         }

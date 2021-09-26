@@ -7,10 +7,15 @@
 
 import UIKit
 
+
+/// 메인 화면을 표시하는 화면과 관련된 뷰컨트롤러 클래스
 class MainScreenViewController: CommonViewController {
+    /// 메인 화면 테이블뷰
     @IBOutlet weak var mainScreenTableView: UITableView!
+    
     /// 영화 구분 타이틀
     let titleList = ["인기작", "액션", "코미디", "로맨스", "판타지"]
+    
     
     /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -21,7 +26,7 @@ class MainScreenViewController: CommonViewController {
     /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        /// 백그라운드 색상 설정
+        // 백그라운드 색상 설정
         view.backgroundColor = .black
         mainScreenTableView.backgroundColor = .black
         
@@ -29,13 +34,12 @@ class MainScreenViewController: CommonViewController {
         print(Date().releaseDate)
         #endif
         
-        /// 지정한 날짜의 영화 데이터를 가져옵니다.
+        // 지정한 날짜의 영화 데이터를 가져옵니다.
         MovieDataSource.shared.fetchMovie(by: Date().releaseDate) {
             self.mainScreenTableView.reloadData()
         }
     }
 }
-
 
 
 
@@ -56,7 +60,6 @@ extension MainScreenViewController: CollectionViewCellDelegate {
         }
     }
 }
-
 
 
 
@@ -82,7 +85,6 @@ extension MainScreenViewController: SubCollectionViewCellDelegate {
 
 
 
-
 extension MainScreenViewController: UITableViewDataSource {
     /// 데이터 소스 객체엑 테이블뷰 섹션의 개수를 요청합니다.
     /// - Parameter tableView: 이 메소드를 호출하는 테이블뷰
@@ -90,6 +92,7 @@ extension MainScreenViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
+    
     
     /// 데이터 소스 객체에게 지정된 섹션에 있는 행의 수를 물어봅니다.
     /// - Parameters:

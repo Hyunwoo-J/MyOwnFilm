@@ -5,14 +5,20 @@
 //  Created by Hyunwoo Jang on 2021/08/20.
 //
 
-import Foundation
 import UIKit
 
+
+/// 영화 이미지를 불러올 클래스
 class MovieImageSource {
+    /// 싱글톤
     static let shared = MovieImageSource()
+    
+    /// 싱글톤
     private init() { }
     
+    /// 이미지를 저장할 캐시
     let cache = NSCache<NSURL, UIImage>()
+    
     
     /// 백그라운드에서 이미지를 다운로드합니다.
     /// - Parameters:

@@ -5,33 +5,50 @@
 //  Created by Hyunwoo Jang on 2021/07/11.
 //
 
-import Foundation
 import UIKit
 
+
+/// 영화 데이터를 불러올 DataSource 클래스
 class MovieDataSource {
+    /// 싱글톤
     static let shared = MovieDataSource()
+    
+    /// 싱글톤
     private init() { }
     
     /// 영화 결과를 저장하기 위한 2차원 배열
-    var movieLists = [[MovieData.Results]]()
+    var movieLists = [[MovieData.Result]]()
+    
     /// 검색한 영화 리스트
-    var searchMovieList = [MovieData.Results]()
+    var searchMovieList = [MovieData.Result]()
+    
     /// 현재 상영중인 영화 리스트
-    var nowPlayingMovieList = [MovieData.Results]()
+    var nowPlayingMovieList = [MovieData.Result]()
+    
     /// 인기있는 영화 리스트
-    private var popularMovieList = [MovieData.Results]()
+    private var popularMovieList = [MovieData.Result]()
+    
     /// 액션 영화 리스트
-    private var actionMovieList = [MovieData.Results]()
+    private var actionMovieList = [MovieData.Result]()
+    
     /// 코메디 영화 리스트
-    private var comedyMovieList = [MovieData.Results]()
+    private var comedyMovieList = [MovieData.Result]()
+    
     /// 로맨스 영화 리스트
-    private var ramanceMovieList = [MovieData.Results]()
+    private var ramanceMovieList = [MovieData.Result]()
+    
     /// 판타지 영화 리스트
-    private var fantasyMovieList = [MovieData.Results]()
+    private var fantasyMovieList = [MovieData.Result]()
+    
     
     /// Prefetch를 위한 변수
+    /// 불러올 페이지
     var page = 0
+    
+    /// 현재 Fetch중인지 구분하기 위한 속성
     private var isFetching = false
+    
+    /// 불러올 데이터가 더 있는지 확인하기 위한 속성
     private var hasMore = true
     
     /// 검색 API를 호출합니다.
@@ -46,7 +63,7 @@ class MovieDataSource {
         
         let urlStr = "https://api.themoviedb.org/3/search/movie?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&page=\(page)&include_adult=false&query=\(movieName)"
         
-        /// 한글 입력도 가능하게 설정
+        // 한글 입력도 가능하게 설정
         let urlWithPercentEscapes = urlStr.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
         
         let url = URL(string: urlWithPercentEscapes!)!
@@ -95,6 +112,7 @@ class MovieDataSource {
     
     /// fetchMovie에서 사용할 DispatchGroup
     let group = DispatchGroup()
+    
     
     ///  요청한 API 응답을 모두 받고나서 테이블뷰를 업데이트합니다.
     /// - Parameters:
@@ -172,13 +190,13 @@ class MovieDataSource {
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
                 self.nowPlayingMovieList.append(contentsOf: movieData.results)
-//                self.nowPlayingMovieList.sort { $0.release_date < $1.release_date }
             } catch {
                 print(error)
             }
         }
         task.resume()
     }
+    
     
     /// 인기작 영화 API를 받아옵니다.
     /// - Parameters:

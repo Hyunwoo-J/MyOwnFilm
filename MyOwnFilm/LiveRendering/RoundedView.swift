@@ -7,7 +7,9 @@
 
 import UIKit
 
+
 @IBDesignable
+/// 뷰를 둥글게 깎는 뷰 클래스
 class RoundedView: UIView {
     /// Initializes and returns a newly allocated view object with the specified frame rectangle.
     /// - Parameter frame: 뷰의 CGRect

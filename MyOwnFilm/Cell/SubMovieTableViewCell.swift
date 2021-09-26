@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+/// SubScreenTableViewCell 안에 있는 CollectionViewCell과 관련된 델리게이트 프로토콜
 protocol SubCollectionViewCellDelegate: AnyObject {
     /// 컬렉션뷰 셀의 인덱스를 MainScreenViewController에 전달해줄 메소드
     func collectionView(collectionviewCell: SubMovieCollectionViewCell?, index: Int, didTappedInTableViewCell: SubMovieTableViewCell)
@@ -14,39 +16,44 @@ protocol SubCollectionViewCellDelegate: AnyObject {
 
 
 
-
+/// 두번째 섹션 테이블뷰 셀
 class SubMovieTableViewCell: UITableViewCell {
-    weak var cellDelegate: SubCollectionViewCellDelegate?
+    
     /// 영화 분류 텍스트를 넣을 레이블
     @IBOutlet weak var movieClassificationLabel: UILabel!
+    
     /// 두번째 섹션의 컬렉션뷰
     @IBOutlet weak var subMovieCollectionView: UICollectionView!
-    /// 영화 데이터 배열을 받을 변수
-    var movie: [MovieData.Results]?
     
-    /// 초기화 작업을 실행합니다.
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        /// 백그라운드 색상 설정
-        backgroundColor = .black
-        subMovieCollectionView.backgroundColor = .black
-        
-        subMovieCollectionView.dataSource = self
-        subMovieCollectionView.delegate = self
-    }
+    /// CollectionViewCellDelegate 변수
+    weak var cellDelegate: SubCollectionViewCellDelegate?
+    
+    /// 영화 데이터 배열을 받을 변수
+    var movie: [MovieData.Result]?
     
     
     /// 테이블뷰셀에 표시할 내용을 설정합니다.
     /// - Parameters:
     ///   - movieData: SubMovieTableViewCell에서 받을 영화 데이터 배열
     ///   - text: 영화 분류 텍스트(ex. 인기작, 액션)
-    func configure(with movieData: [MovieData.Results], text: String) {
+    func configure(with movieData: [MovieData.Result], text: String) {
         movieClassificationLabel.text = text
         movie = movieData
         subMovieCollectionView.reloadData()
     }
+    
+    
+    /// 초기화 작업을 실행합니다.
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // 백그라운드 색상 설정
+        backgroundColor = .black
+        subMovieCollectionView.backgroundColor = .black
+        
+        subMovieCollectionView.dataSource = self
+        subMovieCollectionView.delegate = self
+    }
 }
-
 
 
 
@@ -85,7 +92,6 @@ extension SubMovieTableViewCell: UICollectionViewDataSource {
         return cell
     }
 }
-
 
 
 

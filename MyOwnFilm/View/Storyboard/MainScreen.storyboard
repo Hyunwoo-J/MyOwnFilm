@@ -361,7 +361,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="4O8-GG-GrQ"/>
                     <connections>
-                        <outlet property="backgroundmovieImage" destination="926-ZT-dQn" id="E09-Lk-tje"/>
+                        <outlet property="backgroundmovieImageView" destination="926-ZT-dQn" id="q1o-YO-Y5i"/>
                         <outlet property="dateLabel" destination="YaT-xf-LHV" id="RIg-Xd-vKA"/>
                         <outlet property="storyLabel" destination="089-uU-GOZ" id="WjE-cq-xiU"/>
                         <outlet property="titleLabel" destination="0sv-3b-TlV" id="9j7-0z-Q17"/>
