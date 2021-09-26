@@ -1,16 +1,20 @@
 PODS:
   - Cosmos (23.0.0)
+  - Loaf (0.7.0)
 
 DEPENDENCIES:
   - Cosmos
+  - Loaf
 
 SPEC REPOS:
   trunk:
     - Cosmos
+    - Loaf
 
 SPEC CHECKSUMS:
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
+  Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
 
-PODFILE CHECKSUM: 29a0bf3f435ee0e9e1d88ad4fc0069bb4ead696a
+PODFILE CHECKSUM: 8cea20030e22da1a30f7f59549bfa9fc3b267719
 
 COCOAPODS: 1.10.1
