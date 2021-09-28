@@ -6,6 +6,7 @@
 //
 
 import Cosmos
+import Loaf
 import UIKit
 
 
@@ -67,15 +68,36 @@ class ReviewViewController: CommonViewController {
         guard let index = index else { return }
         
         let target = movieList[index]
+        
+        if starPointView.rating == 0 {
+            alertLoafMessage(message: "평점을 입력해주세요.", duration: .short)
+            return
+        }
+        
+        guard let date = dateLabel.text?.toManagerMemoDate() else {
+            alertLoafMessage(message: "영화 본 날짜를 입력해주세요.", duration: .short)
+            return
+        }
+        
+        guard let place = placeTextField.text, !place.isEmpty else {
+            alertLoafMessage(message: "영화 본 장소를 입력해주세요.", duration: .short)
+            return
+        }
+        
+        guard let friend = friendTextField.text, !friend.isEmpty else {
+            alertLoafMessage(message: "같이 본 친구를 입력해주세요.", duration: .short)
+            return
+        }
+        
         let review = MovieReview(reviewId: UUID(),
                                  movieTitle: target.titleStr,
                                  posterPath: target.posterPath,
                                  backdropPath: target.backdropPath,
                                  releaseDate: target.releaseDate.toManagerDate() ?? Date(),
                                  starPoint: starPointView.rating,
-                                 date: dateLabel.text?.toManagerMemoDate() ?? Date(),
-                                 place: placeTextField.text ?? "",
-                                 friend: friendTextField.text ?? "",
+                                 date: date,
+                                 place: place,
+                                 friend: friend,
                                  memo: memoTextView.text)
         
         MovieReview.movieReviewList.append(review)

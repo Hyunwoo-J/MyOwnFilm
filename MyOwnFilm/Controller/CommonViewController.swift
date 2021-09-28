@@ -5,6 +5,7 @@
 //  Created by Hyunwoo Jang on 2021/06/04.
 //
 
+import Loaf
 import UIKit
 
 
@@ -27,7 +28,7 @@ class CommonViewController: UIViewController {
     ///   - message: 경고창 내용
     ///   - actionTitle: 액션 타이틀
     ///   - actionStyle: 액션 스타일
-    func alertFunc(title: String, message: String, actionTitle: String, actionStyle: UIAlertAction.Style) {
+    func alertMessage(title: String, message: String, actionTitle: String, actionStyle: UIAlertAction.Style) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let alertAction = UIAlertAction(title: actionTitle, style: actionStyle, handler: nil)
@@ -45,6 +46,17 @@ class CommonViewController: UIViewController {
             view.removeFromSuperview()
             break
         }
+    }
+    
+    
+    /// Loaf 경고 메시지를 출력합니다.
+    /// - Parameters:
+    ///   - message: 출력할 메시지
+    ///   - duration: 메시지 출력 시간
+    func alertLoafMessage(message: String, duration: Loaf.Duration) {
+        let loaf = Loaf(message, state: .warning, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self)
+        
+        loaf.show(duration)
     }
     
     
