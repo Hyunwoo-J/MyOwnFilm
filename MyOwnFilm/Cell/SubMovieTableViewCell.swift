@@ -81,9 +81,12 @@ extension SubMovieTableViewCell: UICollectionViewDataSource {
         guard let movie = movie else { return UICollectionViewCell() }
         let posterPath = movie[indexPath.item].posterPath
         
+        cell.subMovieImageView.isHidden = true
+        
         MovieImageSource.shared.loadImage(from: posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
             if let img = img {
                 cell.subMovieImageView.image = img
+                cell.subMovieImageView.isHidden = false
             } else {
                 cell.subMovieImageView.image = UIImage(named: "Default Image")
             }

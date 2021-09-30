@@ -96,10 +96,12 @@ class SearchMovieTableViewCell: UITableViewCell {
             genreText.append(movieGenre)
         }
         genreLabel.text = genreText
+        movieImageView.isHidden = true
         
         MovieImageSource.shared.loadImage(from: movieData.posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
             if let img = img {
                 self.movieImageView.image = img
+                self.movieImageView.isHidden = false
             } else {
                 self.movieImageView.image = UIImage(named: "Default Image")
             }

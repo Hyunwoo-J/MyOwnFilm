@@ -31,7 +31,7 @@ class StorageViewController: CommonViewController {
     
     /// 선택된 버튼에 따라 영화 데이터를 표시합니다.
     /// - Parameter sender: 버튼
-    @IBAction func movieButtonTapped(_ sender: UIButton) {
+    @IBAction func toggleMovieList(_ sender: UIButton) {
         defer {
             DispatchQueue.main.async {
                 self.storageCollectionView.reloadData()
@@ -62,21 +62,38 @@ class StorageViewController: CommonViewController {
     @IBAction func alignmentButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        // 개봉연도 최근순
         let openingYearAction = UIAlertAction(title: "개봉연도", style: .default) { act in
-            MovieReview.movieReviewList.sort { $0.releaseDate > $1.releaseDate }
+            if self.isRecentlyMovieButtonSelected == false {
+                MovieReview.movieReviewList.sort { $0.releaseDate > $1.releaseDate }
+            } else {
+                MovieReview.recentlyMovieReviewList.sort { $0.releaseDate > $1.releaseDate }
+            }
+            
             self.storageCollectionView.reloadData()
         }
         alert.addAction(openingYearAction)
         
+        // 최근 본 영화순
         let dateAction = UIAlertAction(title: "내가 본 날짜", style: .default) { act in
-            MovieReview.movieReviewList.sort { $0.date > $1.date }
+            if self.isRecentlyMovieButtonSelected == false {
+                MovieReview.movieReviewList.sort { $0.date > $1.date }
+            } else {
+                MovieReview.recentlyMovieReviewList.sort { $0.date > $1.date }
+            }
             
             self.storageCollectionView.reloadData()
         }
         alert.addAction(dateAction)
         
+        // 이름 오름차순 ㄱㄴㄷ
         let movieNameAction = UIAlertAction(title: "영화 이름", style: .default) { act in
-            MovieReview.movieReviewList.sort { $0.movieTitle < $1.movieTitle }
+            if self.isRecentlyMovieButtonSelected == false {
+                MovieReview.movieReviewList.sort { $0.movieTitle < $1.movieTitle }
+            } else {
+                MovieReview.recentlyMovieReviewList.sort { $0.movieTitle < $1.movieTitle }
+            }
+            
             self.storageCollectionView.reloadData()
         }
         alert.addAction(movieNameAction)
@@ -91,11 +108,6 @@ class StorageViewController: CommonViewController {
     /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .black
-        storageCollectionView.backgroundColor = .darkGray
-        
-        
         
         NotificationCenter.default.addObserver(forName: .memoWillCancelled, object: nil, queue: .main) {[weak self] _ in
             guard let self = self else { return }
@@ -184,7 +196,12 @@ extension StorageViewController: UICollectionViewDelegate {
             guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
             window.addSubview(self.dimView)
             
-            vc.movieData = MovieReview.movieReviewList[indexPath.row]
+            if isRecentlyMovieButtonSelected == false {
+                vc.movieData = MovieReview.movieReviewList[indexPath.row]
+            } else {
+                vc.movieData = MovieReview.recentlyMovieReviewList[indexPath.row]
+            }
+            
             
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true, completion: nil)

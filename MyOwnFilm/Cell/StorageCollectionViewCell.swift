@@ -19,9 +19,6 @@ class StorageCollectionViewCell: UICollectionViewCell {
     /// 영화 이미지를 넣을 이미지뷰
     @IBOutlet weak var movieImageView: UIImageView!
     
-    /// UI 작업을 위해 넣은 컨테이너뷰
-    @IBOutlet weak var containerView: UIView!
-    
     
     /// 컬렉션뷰셀에 표시할 내용을 설정합니다.
     /// - Parameter movieData: StorageCollectionViewCell에서 받을 영화 데이터
@@ -44,7 +41,6 @@ class StorageCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         movieImageView.layer.cornerRadius = 6
-        containerView.backgroundColor = .darkGray
         [dateLabel, placeLabel].forEach { $0?.textColor = .white }
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 /// 검색 화면과 관련된 뷰컨트롤러 클래스
 class SearchViewController: CommonViewController {
-    /// 서치바
+    /// 영화를 검색할 서치바
     @IBOutlet weak var searchBar: UISearchBar!
     
     /// 영화를 표시할 테이블뷰
@@ -28,6 +28,7 @@ class SearchViewController: CommonViewController {
     /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // 화면에 진입했을 때 키보드 올리기
         searchBar.becomeFirstResponder()
         
@@ -121,6 +122,9 @@ extension SearchViewController: UISearchBarDelegate {
     /// - Parameter searchBar: 탭한 searchBar
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         MovieDataSource.shared.searchMovieList = []
+        MovieDataSource.shared.hasMore = true
+        
+        movieTableView.reloadData()
         
         guard let hasText = searchBar.text else {
             return

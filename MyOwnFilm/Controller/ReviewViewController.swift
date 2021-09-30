@@ -32,6 +32,9 @@ class ReviewViewController: CommonViewController {
     /// 작성 날짜를 넣을 레이블
     @IBOutlet weak var dateLabel: UILabel!
     
+    /// 데이트 피커를 띄우는 버튼
+    @IBOutlet weak var dateButton: UIButton!
+    
     /// 본 장소를 넣을 텍스트필드
     @IBOutlet weak var placeTextField: UITextField!
     
@@ -140,7 +143,7 @@ class ReviewViewController: CommonViewController {
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
             guard let date = datePicker.date.releaseDate.toManagerDate() else { return }
             
-            self.dateLabel.font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: nil)
+            self.dateLabel.textColor = .white
             
             self.dateLabel.text = date.toUserDateString()
         }
@@ -208,6 +211,11 @@ class ReviewViewController: CommonViewController {
         
         starPointView.settings.fillMode = .half
         starPointView.rating = 0
+        
+        [dateButton, placeTextField, friendTextField].forEach {
+            $0?.layer.borderWidth = 1
+            $0?.layer.borderColor = UIColor.white.cgColor
+        }
         
         setMemoView()
         setTextView()

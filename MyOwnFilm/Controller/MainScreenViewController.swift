@@ -13,6 +13,9 @@ class MainScreenViewController: CommonViewController {
     /// 메인 화면 테이블뷰
     @IBOutlet weak var mainScreenTableView: UITableView!
     
+    /// <#Description#>
+    @IBOutlet weak var nowPlayingView: UIView!
+    
     /// 영화 구분 타이틀
     let titleList = ["인기작", "액션", "코미디", "로맨스", "판타지"]
     
@@ -137,6 +140,18 @@ extension MainScreenViewController: UITableViewDataSource {
             
         default:
             fatalError()
+        }
+    }
+}
+
+
+
+extension MainScreenViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 1 {
+            nowPlayingView.isHidden = true
+        } else if scrollView.contentOffset.y <= 1 {
+            nowPlayingView.isHidden = false
         }
     }
 }

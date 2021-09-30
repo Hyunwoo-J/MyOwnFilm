@@ -49,7 +49,7 @@ class MovieDataSource {
     private var isFetching = false
     
     /// 불러올 데이터가 더 있는지 확인하기 위한 속성
-    private var hasMore = true
+    var hasMore = true
     
     /// 검색 API를 호출합니다.
     /// - Parameters:
@@ -112,7 +112,6 @@ class MovieDataSource {
     
     /// fetchMovie에서 사용할 DispatchGroup
     let group = DispatchGroup()
-    
     
     ///  요청한 API 응답을 모두 받고나서 테이블뷰를 업데이트합니다.
     /// - Parameters:

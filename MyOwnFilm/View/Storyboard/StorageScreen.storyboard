@@ -38,7 +38,7 @@
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lEY-n7-vaE">
                                 <rect key="frame" x="0.0" y="184" width="414" height="629"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" red="0.078256899350649389" green="0.078256899350649389" blue="0.078256899350649389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="5" id="fZt-ts-wym">
                                     <size key="itemSize" width="156" height="236"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -62,19 +62,19 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="관람일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICY-Gc-WVu">
                                                                     <rect key="frame" x="0.0" y="0.0" width="29" height="13.5"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
-                                                                    <nil key="textColor"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="장소" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8M5-1k-JIe">
                                                                     <rect key="frame" x="0.0" y="16.5" width="29" height="13.5"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
-                                                                    <nil key="textColor"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" red="0.078256899350000006" green="0.078256899350000006" blue="0.078256899350000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="bNk-gm-ciA" firstAttribute="top" secondItem="P9U-pU-WFE" secondAttribute="top" id="6oW-6Y-Ct5"/>
                                                         <constraint firstItem="bNk-gm-ciA" firstAttribute="leading" secondItem="P9U-pU-WFE" secondAttribute="leading" constant="5" id="jwv-tH-ohG"/>
@@ -99,7 +99,6 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="156" height="236"/>
                                         <connections>
-                                            <outlet property="containerView" destination="P9U-pU-WFE" id="6GB-oe-m1O"/>
                                             <outlet property="dateLabel" destination="ICY-Gc-WVu" id="sIX-vF-cjo"/>
                                             <outlet property="movieImageView" destination="Fiw-zL-6ob" id="XkI-At-gBV"/>
                                             <outlet property="placeLabel" destination="8M5-1k-JIe" id="5tX-9P-2hp"/>
@@ -145,7 +144,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="55" height="30"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <connections>
-                                                                    <action selector="movieButtonTapped:" destination="ikm-Jf-qrg" eventType="touchUpInside" id="p1X-SX-ZuK"/>
+                                                                    <action selector="toggleMovieList:" destination="ikm-Jf-qrg" eventType="touchUpInside" id="Ekt-gS-npC"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -186,7 +185,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="95" height="30"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <connections>
-                                                                    <action selector="movieButtonTapped:" destination="ikm-Jf-qrg" eventType="touchUpInside" id="LIh-Nu-0zr"/>
+                                                                    <action selector="toggleMovieList:" destination="ikm-Jf-qrg" eventType="touchUpInside" id="Pya-3b-bmf"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -274,7 +273,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wJ6-LZ-UuO"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="lEY-n7-vaE" firstAttribute="top" secondItem="zzq-vs-5CG" secondAttribute="bottom" id="4Zz-n1-edH"/>
                             <constraint firstItem="wJ6-LZ-UuO" firstAttribute="bottom" secondItem="lEY-n7-vaE" secondAttribute="bottom" id="6Bq-iJ-kRX"/>
