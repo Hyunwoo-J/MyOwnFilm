@@ -22,8 +22,6 @@ class MovieDetailViewController: CommonViewController {
     /// 개봉 일자 레이블
     @IBOutlet weak var dateLabel: UILabel!
     
-    /// 노티피케이션 옵저를 제거하기 위해 생성한 토큰
-    var token: NSObjectProtocol?
     
     /// 이전 화면에서의 데이터를 가져오기 위한 변수
     /// 인덱스
@@ -90,20 +88,13 @@ class MovieDetailViewController: CommonViewController {
             self.backgroundmovieImageView.image = UIImage(named: "Default Image")
         }
         
-        token = NotificationCenter.default.addObserver(forName: .memoWillCancelled, object: nil, queue: .main) {[weak self] _ in
+        token = NotificationCenter.default.addObserver(forName: .reviewWillCancelled, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             
             // DimView 제거
             UIView.animate(withDuration: 0.3) {
                 self.removeViewFromWindow()
             }
-        }
-    }
-    
-    
-    deinit {
-        if let token = token {
-            NotificationCenter.default.removeObserver(token)
         }
     }
 }

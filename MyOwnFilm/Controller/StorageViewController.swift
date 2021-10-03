@@ -173,7 +173,7 @@ class StorageViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(forName: .memoWillCancelled, object: nil, queue: .main) {[weak self] _ in
+        NotificationCenter.default.addObserver(forName: .reviewWillCancelled, object: nil, queue: .main) {[weak self] _ in
             guard let self = self else { return }
             
             // DimView 제거

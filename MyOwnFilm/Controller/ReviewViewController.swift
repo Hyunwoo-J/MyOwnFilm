@@ -11,15 +11,15 @@ import UIKit
 
 
 extension Notification.Name {
-    /// 메모 작성이 취소되면 보낼 노티피케이션
-    static let memoWillCancelled = Notification.Name(rawValue: "memoWillCancelled")
+    /// 리뷰 작성이 취소되면 보낼 노티피케이션
+    static let reviewWillCancelled = Notification.Name(rawValue: "reviewWillCancelled")
 }
 
 
 
 /// 리뷰 작성 화면과 관련된 뷰컨트롤러 클래스
 class ReviewViewController: CommonViewController {
-    /// 메모 작성화면을 감싸고 있는 뷰
+    /// 리뷰 작성화면을 감싸고 있는 뷰
     @IBOutlet weak var memoView: UIView!
     
     /// 백그라운드 이미지를 넣을 이미지뷰
@@ -43,6 +43,12 @@ class ReviewViewController: CommonViewController {
     /// 메모를 넣을 텍스트뷰
     @IBOutlet weak var memoTextView: UITextView!
     
+    /// 메모 뷰 Top 제약
+    @IBOutlet weak var memoViewTopConstraint: NSLayoutConstraint!
+    
+    /// 메모 뷰 Bottom 제약
+    @IBOutlet weak var memoViewBottomConstraint: NSLayoutConstraint!
+    
     
     /// 이전 화면에서의 데이터를 가져오기 위한 속성
     /// 인덱스
@@ -58,7 +64,7 @@ class ReviewViewController: CommonViewController {
     /// X 버튼을 누르면 이전 화면으로 돌아갑니다.
     /// - Parameter sender: 취소 버튼
     @IBAction func close(_ sender: Any) {
-        NotificationCenter.default.post(name: .memoWillCancelled, object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: .reviewWillCancelled, object: nil, userInfo: nil)
         
         dismiss(animated: true)
     }
@@ -235,6 +241,48 @@ class ReviewViewController: CommonViewController {
             placeTextField.text = movieData.place
             friendTextField.text = movieData.friend
             memoTextView.text = movieData.memo
+        }
+        
+        token = NotificationCenter.default.addObserver(forName: .memoDidSaved, object: nil, queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            
+            if let memoText = noti.userInfo?["memo"] as? String {
+                self.memoTextView.text = memoText
+            }
+        }
+        
+        if let token = token {
+            tokens.append(token)
+        }
+        
+        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            
+            self.memoViewTopConstraint.constant = 70
+            self.memoViewBottomConstraint.constant = 90
+            
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+        
+        if let token = token {
+            tokens.append(token)
+        }
+        
+        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            
+            self.memoViewTopConstraint.constant = 80
+            self.memoViewBottomConstraint.constant = 80
+            
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+        
+        if let token = token {
+            tokens.append(token)
         }
     }
 }

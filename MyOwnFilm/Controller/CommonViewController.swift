@@ -21,6 +21,10 @@ class CommonViewController: UIViewController {
         return v
     }()
     
+    /// 노티피케이션 옵저를 제거하기 위해 생성한 토큰
+    var token: NSObjectProtocol?
+    
+    var tokens = [NSObjectProtocol]()
     
     /// 경고창을 출력합니다.
     /// - Parameters:
@@ -62,5 +66,13 @@ class CommonViewController: UIViewController {
     
     deinit {
         print(#function, self) // self: 현재 인스턴스 정보
+        
+        if let token = token {
+            NotificationCenter.default.removeObserver(token)
+        }
+        
+        for token in tokens {
+            NotificationCenter.default.removeObserver(token)
+        }
     }
 }
