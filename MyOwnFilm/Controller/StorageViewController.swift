@@ -10,7 +10,7 @@ import UIKit
 
 /// 보관함 화면 관련 뷰컨트롤러 클래스
 class StorageViewController: CommonViewController {
-    /// 기록한 영화를 표시할 컬렉션뷰
+    /// 기록한 영화 목록 컬렉션뷰
     @IBOutlet weak var storageCollectionView: UICollectionView!
     
     /// 모든 영화를 표시하는 버튼
@@ -25,9 +25,28 @@ class StorageViewController: CommonViewController {
     /// 최근 저장한 영화 레이블 밑에 표시할 뷰
     @IBOutlet weak var recentlyMovieBottomView: UIView!
     
-    /// 최근 저장한 영화 버튼이 선택됐는지 알기 위해 추가한 변수
+    /// 정렬 레이블
+    /// 어떤 기준을 가지고 정렬하고 있는지 나타냅니다.
+    @IBOutlet weak var alignmentLabel: UILabel!
+    
+    /// 정렬 상태 레이블
+    /// 오름차순인지 내림차순인지 나타냅니다.
+    @IBOutlet weak var alignmentStateLabel: UILabel!
+    
+    /// 정렬 관련 화살표 모양 이미지뷰
+    @IBOutlet weak var alignmentArrowImageView: UIImageView!
+    
+    /// 최근 저장한 영화 버튼이 선택됐는지 알기 위해 추가한 속성
     var isRecentlyMovieButtonSelected = false
     
+    /// 개봉연도순 정렬이 오름차순인지 판단하기 위해 추가한 속성
+    var isOpeningYearAscending = false
+    
+    /// 내가 본 날짜순 정렬이 오름차순인지 판단하기 위해 추가한 속성
+    var isDateAscending = false
+    
+    /// 영화이름순 정렬이 오름차순인지 판단하기 위해 추가한 속성
+    var isMovieNameAscending = true
     
     /// 선택된 버튼에 따라 영화 데이터를 표시합니다.
     /// - Parameter sender: 버튼
@@ -62,36 +81,81 @@ class StorageViewController: CommonViewController {
     @IBAction func alignmentButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        // 개봉연도 최근순
         let openingYearAction = UIAlertAction(title: "개봉연도", style: .default) { act in
-            if self.isRecentlyMovieButtonSelected == false {
-                MovieReview.movieReviewList.sort { $0.releaseDate > $1.releaseDate }
+            [self.alignmentStateLabel, self.alignmentArrowImageView].forEach { $0?.isHidden = false }
+            
+            self.alignmentLabel.text = "개봉연도"
+            
+            if self.isOpeningYearAscending {
+                MovieReview.recentlyMovieReviewList.sort { $0.releaseDate < $1.releaseDate }
+                MovieReview.movieReviewList.sort { $0.releaseDate < $1.releaseDate }
+                
+                self.alignmentStateLabel.text = "오래된 날짜순"
+                self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
+                
+                self.isOpeningYearAscending = !self.isOpeningYearAscending
             } else {
                 MovieReview.recentlyMovieReviewList.sort { $0.releaseDate > $1.releaseDate }
+                MovieReview.movieReviewList.sort { $0.releaseDate > $1.releaseDate }
+                
+                self.alignmentStateLabel.text = "최근 날짜순"
+                self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
+                
+                self.isOpeningYearAscending = !self.isOpeningYearAscending
             }
             
             self.storageCollectionView.reloadData()
         }
         alert.addAction(openingYearAction)
         
-        // 최근 본 영화순
         let dateAction = UIAlertAction(title: "내가 본 날짜", style: .default) { act in
-            if self.isRecentlyMovieButtonSelected == false {
-                MovieReview.movieReviewList.sort { $0.date > $1.date }
+            [self.alignmentStateLabel, self.alignmentArrowImageView].forEach { $0?.isHidden = false }
+            
+            self.alignmentLabel.text = "내가 본 날짜"
+            
+            if self.isDateAscending {
+                MovieReview.recentlyMovieReviewList.sort { $0.date < $1.date }
+                MovieReview.movieReviewList.sort { $0.date < $1.date }
+                
+                self.alignmentStateLabel.text = "오래된 날짜순"
+                self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
+                
+                self.isDateAscending = !self.isDateAscending
             } else {
                 MovieReview.recentlyMovieReviewList.sort { $0.date > $1.date }
+                MovieReview.movieReviewList.sort { $0.date > $1.date }
+                
+                self.alignmentStateLabel.text = "최근 날짜순"
+                self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
+                
+                self.isDateAscending = !self.isDateAscending
             }
             
             self.storageCollectionView.reloadData()
         }
         alert.addAction(dateAction)
         
-        // 이름 오름차순 ㄱㄴㄷ
         let movieNameAction = UIAlertAction(title: "영화 이름", style: .default) { act in
-            if self.isRecentlyMovieButtonSelected == false {
-                MovieReview.movieReviewList.sort { $0.movieTitle < $1.movieTitle }
-            } else {
+            [self.alignmentStateLabel, self.alignmentArrowImageView].forEach { $0?.isHidden = false }
+            
+            self.alignmentLabel.text = "영화 이름"
+            
+            if self.isMovieNameAscending {
                 MovieReview.recentlyMovieReviewList.sort { $0.movieTitle < $1.movieTitle }
+                MovieReview.movieReviewList.sort { $0.movieTitle < $1.movieTitle }
+                
+                self.alignmentStateLabel.text = "가나다"
+                self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
+                
+                self.isMovieNameAscending = !self.isMovieNameAscending
+            } else {
+                MovieReview.recentlyMovieReviewList.sort { $0.movieTitle > $1.movieTitle }
+                MovieReview.movieReviewList.sort { $0.movieTitle > $1.movieTitle }
+                
+                self.alignmentStateLabel.text = "하파타"
+                self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
+                
+                self.isMovieNameAscending = !self.isMovieNameAscending
             }
             
             self.storageCollectionView.reloadData()
@@ -117,6 +181,8 @@ class StorageViewController: CommonViewController {
                 self.removeViewFromWindow()
             }
         }
+        
+        [alignmentStateLabel, alignmentArrowImageView].forEach { $0?.isHidden = true }
     }
     
     
@@ -125,7 +191,31 @@ class StorageViewController: CommonViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        print(#function)
+        if alignmentLabel.text == "개봉연도" && alignmentStateLabel.text == "오래된 날짜순" {
+            MovieReview.movieReviewList.sort { $0.releaseDate < $1.releaseDate }
+            MovieReview.recentlyMovieReviewList.sort { $0.releaseDate < $1.releaseDate }
+        } else if alignmentLabel.text == "개봉연도" && alignmentStateLabel.text == "최근 날짜순" {
+            MovieReview.movieReviewList.sort { $0.releaseDate > $1.releaseDate }
+            MovieReview.recentlyMovieReviewList.sort { $0.releaseDate > $1.releaseDate }
+        }
+        
+        
+        if alignmentLabel.text == "내가 본 날짜" && alignmentStateLabel.text == "오래된 날짜순" {
+            MovieReview.movieReviewList.sort { $0.date < $1.date }
+            MovieReview.recentlyMovieReviewList.sort { $0.date < $1.date }
+        } else if alignmentLabel.text == "내가 본 날짜" && alignmentStateLabel.text == "최근 날짜순" {
+            MovieReview.movieReviewList.sort { $0.date > $1.date }
+            MovieReview.recentlyMovieReviewList.sort { $0.date > $1.date }
+        }
+        
+        if alignmentLabel.text == "영화 이름" && alignmentStateLabel.text == "가나다" {
+            MovieReview.movieReviewList.sort { $0.movieTitle < $1.movieTitle }
+            MovieReview.recentlyMovieReviewList.sort { $0.movieTitle < $1.movieTitle }
+        } else if alignmentLabel.text == "영화 이름" && alignmentStateLabel.text == "하파타" {
+            MovieReview.movieReviewList.sort { $0.movieTitle > $1.movieTitle }
+            MovieReview.recentlyMovieReviewList.sort { $0.movieTitle > $1.movieTitle }
+        }
+        
         storageCollectionView.reloadData()
     }
     
@@ -196,12 +286,11 @@ extension StorageViewController: UICollectionViewDelegate {
             guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
             window.addSubview(self.dimView)
             
-            if isRecentlyMovieButtonSelected == false {
-                vc.movieData = MovieReview.movieReviewList[indexPath.row]
-            } else {
+            if isRecentlyMovieButtonSelected {
                 vc.movieData = MovieReview.recentlyMovieReviewList[indexPath.row]
+            } else {
+                vc.movieData = MovieReview.movieReviewList[indexPath.row]
             }
-            
             
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true, completion: nil)

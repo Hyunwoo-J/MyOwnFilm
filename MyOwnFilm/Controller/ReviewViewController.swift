@@ -10,7 +10,6 @@ import Loaf
 import UIKit
 
 
-
 extension Notification.Name {
     /// 메모 작성이 취소되면 보낼 노티피케이션
     static let memoWillCancelled = Notification.Name(rawValue: "memoWillCancelled")
@@ -26,10 +25,10 @@ class ReviewViewController: CommonViewController {
     /// 백그라운드 이미지를 넣을 이미지뷰
     @IBOutlet weak var memoBackdropImageView: UIImageView!
     
-    /// 별점을 넣을 뷰
+    /// 별점 뷰
     @IBOutlet weak var starPointView: CosmosView!
     
-    /// 작성 날짜를 넣을 레이블
+    /// 작성 날짜 레이블
     @IBOutlet weak var dateLabel: UILabel!
     
     /// 데이트 피커를 띄우는 버튼
@@ -45,7 +44,7 @@ class ReviewViewController: CommonViewController {
     @IBOutlet weak var memoTextView: UITextView!
     
     
-    /// 이전 화면에서의 데이터를 가져오기 위한 변수
+    /// 이전 화면에서의 데이터를 가져오기 위한 속성
     /// 인덱스
     var index: Int?
     
@@ -104,6 +103,7 @@ class ReviewViewController: CommonViewController {
                                  memo: memoTextView.text)
         
         MovieReview.movieReviewList.append(review)
+        MovieReview.recentlyMovieReviewList.append(review)
         
         #if DEBUG
         dump(MovieReview.movieReviewList)

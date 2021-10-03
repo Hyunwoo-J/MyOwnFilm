@@ -13,10 +13,10 @@ class SearchViewController: CommonViewController {
     /// 영화를 검색할 서치바
     @IBOutlet weak var searchBar: UISearchBar!
     
-    /// 영화를 표시할 테이블뷰
+    /// 영화 목록 테이블뷰
     @IBOutlet weak var movieTableView: UITableView!
     
-    /// 검색어를 저장할 변수
+    /// 검색어를 저장할 속성
     var text = ""
     
     /// 상태바를 흰색으로 바꾸기 위해 추가한 메소드

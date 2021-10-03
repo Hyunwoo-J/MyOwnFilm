@@ -13,7 +13,7 @@ class MainScreenViewController: CommonViewController {
     /// 메인 화면 테이블뷰
     @IBOutlet weak var mainScreenTableView: UITableView!
     
-    /// <#Description#>
+    /// Now Playing 글자를 표시하는 View
     @IBOutlet weak var nowPlayingView: UIView!
     
     /// 영화 구분 타이틀

@@ -13,13 +13,13 @@ class MovieDetailViewController: CommonViewController {
     /// 백그라운드에 표시할 이미지를 넣을 이미지뷰
     @IBOutlet weak var backgroundmovieImageView: UIImageView!
     
-    /// 영화 줄거리를 넣을 레이블
+    /// 영화 줄거리 레이블
     @IBOutlet weak var storyLabel: UILabel!
     
-    /// 영화 제목을 넣을 레이블
+    /// 영화 제목 레이블
     @IBOutlet weak var titleLabel: UILabel!
     
-    /// 개봉 일자를 넣을 레이블
+    /// 개봉 일자 레이블
     @IBOutlet weak var dateLabel: UILabel!
     
     /// 노티피케이션 옵저를 제거하기 위해 생성한 토큰
