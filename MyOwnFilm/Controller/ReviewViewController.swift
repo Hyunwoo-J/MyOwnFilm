@@ -17,12 +17,13 @@ extension Notification.Name {
 
 
 
-/// 리뷰 작성 화면과 관련된 뷰컨트롤러 클래스
+/// 리뷰 작성 화면
 class ReviewViewController: CommonViewController {
-    /// 리뷰 작성화면을 감싸고 있는 뷰
+    
+    /// 리뷰 작성 화면 컨테이너 뷰
     @IBOutlet weak var memoView: UIView!
     
-    /// 백그라운드 이미지를 넣을 이미지뷰
+    /// 백그라운드 이미지뷰
     @IBOutlet weak var memoBackdropImageView: UIImageView!
     
     /// 별점 뷰
@@ -34,13 +35,16 @@ class ReviewViewController: CommonViewController {
     /// 데이트 피커를 띄우는 버튼
     @IBOutlet weak var dateButton: UIButton!
     
-    /// 본 장소를 넣을 텍스트필드
-    @IBOutlet weak var placeTextField: UITextField!
+    /// 영화 장소 레이블
+    @IBOutlet weak var placeLabel: UILabel!
     
-    /// 같이 본 친구를 넣을 텍스트필드
+    /// 영화 장소 버튼
+    @IBOutlet weak var placeButton: UIButton!
+    
+    /// 같이 본 친구 입력 필드
     @IBOutlet weak var friendTextField: UITextField!
     
-    /// 메모를 넣을 텍스트뷰
+    /// 메모 텍스트뷰
     @IBOutlet weak var memoTextView: UITextView!
     
     /// 메모 뷰 Top 제약
@@ -61,11 +65,19 @@ class ReviewViewController: CommonViewController {
     var movieList = [MovieData.Result]()
     
     
-    /// X 버튼을 누르면 이전 화면으로 돌아갑니다.
+    /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    
+    /// 취소 버튼을 누르면 이전 화면으로 돌아갑니다.
     /// - Parameter sender: 취소 버튼
     @IBAction func close(_ sender: Any) {
+        
         NotificationCenter.default.post(name: .reviewWillCancelled, object: nil, userInfo: nil)
         
+        dismiss(animated: true)
         dismiss(animated: true)
     }
     
@@ -87,7 +99,7 @@ class ReviewViewController: CommonViewController {
             return
         }
         
-        guard let place = placeTextField.text, !place.isEmpty else {
+        guard let place = placeLabel.text, !place.isEmpty else {
             alertLoafMessage(message: "영화 본 장소를 입력해주세요.", duration: .short)
             return
         }
@@ -119,8 +131,8 @@ class ReviewViewController: CommonViewController {
     }
     
     
-    /// 관람일 관련 버튼을 클릭하면 날짜를 선택할 수 있는 데이트피커를 띄웁니다.
-    /// - Parameter sender: 버튼
+    /// 관람일 관련 버튼을 클릭하면 데이트 피커를 띄웁니다.
+    /// - Parameter sender: 데이트 피커를 띄우는 버튼
     @IBAction func dateButtonTapped(_ sender: Any) {
         let dateAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -162,7 +174,7 @@ class ReviewViewController: CommonViewController {
     }
     
     
-    /// 백그라운드뷰에 표시할 이미지를 다운로드하고 표시합니다.
+    /// 이미지를 다운로드하고 표시합니다.
     func loadImage() {
         if let index = index {
             MovieImageSource.shared.loadImage(from: movieList[index].backdropPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
@@ -194,12 +206,6 @@ class ReviewViewController: CommonViewController {
     }
     
     
-    /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    
     /// 빈 화면을 터치하면 키보드가 내려갑니다.
     /// - Parameters:
     ///   - touches: UITouch 인스턴스 Set
@@ -212,20 +218,20 @@ class ReviewViewController: CommonViewController {
     /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        placeTextField.delegate = self
+        
+        setMemoView()
+        setTextView()
+        loadImage()
+        
         friendTextField.delegate = self
         
         starPointView.settings.fillMode = .half
         starPointView.rating = 0
         
-        [dateButton, placeTextField, friendTextField].forEach {
+        [dateButton, placeButton, friendTextField].forEach {
             $0?.layer.borderWidth = 1
             $0?.layer.borderColor = UIColor.white.cgColor
         }
-        
-        setMemoView()
-        setTextView()
-        loadImage()
         
         if let movieData = movieData {
             MovieImageSource.shared.loadImage(from: movieData.backdropPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
@@ -238,9 +244,12 @@ class ReviewViewController: CommonViewController {
             
             starPointView.rating = movieData.starPoint
             dateLabel.text = movieData.date.toUserDateString()
-            placeTextField.text = movieData.place
+            placeLabel.text = movieData.place
             friendTextField.text = movieData.friend
             memoTextView.text = movieData.memo
+            
+            dateLabel.textColor = .white
+            placeLabel.textColor = .white
         }
         
         token = NotificationCenter.default.addObserver(forName: .memoDidSaved, object: nil, queue: .main) { [weak self] noti in
@@ -284,17 +293,31 @@ class ReviewViewController: CommonViewController {
         if let token = token {
             tokens.append(token)
         }
+        
+        token = NotificationCenter.default.addObserver(forName: .movieTheaterTableViewCellDidTapped, object: nil, queue: .main) { [weak self] noti in
+            guard let self = self else { return }
+            
+            if let theater = noti.userInfo?["theater"] as? String {
+                self.placeLabel.text = theater
+                self.placeLabel.textColor = .white
+            }
+        }
+        
+        if let token = token {
+            tokens.append(token)
+        }
     }
 }
 
 
 
+/// 사용자 동작을 처리하기 위한 extension
 extension ReviewViewController: UITextFieldDelegate {
-    /// 텍스트필드 델리게이트에게 Return 버튼 처리를 할지 물어봅니다.
-    /// - Parameter textField: 호출한 텍스트필드
-    /// - Returns: 처리할지 여부
+    
+    /// Return 버튼 처리 여부를 리턴합니다.
+    /// - Parameter textField: 같이 본 친구 입력 필드
+    /// - Returns: 처리 여부
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        placeTextField.resignFirstResponder()
         friendTextField.resignFirstResponder()
         
         return true

@@ -11,7 +11,10 @@ import UIKit
 
 /// 공통적인 기능을 구현하는 뷰컨트롤러 클래스
 class CommonViewController: UIViewController {
+    
     /// window에 추가할 DimView
+    ///
+    /// 새로운 화면 뒤에 깔리는 화면을 어둡게 보이게 하기 위해서 만든 속성입니다.
     lazy var dimView: UIView = {
         let v = UIView()
         v.frame = self.view.bounds
@@ -21,10 +24,12 @@ class CommonViewController: UIViewController {
         return v
     }()
     
-    /// 노티피케이션 옵저를 제거하기 위해 생성한 토큰
+    /// 노티피케이션 옵저버 토큰
     var token: NSObjectProtocol?
     
+    /// 노티피케이션 옵저버 토큰 배열
     var tokens = [NSObjectProtocol]()
+    
     
     /// 경고창을 출력합니다.
     /// - Parameters:
@@ -43,7 +48,7 @@ class CommonViewController: UIViewController {
     
     
     /// window에 추가된 DimView를 제거합니다.
-    func removeViewFromWindow() {
+    func removeDimViewFromWindow() {
         guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
         
         for view in window.subviews as [UIView] where view == dimView {

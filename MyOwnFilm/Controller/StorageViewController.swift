@@ -8,9 +8,10 @@
 import UIKit
 
 
-/// 보관함 화면 관련 뷰컨트롤러 클래스
+/// 보관함 화면
 class StorageViewController: CommonViewController {
-    /// 기록한 영화 목록 컬렉션뷰
+    
+    /// 리뷰를 작성한 영화 목록 컬렉션뷰
     @IBOutlet weak var storageCollectionView: UICollectionView!
     
     /// 모든 영화를 표시하는 버튼
@@ -19,17 +20,19 @@ class StorageViewController: CommonViewController {
     /// 전체 영화 레이블 밑에 표시할 뷰
     @IBOutlet weak var allMovieBottomView: UIView!
     
-    /// 최근 저장할 영화를 표시하는 버튼
+    /// 최근 저장한 영화를 표시하는 버튼
     @IBOutlet weak var recentlyMovieButton: UIButton!
     
     /// 최근 저장한 영화 레이블 밑에 표시할 뷰
     @IBOutlet weak var recentlyMovieBottomView: UIView!
     
     /// 정렬 레이블
+    ///
     /// 어떤 기준을 가지고 정렬하고 있는지 나타냅니다.
     @IBOutlet weak var alignmentLabel: UILabel!
     
     /// 정렬 상태 레이블
+    ///
     /// 오름차순인지 내림차순인지 나타냅니다.
     @IBOutlet weak var alignmentStateLabel: UILabel!
     
@@ -48,8 +51,11 @@ class StorageViewController: CommonViewController {
     /// 영화이름순 정렬이 오름차순인지 판단하기 위해 추가한 속성
     var isMovieNameAscending = true
     
-    /// 선택된 버튼에 따라 영화 데이터를 표시합니다.
-    /// - Parameter sender: 버튼
+    
+    /// 선택된 항목에 따라 영화 데이터를 표시합니다.
+    ///
+    /// 최근 저장한 영화 항목을 선택하면 최근 3개월간 작성한 리뷰 목록을 표시합니다.
+    /// - Parameter sender: 모든 영화를 표시하는 버튼, 최근 저장한 영화를 표시하는 버튼
     @IBAction func toggleMovieList(_ sender: UIButton) {
         defer {
             DispatchQueue.main.async {
@@ -76,89 +82,23 @@ class StorageViewController: CommonViewController {
     }
     
     
-    /// 정렬 버튼을 누르면 정렬과 관련된 액션시트를 표시합니다.
+    /// 정렬과 관련된 액션시트를 표시합니다.
     /// - Parameter sender: 정렬 버튼
     @IBAction func alignmentButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let openingYearAction = UIAlertAction(title: "개봉연도", style: .default) { act in
-            [self.alignmentStateLabel, self.alignmentArrowImageView].forEach { $0?.isHidden = false }
-            
-            self.alignmentLabel.text = "개봉연도"
-            
-            if self.isOpeningYearAscending {
-                MovieReview.recentlyMovieReviewList.sort { $0.releaseDate < $1.releaseDate }
-                MovieReview.movieReviewList.sort { $0.releaseDate < $1.releaseDate }
-                
-                self.alignmentStateLabel.text = "오래된 날짜순"
-                self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
-                
-                self.isOpeningYearAscending = !self.isOpeningYearAscending
-            } else {
-                MovieReview.recentlyMovieReviewList.sort { $0.releaseDate > $1.releaseDate }
-                MovieReview.movieReviewList.sort { $0.releaseDate > $1.releaseDate }
-                
-                self.alignmentStateLabel.text = "최근 날짜순"
-                self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
-                
-                self.isOpeningYearAscending = !self.isOpeningYearAscending
-            }
-            
-            self.storageCollectionView.reloadData()
+            self.sortByYearOfRelease()
         }
         alert.addAction(openingYearAction)
         
         let dateAction = UIAlertAction(title: "내가 본 날짜", style: .default) { act in
-            [self.alignmentStateLabel, self.alignmentArrowImageView].forEach { $0?.isHidden = false }
-            
-            self.alignmentLabel.text = "내가 본 날짜"
-            
-            if self.isDateAscending {
-                MovieReview.recentlyMovieReviewList.sort { $0.date < $1.date }
-                MovieReview.movieReviewList.sort { $0.date < $1.date }
-                
-                self.alignmentStateLabel.text = "오래된 날짜순"
-                self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
-                
-                self.isDateAscending = !self.isDateAscending
-            } else {
-                MovieReview.recentlyMovieReviewList.sort { $0.date > $1.date }
-                MovieReview.movieReviewList.sort { $0.date > $1.date }
-                
-                self.alignmentStateLabel.text = "최근 날짜순"
-                self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
-                
-                self.isDateAscending = !self.isDateAscending
-            }
-            
-            self.storageCollectionView.reloadData()
+            self.sortByDateISaw()
         }
         alert.addAction(dateAction)
         
         let movieNameAction = UIAlertAction(title: "영화 이름", style: .default) { act in
-            [self.alignmentStateLabel, self.alignmentArrowImageView].forEach { $0?.isHidden = false }
-            
-            self.alignmentLabel.text = "영화 이름"
-            
-            if self.isMovieNameAscending {
-                MovieReview.recentlyMovieReviewList.sort { $0.movieTitle < $1.movieTitle }
-                MovieReview.movieReviewList.sort { $0.movieTitle < $1.movieTitle }
-                
-                self.alignmentStateLabel.text = "가나다"
-                self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
-                
-                self.isMovieNameAscending = !self.isMovieNameAscending
-            } else {
-                MovieReview.recentlyMovieReviewList.sort { $0.movieTitle > $1.movieTitle }
-                MovieReview.movieReviewList.sort { $0.movieTitle > $1.movieTitle }
-                
-                self.alignmentStateLabel.text = "하파타"
-                self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
-                
-                self.isMovieNameAscending = !self.isMovieNameAscending
-            }
-            
-            self.storageCollectionView.reloadData()
+            self.sortByMovieName()
         }
         alert.addAction(movieNameAction)
         
@@ -169,6 +109,104 @@ class StorageViewController: CommonViewController {
     }
     
     
+    /// 정렬 상태가 변경됩니다.
+    ///
+    /// 오름차순이면 내림차순으로, 내림차순이면 오름차순으로 정렬 상태가 변경됩니다.
+    /// - Parameter sender: 정렬 상태 관련 버튼
+    @IBAction func toggleAlignmentOption(_ sender: Any) {
+        if let alignmentText = alignmentLabel.text {
+            switch alignmentText {
+            case "개봉연도":
+                sortByYearOfRelease()
+            case "내가 본 날짜":
+                sortByDateISaw()
+            case "영화 이름":
+                sortByMovieName()
+            default:
+                return
+            }
+        }
+    }
+    
+    
+    /// 개봉연도를 기준으로 정렬합니다.
+    func sortByYearOfRelease() {
+        [self.alignmentStateLabel, self.alignmentArrowImageView].forEach { $0?.isHidden = false }
+        
+        self.alignmentLabel.text = "개봉연도"
+        
+        if self.isOpeningYearAscending {
+            MovieReview.recentlyMovieReviewList.sort { $0.releaseDate < $1.releaseDate }
+            MovieReview.movieReviewList.sort { $0.releaseDate < $1.releaseDate }
+            
+            self.alignmentStateLabel.text = "오래된 날짜순"
+            self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
+        } else {
+            MovieReview.recentlyMovieReviewList.sort { $0.releaseDate > $1.releaseDate }
+            MovieReview.movieReviewList.sort { $0.releaseDate > $1.releaseDate }
+            
+            self.alignmentStateLabel.text = "최근 날짜순"
+            self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
+        }
+        
+        self.isOpeningYearAscending = !self.isOpeningYearAscending
+        
+        self.storageCollectionView.reloadData()
+    }
+    
+    
+    /// 내가 본 날짜를 기준으로 정렬합니다.
+    func sortByDateISaw() {
+        [self.alignmentStateLabel, self.alignmentArrowImageView].forEach { $0?.isHidden = false }
+        
+        self.alignmentLabel.text = "내가 본 날짜"
+        
+        if self.isDateAscending {
+            MovieReview.recentlyMovieReviewList.sort { $0.date < $1.date }
+            MovieReview.movieReviewList.sort { $0.date < $1.date }
+            
+            self.alignmentStateLabel.text = "오래된 날짜순"
+            self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
+        } else {
+            MovieReview.recentlyMovieReviewList.sort { $0.date > $1.date }
+            MovieReview.movieReviewList.sort { $0.date > $1.date }
+            
+            self.alignmentStateLabel.text = "최근 날짜순"
+            self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
+        }
+        
+        self.isDateAscending = !self.isDateAscending
+        
+        self.storageCollectionView.reloadData()
+    }
+    
+    
+    /// 영화 이름을 기준으로 정렬합니다.
+    func sortByMovieName() {
+        [self.alignmentStateLabel, self.alignmentArrowImageView].forEach { $0?.isHidden = false }
+        
+        self.alignmentLabel.text = "영화 이름"
+        
+        if self.isMovieNameAscending {
+            MovieReview.recentlyMovieReviewList.sort { $0.movieTitle < $1.movieTitle }
+            MovieReview.movieReviewList.sort { $0.movieTitle < $1.movieTitle }
+            
+            self.alignmentStateLabel.text = "가나다"
+            self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
+        } else {
+            MovieReview.recentlyMovieReviewList.sort { $0.movieTitle > $1.movieTitle }
+            MovieReview.movieReviewList.sort { $0.movieTitle > $1.movieTitle }
+            
+            self.alignmentStateLabel.text = "하파타"
+            self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
+        }
+        
+        self.isMovieNameAscending = !self.isMovieNameAscending
+        
+        self.storageCollectionView.reloadData()
+    }
+    
+    
     /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -176,9 +214,8 @@ class StorageViewController: CommonViewController {
         NotificationCenter.default.addObserver(forName: .reviewWillCancelled, object: nil, queue: .main) {[weak self] _ in
             guard let self = self else { return }
             
-            // DimView 제거
             UIView.animate(withDuration: 0.3) {
-                self.removeViewFromWindow()
+                self.removeDimViewFromWindow()
             }
         }
         
@@ -186,7 +223,9 @@ class StorageViewController: CommonViewController {
     }
     
     
-    /// 뷰가 나타나기 전에 호출됩니다.
+    /// 보관함 화면이 표시되기 전에 호출됩니다.
+    ///
+    /// 기존에 선택한 정렬 옵션에 따라 데이터를 정렬합니다.
     /// - Parameter animated: 애니메이션 사용 여부
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -223,7 +262,7 @@ class StorageViewController: CommonViewController {
     /// 뷰의 사이즈가 변경되면 호출됩니다.
     /// - Parameters:
     ///   - size: 뷰의 새로운 사이즈
-    ///   - coordinator: 사이즈 변경을 관리하는 코디네이터 객체
+    ///   - coordinator: 사이즈를 관리하는 객체
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -235,12 +274,16 @@ class StorageViewController: CommonViewController {
 
 
 
+/// 리뷰를 작성한 영화 목록 컬렉션뷰 데이터 관리
 extension StorageViewController: UICollectionViewDataSource {
-    /// 데이터소스 객체에게 지정된 섹션에 아이템 수를 물어봅니다.
+    
+    /// 리뷰를 작성한 영화 목록수를 리턴합니다.
+    ///
+    /// 최근 저장한 영화 항목이 선택됐는지 여부에 따라 리턴하는 목록수가 다릅니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
-    ///   - section: 컬렉션뷰 섹션을 식별하는 Index 번호
-    /// - Returns: 섹션 아이템의 수
+    ///   - collectionView: 리뷰를 작성한 영화 목록 컬렉션뷰
+    ///   - section: 섹션 인덱스
+    /// - Returns: 리뷰를 작성한 영화 목록수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isRecentlyMovieButtonSelected {
             return MovieReview.recentlyMovieReviewList.count
@@ -250,9 +293,11 @@ extension StorageViewController: UICollectionViewDataSource {
     }
     
     
-    /// 데이터소스 객체에게 지정된 위치에 해당하는 셀에 데이터를 요청합니다.
+    /// 저장한 리뷰 목록 데이터로 셀을 구성합니다.
+    ///
+    /// 최근 저장한 영화 항목이 선택됐는지 여부에 따라 구성하는 셀이 다릅니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - collectionView: 리뷰를 작성한 영화 목록 컬렉션뷰
     ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
     /// - Returns: 설정한 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -274,15 +319,19 @@ extension StorageViewController: UICollectionViewDataSource {
 
 
 
+/// 리뷰를 작성한 영화 목록 컬렉션뷰와 관련된 사용자 동작을 처리
 extension StorageViewController: UICollectionViewDelegate {
-    /// 델리게이트에게 지정된 인덱스패스에 있는 항목이 선택되었음을 알립니다.
+    
+    /// 셀을 선택하면 호출됩니다.
+    ///
+    /// 리뷰 작성 화면이 표시되고 선택된 영화 리뷰 데이터를 ReviewViewController에 보냅니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - collectionView: 리뷰를 작성한 영화 목록 컬렉션뷰
     ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "MainScreen", bundle: nil)
         
-        if let vc = storyboard.instantiateViewController(withIdentifier: "MemoViewController") as? ReviewViewController {
+        if let vc = storyboard.instantiateViewController(withIdentifier: "ReviewViewController") as? ReviewViewController {
             guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
             window.addSubview(self.dimView)
             
@@ -300,13 +349,19 @@ extension StorageViewController: UICollectionViewDelegate {
 
 
 
+/// 셀 사이즈를 지정하기 위해 추가
 extension StorageViewController: UICollectionViewDelegateFlowLayout {
-    /// 델리게이트에게 지정된 아이템의 셀 크기를 요청합니다.
+    
+    /// 셀 사이즈를 리턴합니다.
+    ///
+    /// 세로 모드: 셀의 너비는 2등분, 높이는 너비의 150%로 지정합니다.
+    /// 가로 모드: 셀의 너비는 4등분, 높이는 너비의 150%로 지정합니다.
+    /// iPad: 셀의 너비는 5등분, 높이는 너비의 150%로 지정합니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
-    ///   - collectionViewLayout: 정보를 요청하는 레이아웃 객체
+    ///   - collectionView: 리뷰를 작성한 영화 목록 컬렉션뷰
+    ///   - collectionViewLayout: 레이아웃 객체
     ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
-    /// - Returns: 지정된 아이템의 너비와 높이(사이즈)
+    /// - Returns: 아이템 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return . zero }
         

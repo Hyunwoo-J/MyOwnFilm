@@ -251,27 +251,50 @@
                                                     <constraint firstItem="PSg-83-8vB" firstAttribute="leading" secondItem="NGA-2X-2Z9" secondAttribute="leading" id="z2f-Cp-nRj"/>
                                                 </constraints>
                                             </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MFV-ys-rVV">
-                                                <rect key="frame" x="308.5" y="16.5" width="92.5" height="17"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RPY-s0-CBe">
+                                                <rect key="frame" x="307" y="7.5" width="100" height="35"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오래된 날짜순" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z3K-93-dOZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="76.5" height="17"/>
-                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="wDo-px-K2l">
-                                                        <rect key="frame" x="76.5" y="0.0" width="16" height="17"/>
-                                                        <color key="tintColor" systemColor="systemBlueColor"/>
-                                                    </imageView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MFV-ys-rVV">
+                                                        <rect key="frame" x="4" y="9" width="92.5" height="17"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오래된 날짜순" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z3K-93-dOZ">
+                                                                <rect key="frame" x="0.0" y="0.0" width="76.5" height="17"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="up-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="wDo-px-K2l">
+                                                                <rect key="frame" x="76.5" y="0.0" width="16" height="17"/>
+                                                                <color key="tintColor" systemColor="systemBlueColor"/>
+                                                            </imageView>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ViF-DT-itc">
+                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="35"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <connections>
+                                                            <action selector="toggleAlignmentOption:" destination="ikm-Jf-qrg" eventType="touchUpInside" id="X3f-RP-gfE"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
-                                            </stackView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="4tx-Pi-wAg"/>
+                                                    <constraint firstAttribute="height" constant="35" id="Cfg-Jc-4bQ"/>
+                                                    <constraint firstItem="ViF-DT-itc" firstAttribute="top" secondItem="RPY-s0-CBe" secondAttribute="top" id="eR9-LQ-pYF"/>
+                                                    <constraint firstItem="MFV-ys-rVV" firstAttribute="centerX" secondItem="RPY-s0-CBe" secondAttribute="centerX" id="ouJ-CB-q0m"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ViF-DT-itc" secondAttribute="trailing" id="qqI-Uy-e3k"/>
+                                                    <constraint firstItem="MFV-ys-rVV" firstAttribute="centerY" secondItem="RPY-s0-CBe" secondAttribute="centerY" id="r4A-lU-Ae5"/>
+                                                    <constraint firstItem="ViF-DT-itc" firstAttribute="leading" secondItem="RPY-s0-CBe" secondAttribute="leading" id="vRr-EG-dLi"/>
+                                                    <constraint firstAttribute="bottom" secondItem="ViF-DT-itc" secondAttribute="bottom" id="vuK-ek-AoO"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="RPY-s0-CBe" secondAttribute="trailing" constant="7" id="A0s-b2-JWd"/>
                                             <constraint firstItem="NGA-2X-2Z9" firstAttribute="centerY" secondItem="g9q-mD-H9d" secondAttribute="centerY" id="C66-la-b3v"/>
-                                            <constraint firstAttribute="trailing" secondItem="MFV-ys-rVV" secondAttribute="trailing" constant="13" id="eSy-Sa-J7a"/>
-                                            <constraint firstItem="MFV-ys-rVV" firstAttribute="centerY" secondItem="8lM-ai-e3K" secondAttribute="centerY" id="iGw-m2-goa"/>
+                                            <constraint firstItem="RPY-s0-CBe" firstAttribute="centerY" secondItem="NGA-2X-2Z9" secondAttribute="centerY" id="NWR-lV-lE2"/>
                                             <constraint firstAttribute="height" constant="50" id="prs-Dm-0b7"/>
                                         </constraints>
                                     </view>
@@ -322,7 +345,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zVP-4T-ZFV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1230" y="104"/>
+            <point key="canvasLocation" x="1228.985507246377" y="103.79464285714285"/>
         </scene>
     </scenes>
     <resources>
