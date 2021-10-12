@@ -65,6 +65,25 @@ class ReviewViewController: CommonViewController {
     var movieList = [MovieData.Result]()
     
     
+    /// 세션
+    lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
+        
+        return session
+    }()
+    
+    /// ISO8601DateFormatter
+    ///
+    /// 데이터를 Post 할 때 사용하기 위해서 만들었습니다.
+    let postDateFormatter: ISO8601DateFormatter = {
+        let f = ISO8601DateFormatter()
+        f.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
+        
+        return f
+    }()
+    
+    
     /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -83,12 +102,10 @@ class ReviewViewController: CommonViewController {
     
     
     /// 확인 버튼을 누르면 기록한 데이터를 추가합니다.
+    ///
+    /// 데이터베이스에 POST 합니다.
     /// - Parameter sender: 확인 버튼
     @IBAction func saveReview(_ sender: Any) {
-        guard let index = index else { return }
-        
-        let target = movieList[index]
-        
         if starPointView.rating == 0 {
             alertLoafMessage(message: "평점을 입력해주세요.", duration: .short)
             return
@@ -109,23 +126,14 @@ class ReviewViewController: CommonViewController {
             return
         }
         
-        let review = MovieReview(reviewId: UUID(),
-                                 movieTitle: target.titleStr,
-                                 posterPath: target.posterPath,
-                                 backdropPath: target.backdropPath,
-                                 releaseDate: target.releaseDate.toManagerDate() ?? Date(),
-                                 starPoint: starPointView.rating,
-                                 date: date,
-                                 place: place,
-                                 friend: friend,
-                                 memo: memoTextView.text)
+        let rating = starPointView.rating
+        let text = memoTextView.text
         
-        MovieReview.movieReviewList.append(review)
-        MovieReview.recentlyMovieReviewList.append(review)
+        let viewingDate = postDateFormatter.string(from: date)
         
-        #if DEBUG
-        dump(MovieReview.movieReviewList)
-        #endif
+        DispatchQueue.global().async {
+            self.insertReviewData(starPoint: rating, viewingDate: viewingDate, movieTheater: place, person: friend, memo: text ?? "")
+        }
         
         close(self)
     }
@@ -171,6 +179,79 @@ class ReviewViewController: CommonViewController {
         dateAlert.addAction(cancelAction)
         
         present(dateAlert, animated: true, completion: nil)
+    }
+    
+    
+    /// 데이터를 데이터베이스에 저장합니다.
+    /// - Parameters:
+    ///   - starPoint: 별점
+    ///   - viewingDate: 영화 본 날짜
+    ///   - movieTheater: 영화관
+    ///   - person: 같이 본 친구
+    ///   - memo: 메모
+    func insertReviewData(starPoint: Double, viewingDate: String, movieTheater: String, person: String, memo: String) {
+        guard let index = index else {
+            return
+        }
+        
+        let target = movieList[index]
+        
+        let updateDate = postDateFormatter.string(from: Date())
+        
+        let reviewData = MovieReviewPostData(movieTitle: target.titleStr, posterPath: target.posterPath, backdropPath: target.backdropPath, releaseDate: target.releaseDate, starPoint: starPoint, viewingDate: viewingDate, person: person, memo: memo, updateDate: updateDate)
+        
+        guard let url = URL(string: "https://localhost:53007/reviewapi") else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let encoder = JSONEncoder()
+            request.httpBody = try encoder.encode(reviewData)
+        } catch {
+            print(error)
+        }
+        
+        session.dataTask(with: request) { data, response, error in
+            defer {
+                print(">>>END", reviewData.movieTitle)
+            }
+            
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                if let httpResponse = response as? HTTPURLResponse {
+                    print(httpResponse.statusCode)
+                }
+                
+                return
+            }
+            
+            if let data = data {
+                let decoder = JSONDecoder()
+                
+                do {
+                    let apiResponse = try decoder.decode(CommonResponse.self, from: data)
+                    
+                    switch apiResponse.resultCode {
+                    case ResultCode.ok.rawValue:
+                        print("추가 성공")
+                    case ResultCode.fail.rawValue:
+                        print("추가 실패")
+                    default:
+                        break
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
     }
     
     
@@ -321,5 +402,14 @@ extension ReviewViewController: UITextFieldDelegate {
         friendTextField.resignFirstResponder()
         
         return true
+    }
+}
+
+
+
+extension ReviewViewController: URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let trust = challenge.protectionSpace.serverTrust!
+        completionHandler(.useCredential, URLCredential(trust: trust))
     }
 }

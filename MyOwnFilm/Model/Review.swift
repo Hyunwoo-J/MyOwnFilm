@@ -46,12 +46,3 @@ struct MovieReview {
     /// 최근 3개월간 저장한 기록을 담을 배열
     static var recentlyMovieReviewList = [MovieReview]()
 }
-
-
-
-/// 영화관 목록 구성 항목 구조체
-struct Theater {
-    let metropolitanCouncil: String
-    let basicOrganization: String
-    let name: String
-}
