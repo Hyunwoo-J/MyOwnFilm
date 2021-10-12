@@ -753,6 +753,9 @@
                             <constraint firstAttribute="bottom" secondItem="M2t-aX-U7f" secondAttribute="bottom" id="h6I-NZ-MQv"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="movieTheaterListTableView" destination="M2t-aX-U7f" id="ebz-5F-WWx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZSH-Yh-EhQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

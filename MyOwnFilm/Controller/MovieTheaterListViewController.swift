@@ -18,47 +18,78 @@ extension Notification.Name {
 /// 영화관 목록 화면
 class MovieTheaterListViewController: UIViewController {
     
-    /// 영화관 목록
-    var theaterList = [Theater]()
+    /// 영화 목록 테이블뷰
+    @IBOutlet weak var movieTheaterListTableView: UITableView!
     
-    /// 기초 단체 목록
+    /// 영화관 목록
+    var movieTheaterList = [MovieTheaterData.MovieTheater]()
+    
+    /// 기초단체 목록
     ///
     /// 중복된 데이터를 제거하기 위해 Set을 사용했습니다.
     var basicOrganizationSetList: Set<String> = []
     
-    /// 기초 단체 목록
+    /// 기초단체 목록
     ///
     /// 중복 데이터를 제거한 Set 리스트를 다시 Array에 넣습니다.
     var basicOrganizationList = [String]()
     
+    /// 세션
+    lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
+        
+        return session
+    }()
     
-    /// 영화관 목록을 가져옵니다.
-    func loadMovieTheaterList() {
-        guard let data = NSDataAsset(name: "Seoul_MovieTheaterInformation")?.data else {
-            return
-        }
+    
+    /// 영화관 목록을 다운로드합니다.
+    func fetchMovieData() {
+        let urlStr = "https://localhost:53007/movietheater"
         
-        guard let source = String(data: data, encoding: .utf8) else { return }
+        guard let url = URL(string: urlStr) else { return }
         
-        let lines = source.components(separatedBy: CharacterSet.newlines).dropFirst()
-        
-        for line in lines {
-            let values = line.components(separatedBy: ",")
-            guard values.count == 3 else { continue }
+        session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
             
-            let metropolitanCouncil = values[0].trimmingCharacters(in: .whitespaces)
-            let basicOrganization = values[1].trimmingCharacters(in: .whitespaces)
-            let name = values[2].trimmingCharacters(in: .whitespaces)
-            theaterList.append(Theater(metropolitanCouncil: metropolitanCouncil, basicOrganization: basicOrganization, name: name))
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                if let httpResponse = response as? HTTPURLResponse {
+                    print(httpResponse.statusCode)
+                }
+                
+                return
+            }
             
-            basicOrganizationSetList.insert(basicOrganization)
-            
-            for basicOrganization in basicOrganizationSetList {
-                if !basicOrganizationList.contains(basicOrganization) {
-                    basicOrganizationList.append(basicOrganization)
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let result = try decoder.decode(MovieTheaterData.self, from: data)
+                    
+                    self.movieTheaterList = result.list
+                    
+                    for movieTheaterInfo in result.list {
+                        self.basicOrganizationSetList.insert(movieTheaterInfo.basicOrganization)
+                    }
+                    
+                    for basicOrganization in self.basicOrganizationSetList {
+                        if !self.basicOrganizationList.contains(basicOrganization) {
+                            self.basicOrganizationList.append(basicOrganization)
+                        }
+                    }
+                    
+                    self.basicOrganizationList.sort { $0 < $1 }
+                    
+                    DispatchQueue.main.async {
+                        self.movieTheaterListTableView.reloadData()
+                    }
+                } catch {
+                    print(error)
                 }
             }
-        }
+        }.resume()
     }
     
     
@@ -66,7 +97,7 @@ class MovieTheaterListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadMovieTheaterList()
+        fetchMovieData()
     }
 }
 
@@ -83,7 +114,7 @@ extension MovieTheaterListViewController: UITableViewDataSource {
     ///   - section: 섹션 인덱스
     /// - Returns: 섹션 행의 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let filteredBasicOrganization = theaterList.filter { theater in
+        let filteredBasicOrganization = movieTheaterList.filter { theater in
             theater.basicOrganization == basicOrganizationList[section]
         }
         
@@ -91,15 +122,15 @@ extension MovieTheaterListViewController: UITableViewDataSource {
     }
     
     
-    /// 섹션 이름으로 필터링된 기초 단체 데이터로 셀을 구성합니다.
+    /// 섹션 이름으로 필터링된 기초단체 데이터로 셀을 구성합니다.
     /// - Parameters:
     ///   - tableView: 영화 목록 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath
-    /// - Returns: 필터링된 기초 단체 데이터 셀
+    /// - Returns: 필터링된 기초단체 데이터 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        let target = theaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row]
+        let target = movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row]
         cell.textLabel?.text = target.name
         
         return cell
@@ -108,7 +139,7 @@ extension MovieTheaterListViewController: UITableViewDataSource {
     
     /// 섹션의 수를 리턴합니다.
     /// - Parameter tableView: 영화 목록 테이블뷰
-    /// - Returns: 기초 단체 목록의 수
+    /// - Returns: 기초단체 목록의 수
     func numberOfSections(in tableView: UITableView) -> Int {
         return basicOrganizationList.count
     }
@@ -118,7 +149,7 @@ extension MovieTheaterListViewController: UITableViewDataSource {
     /// - Parameters:
     ///   - tableView: 영화 목록 테이블뷰
     ///   - section: 섹션 인덱스
-    /// - Returns: 기초 단체 이름
+    /// - Returns: 기초단체 이름
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return basicOrganizationList[section]
     }
@@ -141,15 +172,24 @@ extension MovieTheaterListViewController: UITableViewDelegate {
     
     /// 셀을 선택하면 이전 화면에 노티피케이션을 보냅니다.
     ///
-    /// 선택한 셀에 출력된 기초 단체 이름을 이전 화면에 보내고 화면을 닫습니다.
+    /// 선택한 셀에 출력된 기초단체 이름을 이전 화면에 보내고 화면을 닫습니다.
     /// - Parameters:
     ///   - tableView: 영화 목록 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let target = theaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row].name
+        let target = movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row].name
         
         NotificationCenter.default.post(name: .movieTheaterTableViewCellDidTapped, object: nil, userInfo: ["theater": target])
         
         dismiss(animated: true, completion: nil)
+    }
+}
+
+
+
+extension MovieTheaterListViewController: URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let trust = challenge.protectionSpace.serverTrust!
+        completionHandler(.useCredential, URLCredential(trust: trust))
     }
 }
