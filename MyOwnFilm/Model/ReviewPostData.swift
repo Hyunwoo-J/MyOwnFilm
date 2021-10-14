@@ -8,7 +8,8 @@
 import Foundation
 
 
-struct MovieReviewPostData: Codable {
+/// 서버에 리뷰를 POST할 때 사용
+struct ReviewPostData: Codable {
     let movieTitle: String
     
     let posterPath: String?
@@ -17,6 +18,7 @@ struct MovieReviewPostData: Codable {
     let releaseDate: String
     let starPoint: Double
     let viewingDate: String
+    let movieTheater: String
     let person: String
     let memo: String?
     

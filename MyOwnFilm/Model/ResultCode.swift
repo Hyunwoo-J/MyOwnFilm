@@ -8,7 +8,7 @@
 import Foundation
 
 
-/// 데이터베이스 결과 코드
+/// 서버 결과 코드
 enum ResultCode: Int {
     case ok = 200
     case fail = -999

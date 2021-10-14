@@ -35,7 +35,7 @@ class ReviewViewController: CommonViewController {
     /// 데이트 피커를 띄우는 버튼
     @IBOutlet weak var dateButton: UIButton!
     
-    /// 영화 장소 레이블
+    /// 영화 관람 장소 레이블
     @IBOutlet weak var placeLabel: UILabel!
     
     /// 영화 장소 버튼
@@ -59,7 +59,7 @@ class ReviewViewController: CommonViewController {
     var index: Int?
     
     /// 영화 데이터
-    var movieData: MovieReview?
+    var movieData: ReviewListResponse.Review?
     
     /// 영화 리스트
     var movieList = [MovieData.Result]()
@@ -75,7 +75,7 @@ class ReviewViewController: CommonViewController {
     
     /// ISO8601DateFormatter
     ///
-    /// 데이터를 Post 할 때 사용하기 위해서 만들었습니다.
+    /// 데이터를 POST 할 때 사용하기 위해서 만들었습니다.
     let postDateFormatter: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
         f.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
@@ -101,7 +101,7 @@ class ReviewViewController: CommonViewController {
     }
     
     
-    /// 확인 버튼을 누르면 기록한 데이터를 추가합니다.
+    /// 영화 리뷰를 저장합니다.
     ///
     /// 데이터베이스에 POST 합니다.
     /// - Parameter sender: 확인 버튼
@@ -182,7 +182,7 @@ class ReviewViewController: CommonViewController {
     }
     
     
-    /// 데이터를 데이터베이스에 저장합니다.
+    /// 데이터베이스에 영화 리뷰를 저장합니다.
     /// - Parameters:
     ///   - starPoint: 별점
     ///   - viewingDate: 영화 본 날짜
@@ -198,9 +198,9 @@ class ReviewViewController: CommonViewController {
         
         let updateDate = postDateFormatter.string(from: Date())
         
-        let reviewData = MovieReviewPostData(movieTitle: target.titleStr, posterPath: target.posterPath, backdropPath: target.backdropPath, releaseDate: target.releaseDate, starPoint: starPoint, viewingDate: viewingDate, person: person, memo: memo, updateDate: updateDate)
+        let reviewData = ReviewPostData(movieTitle: target.titleStr, posterPath: target.posterPath, backdropPath: target.backdropPath, releaseDate: target.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: movieTheater, person: person, memo: memo, updateDate: updateDate)
         
-        guard let url = URL(string: "https://localhost:53007/reviewapi") else {
+        guard let url = URL(string: "https://localhost:53007/review") else {
             return
         }
         
@@ -315,7 +315,7 @@ class ReviewViewController: CommonViewController {
         }
         
         if let movieData = movieData {
-            MovieImageSource.shared.loadImage(from: movieData.backdropPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
+            MovieImageSource.shared.loadImage(from: movieData.backdropPath ?? "", posterImageSize: PosterImageSize.w780.rawValue) { img in
                 if let img = img {
                     self.memoBackdropImageView.image = img
                 } else {
@@ -324,9 +324,9 @@ class ReviewViewController: CommonViewController {
             }
             
             starPointView.rating = movieData.starPoint
-            dateLabel.text = movieData.date.toUserDateString()
-            placeLabel.text = movieData.place
-            friendTextField.text = movieData.friend
+            dateLabel.text = movieData.viewingDate
+            placeLabel.text = movieData.movieTheater
+            friendTextField.text = movieData.person
             memoTextView.text = movieData.memo
             
             dateLabel.textColor = .white

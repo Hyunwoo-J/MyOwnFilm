@@ -22,11 +22,13 @@ class StorageCollectionViewCell: UICollectionViewCell {
     
     /// 컬렉션뷰셀에 표시할 내용을 설정합니다.
     /// - Parameter movieData: StorageCollectionViewCell에서 받을 영화 데이터
-    func configure(with movieData: MovieReview) {
-        dateLabel.text = movieData.date.toUserDateString()
-        placeLabel.text = movieData.place
+    func configure(with movieData: ReviewListResponse.Review) {
+        dateLabel.text = movieData.viewingDate.toManagerDBDate()?.toUserDateString()
+        placeLabel.text = movieData.movieTheater
         
-        MovieImageSource.shared.loadImage(from: movieData.posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
+        guard let posterPath = movieData.posterPath else { return }
+        
+        MovieImageSource.shared.loadImage(from: posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
             if let img = img {
                 self.movieImageView.image = img
             } else {
