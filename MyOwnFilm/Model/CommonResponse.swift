@@ -10,6 +10,6 @@ import Foundation
 
 /// 서버 응답
 struct CommonResponse: Codable {
-    let resultCode: Int
+    let code: Int
     let message: String?
 }

@@ -182,42 +182,15 @@ class ReviewViewController: CommonViewController {
     }
     
     
-    /// 데이터베이스에 영화 리뷰를 저장합니다.
-    /// - Parameters:
-    ///   - starPoint: 별점
-    ///   - viewingDate: 영화 본 날짜
-    ///   - movieTheater: 영화관
-    ///   - person: 같이 본 친구
-    ///   - memo: 메모
-    func insertReviewData(starPoint: Double, viewingDate: String, movieTheater: String, person: String, memo: String) {
-        guard let index = index else {
-            return
-        }
-        
-        let target = movieList[index]
-        
-        let updateDate = postDateFormatter.string(from: Date())
-        
-        let reviewData = ReviewPostData(movieTitle: target.titleStr, posterPath: target.posterPath, backdropPath: target.backdropPath, releaseDate: target.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: movieTheater, person: person, memo: memo, updateDate: updateDate)
-        
-        guard let url = URL(string: "https://localhost:53007/review") else {
-            return
-        }
-        
+    func sendRequest(url: URL, httpMethod: String, httpBody: Data?) {
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = httpMethod
+        request.httpBody = httpBody
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        do {
-            let encoder = JSONEncoder()
-            request.httpBody = try encoder.encode(reviewData)
-        } catch {
-            print(error)
-        }
         
         session.dataTask(with: request) { data, response, error in
             defer {
-                print(">>>END", reviewData.movieTitle)
+                print(">>>END")
             }
             
             if let error = error {
@@ -239,7 +212,7 @@ class ReviewViewController: CommonViewController {
                 do {
                     let apiResponse = try decoder.decode(CommonResponse.self, from: data)
                     
-                    switch apiResponse.resultCode {
+                    switch apiResponse.code {
                     case ResultCode.ok.rawValue:
                         print("추가 성공")
                     case ResultCode.fail.rawValue:
@@ -252,6 +225,41 @@ class ReviewViewController: CommonViewController {
                 }
             }
         }.resume()
+    }
+    
+    
+    /// 데이터베이스에 영화 리뷰를 저장합니다.
+    /// - Parameters:
+    ///   - starPoint: 별점
+    ///   - viewingDate: 영화 본 날짜
+    ///   - movieTheater: 영화관
+    ///   - person: 같이 본 친구
+    ///   - memo: 메모
+    func insertReviewData(starPoint: Double, viewingDate: String, movieTheater: String, person: String, memo: String) {
+        guard let index = index else {
+            
+            
+            return
+        }
+        
+        let target = movieList[index]
+        
+        let updateDate = postDateFormatter.string(from: Date())
+        
+        let reviewData = ReviewPostData(movieTitle: target.titleStr, posterPath: target.posterPath, backdropPath: target.backdropPath, releaseDate: target.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: movieTheater, person: person, memo: memo, updateDate: updateDate)
+        
+        let encoder = JSONEncoder()
+        let body = try? encoder.encode(reviewData)
+        
+        if let movieData = movieData {
+            guard let url = URL(string: "https://localhost:53007/review/\(movieData.reviewId)") else { return }
+            print(movieData.reviewId)
+            sendRequest(url: url, httpMethod: "PUT", httpBody: body)
+        } else {
+            guard let url = URL(string: "https://localhost:53007/review") else { return }
+            print("sdfsdfsdfs")
+            sendRequest(url: url, httpMethod: "POST", httpBody: body)
+        }
     }
     
     
@@ -324,7 +332,7 @@ class ReviewViewController: CommonViewController {
             }
             
             starPointView.rating = movieData.starPoint
-            dateLabel.text = movieData.viewingDate
+            dateLabel.text = movieData.viewingDate.toManagerDBDate()?.toUserDateString()
             placeLabel.text = movieData.movieTheater
             friendTextField.text = movieData.person
             memoTextView.text = movieData.memo

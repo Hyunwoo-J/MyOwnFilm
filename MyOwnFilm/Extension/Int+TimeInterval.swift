@@ -8,7 +8,6 @@
 import Foundation
 
 
-
 extension Int {
     /// TimeInterval로 계산해서 일자를 반환
     var day: TimeInterval {

@@ -26,6 +26,6 @@ struct ReviewListResponse: Codable {
     
     let totalCount: Int
     let list: [Review]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }

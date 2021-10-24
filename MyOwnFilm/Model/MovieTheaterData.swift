@@ -18,6 +18,6 @@ struct MovieTheaterData: Codable {
     }
     
     let list: [MovieTheater]
-    let resultCode: Int
+    let code: Int
     let message: String?
 }

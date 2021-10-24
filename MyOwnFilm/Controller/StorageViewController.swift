@@ -267,6 +267,59 @@ class StorageViewController: CommonViewController {
     }
     
     
+    /// 작성한 영화 리뷰를 삭제합니다.
+    /// - Parameter id: 리뷰 id
+    func deleteReview(id: Int) {
+        guard let url = URL(string: "https://localhost:53007/review/\(id)") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        session.dataTask(with: request, completionHandler: { data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                if let httpResponse = response as? HTTPURLResponse {
+                    print(httpResponse.statusCode)
+                }
+                
+                return
+            }
+            
+            if let data = data {
+                let decoder = JSONDecoder()
+                
+                do {
+                    let apiResponse = try decoder.decode(CommonResponse.self, from: data)
+                    
+                    if apiResponse.code == ResultCode.ok.rawValue {
+                        if let index = self.reviewList.firstIndex(where: { $0.reviewId == id }) {
+                            self.reviewList.remove(at: index)
+                            
+                            DispatchQueue.main.async {
+                                let indexPath = IndexPath(row: index, section: 0)
+                                self.storageCollectionView.deleteItems(at: [indexPath])
+                            }
+                        }
+                    } else {
+                        if let message = apiResponse.message {
+                            if let message = apiResponse.message {
+                                print(message)
+                                // 경고창
+                            }
+                        }
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }).resume()
+    }
+    
+    
     /// 리뷰 데이터를 정렬합니다.
     ///
     /// 정렬 기준과 기준 순서에 따라 데이터를 정렬합니다.
@@ -381,6 +434,9 @@ extension StorageViewController: UICollectionViewDataSource {
         
         return cell
     }
+    
+    
+    
 }
 
 
@@ -402,13 +458,43 @@ extension StorageViewController: UICollectionViewDelegate {
             window.addSubview(self.dimView)
             
             if isRecentlyMovieButtonSelected {
-                vc.movieData = reviewList[indexPath.row]
+                vc.movieData = recentlyReviewList[indexPath.item]
             } else {
-                vc.movieData = reviewList[indexPath.row]
+                vc.movieData = reviewList[indexPath.item]
             }
             
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    
+    @available(iOS 13.0, *)
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+            let deleteAction = UIAction(title: NSLocalizedString("리뷰 삭제", comment: ""),
+                                        image: UIImage(systemName: "trash"),
+                                        attributes: .destructive) { action in
+                let alert = UIAlertController(title: "리뷰 삭제", message: "리뷰를 삭제하시겠습니까?", preferredStyle: .alert)
+                
+                let delete = UIAlertAction(title: "확인", style: .destructive) { action in
+                    let id = self.reviewList[indexPath.row].reviewId
+                    
+                    self.deleteReview(id: id)
+                    let target = [IndexPath(item: self.reviewList[indexPath.row].reviewId, section: 0)]
+                    
+                    self.reviewList.remove(at: indexPath.item)
+                    collectionView.reloadItems(at: target)
+                }
+                alert.addAction(delete)
+                
+                let cancel = UIAlertAction(title: "취소", style: .default, handler: nil)
+                alert.addAction(cancel)
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+            return UIMenu(title: "", children: [deleteAction])
         }
     }
 }
