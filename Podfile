@@ -9,5 +9,6 @@ target 'MyOwnFilm' do
 pod 'Cosmos'
 pod 'Loaf'
 pod 'FBSDKLoginKit'
+pod 'KakaoSDK'
 
 end
