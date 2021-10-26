@@ -37,13 +37,31 @@ class CommonViewController: UIViewController {
     ///   - message: 경고창 내용
     ///   - actionTitle: 액션 타이틀
     ///   - actionStyle: 액션 스타일
-    func alertMessage(title: String, message: String, actionTitle: String, actionStyle: UIAlertAction.Style) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let alertAction = UIAlertAction(title: actionTitle, style: actionStyle, handler: nil)
-        alert.addAction(alertAction)
-        
-        present(alert, animated: true, completion: nil)
+    func alertMessage(title: String = "알림", message: String, actionTitle: String = "확인", actionStyle: UIAlertAction.Style = .default) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            let alertAction = UIAlertAction(title: actionTitle, style: actionStyle, handler: nil)
+            alert.addAction(alertAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
+    /// 경고창을 출력합니다.
+    /// - Parameters:
+    ///   - message: 경고창 내용
+    ///   - handler: 완료 블록
+    func alertMessageWithHandler(message: String, handler: ((UIAlertAction) -> Void)?) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+            
+            let alertAction = UIAlertAction(title: "확인", style: .default, handler: handler)
+            alert.addAction(alertAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     
@@ -69,6 +87,14 @@ class CommonViewController: UIViewController {
     }
     
     
+    /// 메인 화면으로 이동합니다.
+    func goToMain() {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "mainSegue", sender: nil)
+        }
+    }
+    
+    
     deinit {
         print(#function, self) // self: 현재 인스턴스 정보
         
@@ -79,5 +105,13 @@ class CommonViewController: UIViewController {
         for token in tokens {
             NotificationCenter.default.removeObserver(token)
         }
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
     }
 }

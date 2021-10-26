@@ -1,15 +1,15 @@
 //
-//  FirstViewController.swift
+//  JoinViewController.swift
 //  MyOwnFilm
 //
-//  Created by Hyunwoo Jang on 2021/06/10.
+//  Created by Hyunwoo Jang on 2021/10/27.
 //
 
 import UIKit
 
 
-/// 로그인 화면
-class LoginViewController: CommonViewController {
+/// 회원가입 화면
+class JoinViewController: CommonViewController {
     
     /// 이메일 필드
     @IBOutlet weak var emailField: UITextField!
@@ -18,12 +18,10 @@ class LoginViewController: CommonViewController {
     @IBOutlet weak var passwordField: UITextField!
     
     
-    /// 버튼을 누르면 다음 화면으로 이동합니다.
-    /// - Parameter sender: 버튼
-    @IBAction func login(_ sender: UIButton) {
+    @IBAction func signup(_ sender: Any) {
         guard let email = emailField.text, let password = passwordField.text else { return }
         
-        guard let url = URL(string: "https://mofapi.azurewebsites.net/login/email") else { return }
+        guard let url = URL(string: "https://mofapi.azurewebsites.net/join/email") else { return }
         
         let session = URLSession.shared
         var request = URLRequest(url: url)
@@ -31,10 +29,10 @@ class LoginViewController: CommonViewController {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {
-            let loginData = EmailLoginPostData(email: email, password: password)
+            let joinData = EmailJoinPostData(email: email, password: password)
             
             let encoder = JSONEncoder()
-            request.httpBody = try encoder.encode(loginData)
+            request.httpBody = try encoder.encode(joinData)
         } catch {
             print(error)
         }
@@ -62,7 +60,9 @@ class LoginViewController: CommonViewController {
                     
                     switch apiRespose.code {
                     case ResultCode.ok.rawValue:
-                        self.goToMain()
+                        self.alertMessageWithHandler(message: "회원가입에 성공하였습니다.") { _ in
+                            self.dismiss(animated: true, completion: nil)
+                        }
                     case ResultCode.fail.rawValue:
                         self.alertMessage(message: apiRespose.message ?? "오류가 발생했습니다.")
                     default:
@@ -76,10 +76,9 @@ class LoginViewController: CommonViewController {
     }
     
     
-    /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         
     }
 }

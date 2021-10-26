@@ -9,16 +9,10 @@ import UIKit
 
 
 /// 회원 가입 화면
-class SignUpViewController: UIViewController {
-
-    @IBOutlet weak var appleContainerView: UIView!
-    @IBOutlet weak var googleContainerView: UIView!
-    @IBOutlet weak var facebookContainerView: UIView!
-    @IBOutlet weak var emailContainerView: UIView!
-    
-    
+class SignUpViewController: CommonViewController {
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
 }

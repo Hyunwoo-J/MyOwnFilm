@@ -39,6 +39,11 @@
 		2C9DCD14272854DE00C87810 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD13272854DE00C87810 /* SignUpViewController.swift */; };
 		2C9DCD17272859DB00C87810 /* ReplaceRootSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD16272859DB00C87810 /* ReplaceRootSegue.swift */; };
 		2C9DCD19272862FD00C87810 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD18272862FD00C87810 /* RoundedView.swift */; };
+		2C9DCD1B272874A300C87810 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD1A272874A300C87810 /* LoginResponse.swift */; };
+		2C9DCD1D2728765E00C87810 /* EmailLoginPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD1C2728765E00C87810 /* EmailLoginPostData.swift */; };
+		2C9DCD1F2728822300C87810 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD1E2728822300C87810 /* JoinViewController.swift */; };
+		2C9DCD21272882E000C87810 /* EmailJoinPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */; };
+		2C9DCD23272882F700C87810 /* JoinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD22272882F700C87810 /* JoinResponse.swift */; };
 		2CA0CD9426F062B6004BDA42 /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */; };
 		2CAB1AC226CFE32400EA3C8B /* Int+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */; };
 		2CAB1AC426CFE44100EA3C8B /* MovieImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAB1AC326CFE44100EA3C8B /* MovieImageSource.swift */; };
@@ -86,6 +91,11 @@
 		2C9DCD13272854DE00C87810 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2C9DCD16272859DB00C87810 /* ReplaceRootSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceRootSegue.swift; sourceTree = "<group>"; };
 		2C9DCD18272862FD00C87810 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
+		2C9DCD1A272874A300C87810 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		2C9DCD1C2728765E00C87810 /* EmailLoginPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginPostData.swift; sourceTree = "<group>"; };
+		2C9DCD1E2728822300C87810 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
+		2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailJoinPostData.swift; sourceTree = "<group>"; };
+		2C9DCD22272882F700C87810 /* JoinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinResponse.swift; sourceTree = "<group>"; };
 		2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+TimeInterval.swift"; sourceTree = "<group>"; };
 		2CAB1AC326CFE44100EA3C8B /* MovieImageSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImageSource.swift; sourceTree = "<group>"; };
@@ -168,6 +178,7 @@
 			children = (
 				2C9DCD13272854DE00C87810 /* SignUpViewController.swift */,
 				2CE4F014267242C7008BB895 /* LoginViewController.swift */,
+				2C9DCD1E2728822300C87810 /* JoinViewController.swift */,
 				2C16A01E26AC172900802BD6 /* MainScreenViewController.swift */,
 				2C6BE450269406E3004237C0 /* MovieDetailViewController.swift */,
 				2C63157426B04B940019C9E9 /* ReviewViewController.swift */,
@@ -247,6 +258,10 @@
 				2C443A662716085400B1F5D1 /* ResultCode.swift */,
 				2C443A682716087500B1F5D1 /* CommonResponse.swift */,
 				2C443A6A27160B1500B1F5D1 /* MovieTheaterData.swift */,
+				2C9DCD1A272874A300C87810 /* LoginResponse.swift */,
+				2C9DCD22272882F700C87810 /* JoinResponse.swift */,
+				2C9DCD1C2728765E00C87810 /* EmailLoginPostData.swift */,
+				2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -397,6 +412,7 @@
 			files = (
 				2C9DCD14272854DE00C87810 /* SignUpViewController.swift in Sources */,
 				2C63157526B04B940019C9E9 /* ReviewViewController.swift in Sources */,
+				2C9DCD1B272874A300C87810 /* LoginResponse.swift in Sources */,
 				2CAB1AC426CFE44100EA3C8B /* MovieImageSource.swift in Sources */,
 				2C443A692716087500B1F5D1 /* CommonResponse.swift in Sources */,
 				2C50D0882717FE5B00B2E112 /* ReviewListResponse.swift in Sources */,
@@ -408,10 +424,13 @@
 				2C16A02326AC1D7800802BD6 /* MainScreenFirstSectionCollectionViewCell.swift in Sources */,
 				2CE2F5B426EF38DD0021C642 /* StorageCollectionViewCell.swift in Sources */,
 				2CE4F015267242C7008BB895 /* LoginViewController.swift in Sources */,
+				2C9DCD21272882E000C87810 /* EmailJoinPostData.swift in Sources */,
 				2C16A02626AC21BF00802BD6 /* Date+Formatter.swift in Sources */,
 				2C16A01F26AC172900802BD6 /* MainScreenViewController.swift in Sources */,
+				2C9DCD1F2728822300C87810 /* JoinViewController.swift in Sources */,
 				2CD6C73A26AC6F0600E82A06 /* SubMovieCollectionViewCell.swift in Sources */,
 				2CD6C73C26AC6F9D00E82A06 /* SubMovieTableViewCell.swift in Sources */,
+				2C9DCD23272882F700C87810 /* JoinResponse.swift in Sources */,
 				2C2BADC026B54E2100138E58 /* SearchViewController.swift in Sources */,
 				2C581DEC26693ECE0040C6EA /* CommonViewController.swift in Sources */,
 				2C117F122662303B00335B74 /* AppDelegate.swift in Sources */,
@@ -421,6 +440,7 @@
 				2C9DCD19272862FD00C87810 /* RoundedView.swift in Sources */,
 				2CA0CD9426F062B6004BDA42 /* MemoViewController.swift in Sources */,
 				2C443A672716085400B1F5D1 /* ResultCode.swift in Sources */,
+				2C9DCD1D2728765E00C87810 /* EmailLoginPostData.swift in Sources */,
 				2C7CDC06271E6656003E1E60 /* String+Fomatter.swift in Sources */,
 				2C1B4BE026EE690A000AAE1D /* StorageViewController.swift in Sources */,
 				2C443A652716083700B1F5D1 /* ReviewPostData.swift in Sources */,

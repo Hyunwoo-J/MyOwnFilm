@@ -225,12 +225,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lYO-TP-BYs"/>
-                    <connections>
-                        <outlet property="appleContainerView" destination="gkM-vJ-lLP" id="K0t-I1-kmN"/>
-                        <outlet property="emailContainerView" destination="vDg-Ri-gUx" id="q3z-gO-pPL"/>
-                        <outlet property="facebookContainerView" destination="Rnp-rR-SWS" id="Ss5-Kp-YhW"/>
-                        <outlet property="googleContainerView" destination="7Yl-51-aVe" id="8cX-e5-5Yb"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VSc-iH-xxu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -302,6 +296,9 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="334" height="40"/>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <connections>
+                                                            <action selector="login:" destination="IrW-vn-xtT" eventType="touchUpInside" id="6sy-j6-0RS"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.46666666670000001" green="0.54901960780000003" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -340,6 +337,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mO2-j4-wTn"/>
+                    <connections>
+                        <outlet property="emailField" destination="Eps-kK-vaa" id="ply-sd-Lfi"/>
+                        <outlet property="passwordField" destination="f5a-ux-8en" id="mf1-eb-QTq"/>
+                        <segue destination="za3-LM-Slj" kind="custom" identifier="mainSegue" customClass="ReplaceRootSegue" customModule="MyOwnFilm" customModuleProvider="target" id="Lae-eb-aVe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bHd-hH-khi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -561,10 +563,10 @@
             </objects>
             <point key="canvasLocation" x="-1265.217391304348" y="72.991071428571431"/>
         </scene>
-        <!--Login View Controller-->
+        <!--Join View Controller-->
         <scene sceneID="Ofu-Ay-a7m">
             <objects>
-                <viewController id="TaM-tc-yOl" customClass="LoginViewController" customModule="MyOwnFilm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="TaM-tc-yOl" customClass="JoinViewController" customModule="MyOwnFilm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ugz-7O-Hez">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -627,9 +629,12 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="334" height="40"/>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <connections>
+                                                            <action selector="signup:" destination="TaM-tc-yOl" eventType="touchUpInside" id="l32-4z-SQf"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.46666666670000001" green="0.54901960780000003" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.64705882349999999" green="0.7843137255" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="5MY-L7-wmk" firstAttribute="top" secondItem="qcn-Ls-prR" secondAttribute="top" id="0UC-Hc-AUS"/>
                                                     <constraint firstAttribute="bottom" secondItem="5MY-L7-wmk" secondAttribute="bottom" id="7C8-WT-O6n"/>
@@ -665,6 +670,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JW6-jb-r4v"/>
+                    <connections>
+                        <outlet property="emailField" destination="p8J-O5-1uy" id="xgI-2Y-HaO"/>
+                        <outlet property="passwordField" destination="Byl-Pp-R5e" id="1sD-dR-3wf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xa8-KK-bc4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
