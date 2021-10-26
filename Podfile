@@ -8,5 +8,6 @@ target 'MyOwnFilm' do
   # Pods for MyOwnFilm
 pod 'Cosmos'
 pod 'Loaf'
+pod 'FBSDKLoginKit'
 
 end

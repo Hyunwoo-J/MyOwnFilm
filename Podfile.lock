@@ -1,20 +1,37 @@
 PODS:
   - Cosmos (23.0.0)
+  - FBAEMKit (12.0.2):
+    - FBSDKCoreKit_Basics (= 12.0.2)
+  - FBSDKCoreKit (12.0.2):
+    - FBAEMKit (= 12.0.2)
+    - FBSDKCoreKit_Basics (= 12.0.2)
+  - FBSDKCoreKit_Basics (12.0.2)
+  - FBSDKLoginKit (12.0.2):
+    - FBSDKCoreKit (= 12.0.2)
   - Loaf (0.7.0)
 
 DEPENDENCIES:
   - Cosmos
+  - FBSDKLoginKit
   - Loaf
 
 SPEC REPOS:
   trunk:
     - Cosmos
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - FBSDKLoginKit
     - Loaf
 
 SPEC CHECKSUMS:
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
+  FBAEMKit: c6b8ddf8371640fcd1a3b844d0f8884c8f334cea
+  FBSDKCoreKit: 506c0fd1c09a3075f62be8fa36bdd921c563daa9
+  FBSDKCoreKit_Basics: c0701d1634c944d60dd3c6361d66dbd0e707a456
+  FBSDKLoginKit: d7c9f6ddff20d7b04c94d1f1f065dc7a441d44a0
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
 
-PODFILE CHECKSUM: 8cea20030e22da1a30f7f59549bfa9fc3b267719
+PODFILE CHECKSUM: 0a0dff32692615509429f767bedd148c42c7e5b3
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
