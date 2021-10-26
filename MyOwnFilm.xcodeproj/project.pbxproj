@@ -44,6 +44,7 @@
 		2C9DCD1F2728822300C87810 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD1E2728822300C87810 /* JoinViewController.swift */; };
 		2C9DCD21272882E000C87810 /* EmailJoinPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */; };
 		2C9DCD23272882F700C87810 /* JoinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD22272882F700C87810 /* JoinResponse.swift */; };
+		2C9DCD2527288BB100C87810 /* SocialLoginPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD2427288BB000C87810 /* SocialLoginPostData.swift */; };
 		2CA0CD9426F062B6004BDA42 /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */; };
 		2CAB1AC226CFE32400EA3C8B /* Int+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */; };
 		2CAB1AC426CFE44100EA3C8B /* MovieImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAB1AC326CFE44100EA3C8B /* MovieImageSource.swift */; };
@@ -96,6 +97,7 @@
 		2C9DCD1E2728822300C87810 /* JoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
 		2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailJoinPostData.swift; sourceTree = "<group>"; };
 		2C9DCD22272882F700C87810 /* JoinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinResponse.swift; sourceTree = "<group>"; };
+		2C9DCD2427288BB000C87810 /* SocialLoginPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginPostData.swift; sourceTree = "<group>"; };
 		2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+TimeInterval.swift"; sourceTree = "<group>"; };
 		2CAB1AC326CFE44100EA3C8B /* MovieImageSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImageSource.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				2C9DCD22272882F700C87810 /* JoinResponse.swift */,
 				2C9DCD1C2728765E00C87810 /* EmailLoginPostData.swift */,
 				2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */,
+				2C9DCD2427288BB000C87810 /* SocialLoginPostData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				2CE2F5B426EF38DD0021C642 /* StorageCollectionViewCell.swift in Sources */,
 				2CE4F015267242C7008BB895 /* LoginViewController.swift in Sources */,
 				2C9DCD21272882E000C87810 /* EmailJoinPostData.swift in Sources */,
+				2C9DCD2527288BB100C87810 /* SocialLoginPostData.swift in Sources */,
 				2C16A02626AC21BF00802BD6 /* Date+Formatter.swift in Sources */,
 				2C16A01F26AC172900802BD6 /* MainScreenViewController.swift in Sources */,
 				2C9DCD1F2728822300C87810 /* JoinViewController.swift in Sources */,

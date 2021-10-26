@@ -146,6 +146,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hiV-ws-v2v">
                                                         <rect key="frame" x="0.0" y="0.0" width="334" height="54"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <connections>
+                                                            <action selector="loginWithFacebook:" destination="nqy-fh-DDC" eventType="touchUpInside" id="HoQ-QE-YvB"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -225,6 +228,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lYO-TP-BYs"/>
+                    <connections>
+                        <segue destination="za3-LM-Slj" kind="custom" identifier="mainSegue" customClass="ReplaceRootSegue" customModule="MyOwnFilm" customModuleProvider="target" id="62r-q2-5OL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VSc-iH-xxu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -550,7 +556,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IJs-uU-gSK" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZSd-97-mnd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="ZSd-97-mnd">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -680,6 +686,9 @@
             <point key="canvasLocation" x="1543" y="-230"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="62r-q2-5OL"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="applelogo" catalog="system" width="103" height="128"/>
         <image name="facebook" width="16" height="16"/>
