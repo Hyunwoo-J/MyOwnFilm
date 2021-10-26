@@ -872,7 +872,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Q6G-yt-4zL" firstAttribute="top" secondItem="ayF-b6-GD9" secondAttribute="bottom" constant="10" id="GLd-mS-c0e"/>
-                            <constraint firstItem="ayF-b6-GD9" firstAttribute="top" secondItem="GyV-45-wbP" secondAttribute="top" id="Kl1-pW-WsO"/>
+                            <constraint firstItem="ayF-b6-GD9" firstAttribute="top" secondItem="GyV-45-wbP" secondAttribute="top" id="INq-x2-FNp"/>
                             <constraint firstItem="Q6G-yt-4zL" firstAttribute="leading" secondItem="GyV-45-wbP" secondAttribute="leading" constant="8" id="Mle-hp-ogp"/>
                             <constraint firstItem="Scv-J3-BpU" firstAttribute="leading" secondItem="GyV-45-wbP" secondAttribute="leading" id="Q9i-Y1-ehI"/>
                             <constraint firstItem="Scv-J3-BpU" firstAttribute="trailing" secondItem="GyV-45-wbP" secondAttribute="trailing" id="ahF-7f-2gB"/>

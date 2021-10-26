@@ -10,7 +10,11 @@ import Foundation
 
 /// 영화 API에서 가져올 데이터를 정의한 구조체
 struct MovieData: Codable {
+    
     struct Result: Codable {
+        /// 영화 Id
+        let id: Int
+        
         /// 배경 이미지 경로
         private let backdrop_path: String?
         /// 배경 이미지 경로의 기본값을 넣어주는 코드

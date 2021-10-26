@@ -9,7 +9,7 @@ import Loaf
 import UIKit
 
 
-/// 공통적인 기능을 구현하는 뷰컨트롤러 클래스
+/// 공통적인 기능을 구현
 class CommonViewController: UIViewController {
     
     /// window에 추가할 DimView

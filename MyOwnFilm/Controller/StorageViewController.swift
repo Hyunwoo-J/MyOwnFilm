@@ -39,33 +39,20 @@ class StorageViewController: CommonViewController {
     /// 정렬 관련 화살표 모양 이미지뷰
     @IBOutlet weak var alignmentArrowImageView: UIImageView!
     
-    /// 최근 저장한 영화 버튼이 선택됐는지 알기 위해 추가한 속성
+    /// 최근 저장한 영화 버튼 활성화 플래그
     var isRecentlyMovieButtonSelected = false
     
-    /// 개봉연도순 정렬이 오름차순인지 판단하기 위해 추가한 속성
+    /// 개봉연도순 정렬이 오름차순인지 판단
     var isOpeningYearAscending = false
     
-    /// 내가 본 날짜순 정렬이 오름차순인지 판단하기 위해 추가한 속성
+    /// 내가 본 날짜순 정렬이 오름차순인지 판단
     var isDateAscending = false
     
-    /// 영화이름순 정렬이 오름차순인지 판단하기 위해 추가한 속성
+    /// 영화이름순 정렬이 오름차순인지 판단
     var isMovieNameAscending = true
-    
-    
-    /// 전체 리뷰 목록
-    var reviewList = [ReviewListResponse.Review]()
     
     /// 최근 저장한 리뷰 목록
     var recentlyReviewList = [ReviewListResponse.Review]()
-    
-    
-    /// 세션
-    lazy var session: URLSession = {
-        let configuration = URLSessionConfiguration.default
-        var session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
-        
-        return session
-    }()
     
     
     /// 선택된 항목에 따라 영화 데이터를 표시합니다.
@@ -85,7 +72,7 @@ class StorageViewController: CommonViewController {
         }
         
         if sender.tag == 100 {
-            recentlyReviewList = reviewList.filter { reviewData in
+            recentlyReviewList = ReviewManager.shared.reviewList.filter { reviewData in
                 let dateBeforeThreeMonth = Date() - 3.month
                 
                 guard let date = reviewData.viewingDate.toManagerDBDate() else {
@@ -159,13 +146,13 @@ class StorageViewController: CommonViewController {
         
         if self.isOpeningYearAscending {
             recentlyReviewList.sort { $0.releaseDate < $1.releaseDate }
-            reviewList.sort { $0.releaseDate < $1.releaseDate }
+            ReviewManager.shared.reviewList.sort { $0.releaseDate < $1.releaseDate }
             
             self.alignmentStateLabel.text = "오래된 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
         } else {
             recentlyReviewList.sort { $0.releaseDate > $1.releaseDate }
-            reviewList.sort { $0.releaseDate > $1.releaseDate }
+            ReviewManager.shared.reviewList.sort { $0.releaseDate > $1.releaseDate }
             
             self.alignmentStateLabel.text = "최근 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
@@ -185,13 +172,13 @@ class StorageViewController: CommonViewController {
         
         if self.isDateAscending {
             recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
-            reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
             
             self.alignmentStateLabel.text = "오래된 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
         } else {
             recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
-            reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
             
             self.alignmentStateLabel.text = "최근 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
@@ -211,13 +198,13 @@ class StorageViewController: CommonViewController {
         
         if self.isMovieNameAscending {
             recentlyReviewList.sort { $0.movieTitle < $1.movieTitle }
-            reviewList.sort { $0.movieTitle < $1.movieTitle }
+            ReviewManager.shared.reviewList.sort { $0.movieTitle < $1.movieTitle }
             
             self.alignmentStateLabel.text = "가나다"
             self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
         } else {
             recentlyReviewList.sort { $0.movieTitle > $1.movieTitle }
-            reviewList.sort { $0.movieTitle > $1.movieTitle }
+            ReviewManager.shared.reviewList.sort { $0.movieTitle > $1.movieTitle }
             
             self.alignmentStateLabel.text = "하파타"
             self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
@@ -229,123 +216,32 @@ class StorageViewController: CommonViewController {
     }
     
     
-    /// 영화 리뷰를 다운로드합니다.
-    private func fetchReview() {
-        guard let url = URL(string: "https://localhost:53007/review") else { return }
-        
-        session.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    print(httpResponse.statusCode)
-                }
-                
-                return
-            }
-            
-            if let data = data {
-                let decoder = JSONDecoder()
-                
-                do {
-                    let result = try decoder.decode(ReviewListResponse.self, from: data)
-                    
-                    self.reviewList = result.list
-                    
-                    DispatchQueue.main.async {
-                        self.storageCollectionView.reloadData()
-                        self.sortReviewData()
-                    }
-                } catch {
-                    print(error)
-                }
-            }
-        }.resume()
-    }
-    
-    
-    /// 작성한 영화 리뷰를 삭제합니다.
-    /// - Parameter id: 리뷰 id
-    func deleteReview(id: Int) {
-        guard let url = URL(string: "https://localhost:53007/review/\(id)") else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-        
-        session.dataTask(with: request, completionHandler: { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    print(httpResponse.statusCode)
-                }
-                
-                return
-            }
-            
-            if let data = data {
-                let decoder = JSONDecoder()
-                
-                do {
-                    let apiResponse = try decoder.decode(CommonResponse.self, from: data)
-                    
-                    if apiResponse.code == ResultCode.ok.rawValue {
-                        if let index = self.reviewList.firstIndex(where: { $0.reviewId == id }) {
-                            self.reviewList.remove(at: index)
-                            
-                            DispatchQueue.main.async {
-                                let indexPath = IndexPath(row: index, section: 0)
-                                self.storageCollectionView.deleteItems(at: [indexPath])
-                            }
-                        }
-                    } else {
-                        if let message = apiResponse.message {
-                            if let message = apiResponse.message {
-                                print(message)
-                                // 경고창
-                            }
-                        }
-                    }
-                } catch {
-                    print(error)
-                }
-            }
-        }).resume()
-    }
-    
-    
     /// 리뷰 데이터를 정렬합니다.
     ///
     /// 정렬 기준과 기준 순서에 따라 데이터를 정렬합니다.
     func sortReviewData() {
         if alignmentLabel.text == "개봉연도" && alignmentStateLabel.text == "오래된 날짜순" {
-            reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() < $1.releaseDate.toManagerDBDate() ?? Date() }
+            ReviewManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() < $1.releaseDate.toManagerDBDate() ?? Date() }
             recentlyReviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() < $1.releaseDate.toManagerDBDate() ?? Date() }
         } else if alignmentLabel.text == "개봉연도" && alignmentStateLabel.text == "최근 날짜순" {
-            reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() > $1.releaseDate.toManagerDBDate() ?? Date() }
+            ReviewManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() > $1.releaseDate.toManagerDBDate() ?? Date() }
             recentlyReviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() > $1.releaseDate.toManagerDBDate() ?? Date() }
         }
         
         
         if alignmentLabel.text == "내가 본 날짜" && alignmentStateLabel.text == "오래된 날짜순" {
-            reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
             recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
         } else if alignmentLabel.text == "내가 본 날짜" && alignmentStateLabel.text == "최근 날짜순" {
-            reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
             recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
         }
         
         if alignmentLabel.text == "영화 이름" && alignmentStateLabel.text == "가나다" {
-            reviewList.sort { $0.movieTitle < $1.movieTitle }
+            ReviewManager.shared.reviewList.sort { $0.movieTitle < $1.movieTitle }
             recentlyReviewList.sort { $0.movieTitle < $1.movieTitle }
         } else if alignmentLabel.text == "영화 이름" && alignmentStateLabel.text == "하파타" {
-            reviewList.sort { $0.movieTitle > $1.movieTitle }
+            ReviewManager.shared.reviewList.sort { $0.movieTitle > $1.movieTitle }
             recentlyReviewList.sort { $0.movieTitle > $1.movieTitle }
         }
         
@@ -357,11 +253,20 @@ class StorageViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(ReviewManager.shared.reviewList.count)
         NotificationCenter.default.addObserver(forName: .reviewWillCancelled, object: nil, queue: .main) {[weak self] _ in
             guard let self = self else { return }
             
             UIView.animate(withDuration: 0.3) {
                 self.removeDimViewFromWindow()
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: .reviewDidUpdate, object: nil, queue: .main) {[weak self] _ in
+            guard let self = self else { return }
+            
+            ReviewManager.shared.fetchReview {
+                self.storageCollectionView.reloadData()
             }
         }
         
@@ -374,7 +279,9 @@ class StorageViewController: CommonViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchReview()
+        ReviewManager.shared.fetchReview {
+            self.storageCollectionView.reloadData()
+        }
     }
     
     
@@ -408,7 +315,7 @@ extension StorageViewController: UICollectionViewDataSource {
             return recentlyReviewList.count
         }
 
-        return reviewList.count
+        return ReviewManager.shared.reviewList.count
     }
     
     
@@ -429,14 +336,11 @@ extension StorageViewController: UICollectionViewDataSource {
             return cell
         }
 
-        let target = reviewList[indexPath.row]
+        let target = ReviewManager.shared.reviewList[indexPath.row]
         cell.configure(with: target)
         
         return cell
     }
-    
-    
-    
 }
 
 
@@ -458,9 +362,9 @@ extension StorageViewController: UICollectionViewDelegate {
             window.addSubview(self.dimView)
             
             if isRecentlyMovieButtonSelected {
-                vc.movieData = recentlyReviewList[indexPath.item]
+                vc.reviewData = recentlyReviewList[indexPath.item]
             } else {
-                vc.movieData = reviewList[indexPath.item]
+                vc.reviewData = ReviewManager.shared.reviewList[indexPath.item]
             }
             
             vc.modalPresentationStyle = .overFullScreen
@@ -478,12 +382,12 @@ extension StorageViewController: UICollectionViewDelegate {
                 let alert = UIAlertController(title: "리뷰 삭제", message: "리뷰를 삭제하시겠습니까?", preferredStyle: .alert)
                 
                 let delete = UIAlertAction(title: "확인", style: .destructive) { action in
-                    let id = self.reviewList[indexPath.row].reviewId
+                    let id = ReviewManager.shared.reviewList[indexPath.row].reviewId
                     
-                    self.deleteReview(id: id)
-                    let target = [IndexPath(item: self.reviewList[indexPath.row].reviewId, section: 0)]
+                    ReviewManager.shared.deleteReview(id: id, collectionView: self.storageCollectionView)
+                    let target = [IndexPath(item: ReviewManager.shared.reviewList[indexPath.row].reviewId, section: 0)]
                     
-                    self.reviewList.remove(at: indexPath.item)
+                    ReviewManager.shared.reviewList.remove(at: indexPath.item)
                     collectionView.reloadItems(at: target)
                 }
                 alert.addAction(delete)
@@ -535,21 +439,5 @@ extension StorageViewController: UICollectionViewDelegateFlowLayout {
         }
         
         return CGSize(width: Int(width), height: Int(height))
-    }
-}
-
-
-
-/// 로컬 인증서 문제 해결
-extension StorageViewController: URLSessionDelegate {
-    
-    /// 로컬 인증서 문제를 해결합니다.
-    /// - Parameters:
-    ///   - session: 세션
-    ///   - challenge: 인증 요청 객체
-    ///   - completionHandler: 완료 블록
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let trust = challenge.protectionSpace.serverTrust!
-        completionHandler(.useCredential, URLCredential(trust: trust))
     }
 }

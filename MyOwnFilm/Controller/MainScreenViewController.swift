@@ -10,10 +10,11 @@ import UIKit
 
 /// 메인 화면을 표시하는 화면과 관련된 뷰컨트롤러 클래스
 class MainScreenViewController: CommonViewController {
+    
     /// 메인 화면 테이블뷰
     @IBOutlet weak var mainScreenTableView: UITableView!
     
-    /// Now Playing 글자를 표시하는 View
+    /// Now Playing 뷰
     @IBOutlet weak var nowPlayingView: UIView!
     
     /// 영화 구분 타이틀
@@ -29,6 +30,7 @@ class MainScreenViewController: CommonViewController {
     /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // 백그라운드 색상 설정
         view.backgroundColor = .black
         mainScreenTableView.backgroundColor = .black
@@ -47,6 +49,7 @@ class MainScreenViewController: CommonViewController {
 
 
 extension MainScreenViewController: CollectionViewCellDelegate {
+    
     /// 델리게이트에게 선택된 테이블뷰 셀에 있는 컬렉션뷰의 인덱스를 알립니다.
     /// - Parameters:
     ///   - collectionviewCell: 이 메소드를 호출하는 컬렉션뷰
@@ -67,6 +70,7 @@ extension MainScreenViewController: CollectionViewCellDelegate {
 
 
 extension MainScreenViewController: SubCollectionViewCellDelegate {
+    
     /// 델리게이트에게 선택된 테이블뷰 셀에 있는 컬렉션뷰의 인덱스를 알립니다.
     /// - Parameters:
     ///   - collectionviewCell: 이 메소드를 호출하는 컬렉션뷰
@@ -89,6 +93,7 @@ extension MainScreenViewController: SubCollectionViewCellDelegate {
 
 
 extension MainScreenViewController: UITableViewDataSource {
+    
     /// 데이터 소스 객체엑 테이블뷰 섹션의 개수를 요청합니다.
     /// - Parameter tableView: 이 메소드를 호출하는 테이블뷰
     /// - Returns: 섹션의 개수

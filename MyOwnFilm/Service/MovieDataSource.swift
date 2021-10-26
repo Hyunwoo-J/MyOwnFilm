@@ -8,8 +8,9 @@
 import UIKit
 
 
-/// 영화 데이터를 불러올 DataSource 클래스
+/// 영화 데이터 매니저
 class MovieDataSource {
+    
     /// 싱글톤
     static let shared = MovieDataSource()
     
@@ -45,10 +46,10 @@ class MovieDataSource {
     /// 불러올 페이지
     var page = 0
     
-    /// 현재 Fetch중인지 구분하기 위한 속성
+    /// 현재 Fetch중인지 구분
     private var isFetching = false
     
-    /// 불러올 데이터가 더 있는지 확인하기 위한 속성
+    /// 불러올 데이터가 더 있는지 확인
     var hasMore = true
     
     /// 검색 API를 호출합니다.

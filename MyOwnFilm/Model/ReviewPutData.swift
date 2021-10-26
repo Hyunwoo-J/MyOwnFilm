@@ -1,15 +1,16 @@
 //
-//  ReviewPostData.swift
+//  ReviewPutData.swift
 //  MyOwnFilm
 //
-//  Created by Hyunwoo Jang on 2021/10/13.
+//  Created by Hyunwoo Jang on 2021/10/26.
 //
 
 import Foundation
 
 
-/// 서버에 리뷰를 POST할 때 사용
-struct ReviewPostData: Codable {
+/// 서버에 리뷰를 PUT할 때 사용
+struct ReviewPutData: Codable {
+    let reviewId: Int
     let movieId: Int
     let movieTitle: String
     

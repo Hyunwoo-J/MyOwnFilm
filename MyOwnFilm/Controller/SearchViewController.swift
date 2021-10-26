@@ -8,8 +8,9 @@
 import UIKit
 
 
-/// 검색 화면과 관련된 뷰컨트롤러 클래스
+/// 검색 화면
 class SearchViewController: CommonViewController {
+    
     /// 영화를 검색할 서치바
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -40,6 +41,7 @@ class SearchViewController: CommonViewController {
 
 
 extension SearchViewController: UITableViewDataSourcePrefetching {
+    
     /// 데이터 소스 객체에게 설정한 인덱스 경로에서 셀에 대한 데이터를 준비하도록 지시합니다.
     /// - Parameters:
     ///   - tableView: 이 메소드를 호출하는 테이블뷰
@@ -61,6 +63,7 @@ extension SearchViewController: UITableViewDataSourcePrefetching {
 
 
 extension SearchViewController: UITableViewDataSource {
+    
     /// 데이터 소스 객체에게 지정된 섹션에 있는 행의 수를 물어봅니다.
     /// - Parameters:
     ///   - tableView: 이 메소드를 호출하는 테이블뷰
@@ -89,6 +92,7 @@ extension SearchViewController: UITableViewDataSource {
 
 
 extension SearchViewController: UITableViewDelegate {
+    
     /// 델리게이트에게 셀이 선택되었음을 알립니다.
     /// - Parameters:
     ///   - tableView: 이 메소드를 호출하는 테이블뷰
@@ -116,6 +120,7 @@ extension SearchViewController: UITableViewDelegate {
 
 
 extension SearchViewController: UISearchBarDelegate {
+    
     /// 델리게이트에게 검색 버튼이 눌렸음을 알립니다.
     /// - Parameter searchBar: 탭한 searchBar
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

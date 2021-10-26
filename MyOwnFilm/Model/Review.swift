@@ -10,6 +10,7 @@ import Foundation
 
 /// 영화에 대한 기록을 남길 항목들을 정의한 구조체
 struct MovieReview {
+    
     /// 기록을 구분할 id
     let reviewId: UUID
     

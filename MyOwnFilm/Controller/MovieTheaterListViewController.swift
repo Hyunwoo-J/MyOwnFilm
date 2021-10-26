@@ -188,6 +188,7 @@ extension MovieTheaterListViewController: UITableViewDelegate {
 
 
 extension MovieTheaterListViewController: URLSessionDelegate {
+    
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         let trust = challenge.protectionSpace.serverTrust!
         completionHandler(.useCredential, URLCredential(trust: trust))

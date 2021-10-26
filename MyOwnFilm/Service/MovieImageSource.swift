@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 영화 이미지를 불러올 클래스
+/// 영화 이미지 매니저
 class MovieImageSource {
     /// 싱글톤
     static let shared = MovieImageSource()
