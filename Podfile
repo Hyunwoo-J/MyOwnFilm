@@ -10,5 +10,6 @@ pod 'Cosmos'
 pod 'Loaf'
 pod 'FBSDKLoginKit'
 pod 'KakaoSDK'
+pod 'naveridlogin-sdk-ios'
 
 end
