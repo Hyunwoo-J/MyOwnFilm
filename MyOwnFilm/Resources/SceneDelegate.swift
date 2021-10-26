@@ -6,6 +6,7 @@
 //
 
 import FBSDKCoreKit
+import KakaoSDKAuth
 import UIKit
 
 @available(iOS 13.0, *)
@@ -50,10 +51,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-            guard let url = URLContexts.first?.url else {
-                return
-            }
-
+        guard let url = URLContexts.first?.url else {
+            return
+        }
+        
+        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            _ = AuthController.handleOpenUrl(url: url)
+        }
+        
+        if url.absoluteString.hasPrefix("fb") {
             ApplicationDelegate.shared.application(
                 UIApplication.shared,
                 open: url,
@@ -61,5 +67,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 annotation: [UIApplication.OpenURLOptionsKey.annotation]
             )
         }
+    }
 }
 
