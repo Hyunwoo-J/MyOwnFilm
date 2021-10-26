@@ -2,7 +2,7 @@
 //  RoundedView.swift
 //  MyOwnFilm
 //
-//  Created by Hyunwoo Jang on 2021/10/27.
+//  Created by Hyunwoo Jang on 2021/07/17.
 //
 
 import UIKit
@@ -10,8 +10,8 @@ import UIKit
 
 @IBDesignable
 /// 뷰를 둥글게 깎는 뷰
-class RoundedView: UIView {
-
+class CircleView: UIView {
+    
     /// Initializes and returns a newly allocated view object with the specified frame rectangle.
     /// - Parameter frame: 뷰의 CGRect
     override init(frame: CGRect) {
@@ -28,7 +28,7 @@ class RoundedView: UIView {
     
     /// View의 cornerRadius를 둥글게 깎습니다.
     func setup() {
-        layer.cornerRadius = frame.height / 3
+        layer.cornerRadius = frame.height / 2
     }
     
     
