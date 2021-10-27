@@ -18,6 +18,13 @@ class JoinViewController: CommonViewController {
     @IBOutlet weak var passwordField: UITextField!
     
     
+    /// 이전 화면으로 돌아갑니다.
+    /// - Parameter sender: X 버튼
+    @IBAction func cancel(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     @IBAction func signup(_ sender: Any) {
         guard let email = emailField.text, let password = passwordField.text else { return }
         
