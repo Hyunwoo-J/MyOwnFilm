@@ -45,6 +45,7 @@
 		2C9DCD21272882E000C87810 /* EmailJoinPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */; };
 		2C9DCD23272882F700C87810 /* JoinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD22272882F700C87810 /* JoinResponse.swift */; };
 		2C9DCD2527288BB100C87810 /* SocialLoginPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD2427288BB000C87810 /* SocialLoginPostData.swift */; };
+		2C9DCD2727289F7700C87810 /* NaverResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD2627289F7700C87810 /* NaverResponse.swift */; };
 		2CA0CD9426F062B6004BDA42 /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */; };
 		2CAB1AC226CFE32400EA3C8B /* Int+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */; };
 		2CAB1AC426CFE44100EA3C8B /* MovieImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAB1AC326CFE44100EA3C8B /* MovieImageSource.swift */; };
@@ -98,6 +99,7 @@
 		2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailJoinPostData.swift; sourceTree = "<group>"; };
 		2C9DCD22272882F700C87810 /* JoinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinResponse.swift; sourceTree = "<group>"; };
 		2C9DCD2427288BB000C87810 /* SocialLoginPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginPostData.swift; sourceTree = "<group>"; };
+		2C9DCD2627289F7700C87810 /* NaverResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverResponse.swift; sourceTree = "<group>"; };
 		2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+TimeInterval.swift"; sourceTree = "<group>"; };
 		2CAB1AC326CFE44100EA3C8B /* MovieImageSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImageSource.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				2C9DCD1C2728765E00C87810 /* EmailLoginPostData.swift */,
 				2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */,
 				2C9DCD2427288BB000C87810 /* SocialLoginPostData.swift */,
+				2C9DCD2627289F7700C87810 /* NaverResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				2C9DCD19272862FD00C87810 /* RoundedView.swift in Sources */,
 				2CA0CD9426F062B6004BDA42 /* MemoViewController.swift in Sources */,
 				2C443A672716085400B1F5D1 /* ResultCode.swift in Sources */,
+				2C9DCD2727289F7700C87810 /* NaverResponse.swift in Sources */,
 				2C9DCD1D2728765E00C87810 /* EmailLoginPostData.swift in Sources */,
 				2C7CDC06271E6656003E1E60 /* String+Fomatter.swift in Sources */,
 				2C1B4BE026EE690A000AAE1D /* StorageViewController.swift in Sources */,

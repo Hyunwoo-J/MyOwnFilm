@@ -9,6 +9,7 @@ import FBSDKCoreKit
 import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
+import NaverThirdPartyLogin
 import UIKit
 
 @main
@@ -21,6 +22,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         KakaoSDKCommon.initSDK(appKey: "7e1f8717a3efa57d0d3af0222d644d98")
+        
+        if let naverLogin = NaverThirdPartyLoginConnection.getSharedInstance() {
+            let scheme = "MoF"
+            let clientId = "w9eehqWBlY_oheYT0Umv"
+            let clientSecret = "2EyfP25Rdb"
+            
+            naverLogin.isNaverAppOauthEnable = true
+            naverLogin.isInAppOauthEnable = true
+            
+            naverLogin.serviceUrlScheme = scheme
+            naverLogin.consumerKey = clientId
+            naverLogin.consumerSecret = clientSecret
+            naverLogin.appName = "MoF"
+        }
         
         return true
     }
@@ -36,6 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
                 annotation: options[UIApplication.OpenURLOptionsKey.annotation]
             )
+        }
+        else if url.absoluteString.hasPrefix("naver") || url.absoluteString.hasPrefix("MoF"), let naverLogin = NaverThirdPartyLoginConnection.getSharedInstance() {
+            return naverLogin.application(app, open: url, options: options)
         }
         
         return false

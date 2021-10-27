@@ -7,6 +7,7 @@
 
 import FBSDKCoreKit
 import KakaoSDKAuth
+import NaverThirdPartyLogin
 import UIKit
 
 @available(iOS 13.0, *)
@@ -58,14 +59,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if (AuthApi.isKakaoTalkLoginUrl(url)) {
             _ = AuthController.handleOpenUrl(url: url)
         }
-        
-        if url.absoluteString.hasPrefix("fb") {
+        else if url.absoluteString.hasPrefix("fb") {
             ApplicationDelegate.shared.application(
                 UIApplication.shared,
                 open: url,
                 sourceApplication: nil,
                 annotation: [UIApplication.OpenURLOptionsKey.annotation]
             )
+        }
+        else if url.absoluteString.hasPrefix("naver") || url.absoluteString.hasPrefix("MoF"), let naverLogin = NaverThirdPartyLoginConnection.getSharedInstance() {
+            naverLogin.receiveAccessToken(url)
         }
     }
 }

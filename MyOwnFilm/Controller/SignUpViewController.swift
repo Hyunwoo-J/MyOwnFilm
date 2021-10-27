@@ -10,6 +10,7 @@ import FBSDKLoginKit
 import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
+import NaverThirdPartyLogin
 import UIKit
 
 
@@ -22,7 +23,7 @@ class SignUpViewController: CommonViewController {
     
     /// 페이스북 계정으로 로그인합니다.
     /// - Parameter sender: 페이스북 버튼
-    @IBAction func loginWithFacebook(_ sender: Any) {
+    @IBAction func signupWithFacebook(_ sender: Any) {
         manager.logIn(permissions: ["email", "public_profile"], from: self) { result, error in
             if let error = error {
                 print(error)
@@ -66,7 +67,7 @@ class SignUpViewController: CommonViewController {
     
     /// 카카오로 로그인합니다.
     /// - Parameter sender: 카카오 버튼
-    @IBAction func loginWithKakao(_ sender: Any) {
+    @IBAction func signupWithKakao(_ sender: Any) {
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
             if let error = error {
                 print(error)
@@ -114,8 +115,60 @@ class SignUpViewController: CommonViewController {
     }
     
     
+    @IBAction func signupWithNaver(_ sender: Any) {
+        if let naverLogin = NaverThirdPartyLoginConnection.getSharedInstance() {
+            if let _ = naverLogin.accessToken {
+                getNaverProfile()
+                
+                return
+            }
+            
+            naverLogin.delegate = self
+            naverLogin.requestThirdPartyLogin()
+        }
+    }
+    
+    private func getNaverProfile() {
+        guard let naverLogin = NaverThirdPartyLoginConnection.getSharedInstance() else { return }
+        guard let token = naverLogin.accessToken else { return }
+        
+        let apiURL = "https://openapi.naver.com/v1/nid/me"
+        guard let url = URL(string: apiURL) else { return }
+        
+        let session = URLSession.shared
+        
+        var request = URLRequest(url: url)
+        request.setValue("w9eehqWBlY_oheYT0Umv", forHTTPHeaderField: "X-Naver-Client-Id")
+        request.setValue("2EyfP25Rdb", forHTTPHeaderField: "X-Naver-Client-Secret")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        session.dataTask(with: request) { data, response, error in
+            if let data = data {
+                let decoder = JSONDecoder()
+                
+                do {
+                    let apiResponse = try decoder.decode(NaverResponse.self, from: data)
+                    
+                    let id = apiResponse.response.id
+                    let email = apiResponse.response.email
+                    let data = SocialLoginPostData(provider: "Naver", id: id, email: email)
+                    
+                    switch apiResponse.resultcode {
+                    case "00":
+                        self.login(data: data)
+                    default:
+                        break
+                    }
+                } catch {
+                    self.alertMessage(message: error.localizedDescription)
+                }
+            }
+        }.resume()
+    }
+    
+    
     private func login(data: SocialLoginPostData) {
-        guard let url = URL(string: "https://mofapi.azurewebsites.net//login/sso") else {
+        guard let url = URL(string: "https://mofapi.azurewebsites.net/login/sso") else {
             return
         }
         
@@ -172,5 +225,28 @@ class SignUpViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+}
+
+
+
+extension SignUpViewController: NaverThirdPartyLoginConnectionDelegate {
+    
+    func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
+        getNaverProfile()
+    }
+    
+    
+    func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
+        getNaverProfile()
+    }
+    
+    
+    func oauth20ConnectionDidFinishDeleteToken() {
+    }
+    
+    
+    func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
+        alertMessage(message: error.localizedDescription)
     }
 }
