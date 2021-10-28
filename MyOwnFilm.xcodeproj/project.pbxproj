@@ -47,6 +47,10 @@
 		2C9DCD2527288BB100C87810 /* SocialLoginPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD2427288BB000C87810 /* SocialLoginPostData.swift */; };
 		2C9DCD2727289F7700C87810 /* NaverResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9DCD2627289F7700C87810 /* NaverResponse.swift */; };
 		2CA0CD9426F062B6004BDA42 /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */; };
+		2CA8691F2729D6D5000B6A8E /* AccountKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA8691E2729D6D5000B6A8E /* AccountKeys.swift */; };
+		2CA869232729E231000B6A8E /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA869222729E231000B6A8E /* SettingViewController.swift */; };
+		2CA869252729E347000B6A8E /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA869242729E347000B6A8E /* SettingTableViewCell.swift */; };
+		2CA869272729EC57000B6A8E /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA869262729EC57000B6A8E /* IntroViewController.swift */; };
 		2CAB1AC226CFE32400EA3C8B /* Int+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */; };
 		2CAB1AC426CFE44100EA3C8B /* MovieImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAB1AC326CFE44100EA3C8B /* MovieImageSource.swift */; };
 		2CD6C73A26AC6F0600E82A06 /* SubMovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD6C73926AC6F0600E82A06 /* SubMovieCollectionViewCell.swift */; };
@@ -102,6 +106,10 @@
 		2C9DCD2627289F7700C87810 /* NaverResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverResponse.swift; sourceTree = "<group>"; };
 		2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		2CA8691D2729A994000B6A8E /* MyOwnFilm.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyOwnFilm.entitlements; sourceTree = "<group>"; };
+		2CA8691E2729D6D5000B6A8E /* AccountKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountKeys.swift; sourceTree = "<group>"; };
+		2CA869222729E231000B6A8E /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		2CA869242729E347000B6A8E /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		2CA869262729EC57000B6A8E /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+TimeInterval.swift"; sourceTree = "<group>"; };
 		2CAB1AC326CFE44100EA3C8B /* MovieImageSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImageSource.swift; sourceTree = "<group>"; };
 		2CD6C73926AC6F0600E82A06 /* SubMovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubMovieCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -137,6 +145,7 @@
 				2CD6C73926AC6F0600E82A06 /* SubMovieCollectionViewCell.swift */,
 				2C2BADC126B55E3D00138E58 /* SearchMovieTableViewCell.swift */,
 				2CE2F5B326EF38DD0021C642 /* StorageCollectionViewCell.swift */,
+				2CA869242729E347000B6A8E /* SettingTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -156,7 +165,6 @@
 			children = (
 				2CA8691D2729A994000B6A8E /* MyOwnFilm.entitlements */,
 				2C16A02426AC216100802BD6 /* Extension */,
-				2C6EA15726A30DF9003B4671 /* LiveRendering */,
 				2CF18D7B269ADA0D001B1497 /* Prototype */,
 				2CF18D7D269AF1F6001B1497 /* Model */,
 				2CF18D80269AF243001B1497 /* Service */,
@@ -175,6 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				2C117F282662317700335B74 /* Storyboard */,
+				2C6EA15826A30E18003B4671 /* CircleView.swift */,
+				2C9DCD18272862FD00C87810 /* RoundedView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -182,6 +192,7 @@
 		2C117F272662315E00335B74 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2CA869262729EC57000B6A8E /* IntroViewController.swift */,
 				2C9DCD13272854DE00C87810 /* SignupViewController.swift */,
 				2CE4F014267242C7008BB895 /* LoginViewController.swift */,
 				2C9DCD1E2728822300C87810 /* JoinViewController.swift */,
@@ -192,6 +203,7 @@
 				2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */,
 				2C2BADBF26B54E2100138E58 /* SearchViewController.swift */,
 				2C1B4BDF26EE690A000AAE1D /* StorageViewController.swift */,
+				2CA869222729E231000B6A8E /* SettingViewController.swift */,
 				2C581DEB26693ECE0040C6EA /* CommonViewController.swift */,
 			);
 			path = Controller;
@@ -228,15 +240,6 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		2C6EA15726A30DF9003B4671 /* LiveRendering */ = {
-			isa = PBXGroup;
-			children = (
-				2C6EA15826A30E18003B4671 /* CircleView.swift */,
-				2C9DCD18272862FD00C87810 /* RoundedView.swift */,
-			);
-			path = LiveRendering;
-			sourceTree = "<group>";
-		};
 		2C9DCD15272859B400C87810 /* Segue */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +273,7 @@
 				2C9DCD20272882E000C87810 /* EmailJoinPostData.swift */,
 				2C9DCD2427288BB000C87810 /* SocialLoginPostData.swift */,
 				2C9DCD2627289F7700C87810 /* NaverResponse.swift */,
+				2CA8691E2729D6D5000B6A8E /* AccountKeys.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -432,14 +436,18 @@
 				2C16A02326AC1D7800802BD6 /* MainScreenFirstSectionCollectionViewCell.swift in Sources */,
 				2CE2F5B426EF38DD0021C642 /* StorageCollectionViewCell.swift in Sources */,
 				2CE4F015267242C7008BB895 /* LoginViewController.swift in Sources */,
+				2CA8691F2729D6D5000B6A8E /* AccountKeys.swift in Sources */,
 				2C9DCD21272882E000C87810 /* EmailJoinPostData.swift in Sources */,
 				2C9DCD2527288BB100C87810 /* SocialLoginPostData.swift in Sources */,
 				2C16A02626AC21BF00802BD6 /* Date+Formatter.swift in Sources */,
 				2C16A01F26AC172900802BD6 /* MainScreenViewController.swift in Sources */,
 				2C9DCD1F2728822300C87810 /* JoinViewController.swift in Sources */,
 				2CD6C73A26AC6F0600E82A06 /* SubMovieCollectionViewCell.swift in Sources */,
+				2CA869252729E347000B6A8E /* SettingTableViewCell.swift in Sources */,
 				2CD6C73C26AC6F9D00E82A06 /* SubMovieTableViewCell.swift in Sources */,
+				2CA869272729EC57000B6A8E /* IntroViewController.swift in Sources */,
 				2C9DCD23272882F700C87810 /* JoinResponse.swift in Sources */,
+				2CA869232729E231000B6A8E /* SettingViewController.swift in Sources */,
 				2C2BADC026B54E2100138E58 /* SearchViewController.swift in Sources */,
 				2C581DEC26693ECE0040C6EA /* CommonViewController.swift in Sources */,
 				2C117F122662303B00335B74 /* AppDelegate.swift in Sources */,

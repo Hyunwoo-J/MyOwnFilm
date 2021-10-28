@@ -63,15 +63,16 @@ class JoinViewController: CommonViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let apiRespose = try decoder.decode(LoginResponse.self, from: data)
+                    let apiResponse = try decoder.decode(LoginResponse.self, from: data)
                     
-                    switch apiRespose.code {
+                    switch apiResponse.code {
                     case ResultCode.ok.rawValue:
+                        self.saveAccount(responseData: apiResponse)
                         self.alertMessageWithHandler(message: "회원가입에 성공하였습니다.") { _ in
                             self.dismiss(animated: true, completion: nil)
                         }
                     case ResultCode.fail.rawValue:
-                        self.alertMessage(message: apiRespose.message ?? "오류가 발생했습니다.")
+                        self.alertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
                     default:
                         break
                     }

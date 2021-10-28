@@ -35,11 +35,6 @@ class SignupViewController: CommonViewController {
     }
     
     
-    @objc func handleAppleLogin(_ sender: Any) {
-        
-    }
-    
-    
     /// 네이버로 회원가입을 하고 로그인합니다.
     /// - Parameter sender: 네이버 버튼
     @IBAction func signupWithNaver(_ sender: Any) {

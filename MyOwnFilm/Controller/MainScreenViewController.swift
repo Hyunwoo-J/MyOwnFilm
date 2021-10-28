@@ -139,7 +139,7 @@ extension MainScreenViewController: UITableViewDataSource {
             cell.cellDelegate = self
             
             let target = MovieDataSource.shared.movieLists[indexPath.row]
-            cell.configure(with: target, text: titleList[indexPath.row])
+            cell.configure(with: target, text: titleList[indexPath.row]) 
             
             return cell
             

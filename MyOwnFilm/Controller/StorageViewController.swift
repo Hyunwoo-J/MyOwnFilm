@@ -39,16 +39,21 @@ class StorageViewController: CommonViewController {
     /// 정렬 관련 화살표 모양 이미지뷰
     @IBOutlet weak var alignmentArrowImageView: UIImageView!
     
+    /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     /// 최근 저장한 영화 버튼 활성화 플래그
     var isRecentlyMovieButtonSelected = false
     
-    /// 개봉연도순 정렬이 오름차순인지 판단
+    /// 개봉연도순 정렬 오름차순 플래그
     var isOpeningYearAscending = false
     
-    /// 내가 본 날짜순 정렬이 오름차순인지 판단
+    /// 내가 본 날짜순 정렬  오름차순 플래그
     var isDateAscending = false
     
-    /// 영화이름순 정렬이 오름차순인지 판단
+    /// 영화이름순 정렬  오름차순 플래그  => enum(리팩토링) 오름차순, 내림차순
     var isMovieNameAscending = true
     
     /// 최근 저장한 리뷰 목록
@@ -385,10 +390,6 @@ extension StorageViewController: UICollectionViewDelegate {
                     let id = ReviewManager.shared.reviewList[indexPath.row].reviewId
                     
                     ReviewManager.shared.deleteReview(id: id, collectionView: self.storageCollectionView)
-                    let target = [IndexPath(item: ReviewManager.shared.reviewList[indexPath.row].reviewId, section: 0)]
-                    
-                    ReviewManager.shared.reviewList.remove(at: indexPath.item)
-                    collectionView.reloadItems(at: target)
                 }
                 alert.addAction(delete)
                 

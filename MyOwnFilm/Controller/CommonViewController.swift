@@ -95,6 +95,25 @@ class CommonViewController: UIViewController {
     }
     
     
+    /// 계정을 저장합니다.
+    /// - Parameter responseData: 계정 응답 모델
+    func saveAccount(responseData: CommonAccountResponseType) {
+        if let userId = responseData.userId, let token = responseData.token {
+            UserDefaults.standard.set(userId, forKey: AccountKeys.userId.rawValue)
+            UserDefaults.standard.set(token, forKey: AccountKeys.apiToken.rawValue)
+            UserDefaults.standard.set("email", forKey: AccountKeys.provider.rawValue)
+        }
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.tintColor = .white
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
+    }
+    
+    
     deinit {
         print(#function, self) // self: 현재 인스턴스 정보
         
@@ -105,13 +124,5 @@ class CommonViewController: UIViewController {
         for token in tokens {
             NotificationCenter.default.removeObserver(token)
         }
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
     }
 }

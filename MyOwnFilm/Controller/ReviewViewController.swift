@@ -208,9 +208,6 @@ class ReviewViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ReviewManager.shared.fetchReview {
-            
-        }
         setMemoView()
         setTextView()
         loadImage()

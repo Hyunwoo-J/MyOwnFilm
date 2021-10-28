@@ -55,6 +55,10 @@ class ReviewManager {
         request.httpBody = httpBody
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        if let token = UserDefaults.standard.string(forKey: AccountKeys.apiToken.rawValue) {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
         session.dataTask(with: request) { data, response, error in
             defer {
                 print(">>>END")
@@ -101,7 +105,15 @@ class ReviewManager {
     func fetchReview(completion: @escaping () -> ()) {
         guard let url = URL(string: "https://mofapi.azurewebsites.net/review") else { return }
         
-        session.dataTask(with: url) { data, response, error in
+        let session = URLSession.shared
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        if let token = UserDefaults.standard.string(forKey: AccountKeys.apiToken.rawValue) {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        session.dataTask(with: request) { data, response, error in
             defer {
                 DispatchQueue.main.async {
                     completion()
@@ -187,6 +199,11 @@ class ReviewManager {
         
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if let token = UserDefaults.standard.string(forKey: AccountKeys.apiToken.rawValue) {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         session.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
@@ -210,19 +227,17 @@ class ReviewManager {
                     
                     if apiResponse.code == ResultCode.ok.rawValue {
                         if let index = self.reviewList.firstIndex(where: { $0.reviewId == id }) {
-                            self.reviewList.remove(at: index)
-                            
                             DispatchQueue.main.async {
                                 let indexPath = IndexPath(row: index, section: 0)
                                 collectionView.deleteItems(at: [indexPath])
                             }
+                            
+                            self.reviewList.remove(at: index)
                         }
                     } else {
                         if let message = apiResponse.message {
-                            if let message = apiResponse.message {
-                                print(message)
-                                // 경고창
-                            }
+                            print(message)
+                            // 경고창
                         }
                     }
                 } catch {

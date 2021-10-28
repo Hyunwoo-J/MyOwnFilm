@@ -189,7 +189,7 @@ class MovieDataSource {
                 let decoder = JSONDecoder()
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
-                self.nowPlayingMovieList.append(contentsOf: movieData.results)
+                self.nowPlayingMovieList = movieData.results
             } catch {
                 print(error)
             }
@@ -232,9 +232,12 @@ class MovieDataSource {
                 let decoder = JSONDecoder()
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
-                self.popularMovieList.append(contentsOf: movieData.results)
+                self.popularMovieList = movieData.results
                 self.popularMovieList.sort { $0.releaseDate > $1.releaseDate }
-                self.movieLists.append(self.popularMovieList)
+                
+                if self.movieLists.count != 5 {
+                    self.movieLists.append(self.popularMovieList)
+                }
             } catch {
                 print(error)
             }
@@ -277,8 +280,11 @@ class MovieDataSource {
                 let decoder = JSONDecoder()
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
-                self.actionMovieList.append(contentsOf: movieData.results)
-                self.movieLists.append(self.actionMovieList)
+                self.actionMovieList = movieData.results
+                
+                if self.movieLists.count != 5 {
+                    self.movieLists.append(self.actionMovieList)
+                }
             } catch {
                 print(error)
             }
@@ -322,8 +328,11 @@ class MovieDataSource {
                 let decoder = JSONDecoder()
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
-                self.comedyMovieList.append(contentsOf: movieData.results)
-                self.movieLists.append(self.comedyMovieList)
+                self.comedyMovieList = movieData.results
+                
+                if self.movieLists.count != 5 {
+                    self.movieLists.append(self.comedyMovieList)
+                }
             } catch {
                 print(error)
             }
@@ -367,8 +376,11 @@ class MovieDataSource {
                 let decoder = JSONDecoder()
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
-                self.ramanceMovieList.append(contentsOf: movieData.results)
-                self.movieLists.append(self.ramanceMovieList)
+                self.ramanceMovieList = movieData.results
+                
+                if self.movieLists.count != 5 {
+                    self.movieLists.append(self.ramanceMovieList)
+                }
             } catch {
                 print(error)
             }
@@ -412,8 +424,11 @@ class MovieDataSource {
                 let decoder = JSONDecoder()
                 let movieData = try decoder.decode(MovieData.self, from: data)
                 
-                self.fantasyMovieList.append(contentsOf: movieData.results)
-                self.movieLists.append(self.fantasyMovieList)
+                self.fantasyMovieList = movieData.results
+                
+                if self.movieLists.count != 5 {
+                    self.movieLists.append(self.fantasyMovieList)
+                }
             } catch {
                 print(error)
             }

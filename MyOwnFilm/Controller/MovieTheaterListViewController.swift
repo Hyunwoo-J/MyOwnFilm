@@ -45,7 +45,7 @@ class MovieTheaterListViewController: UIViewController {
     
     /// 영화관 목록을 다운로드합니다.
     func fetchMovieData() {
-        let urlStr = "https://localhost:53007/movietheater"
+        let urlStr = "https://mofapi.azurewebsites.net/movietheater"
         
         guard let url = URL(string: urlStr) else { return }
         

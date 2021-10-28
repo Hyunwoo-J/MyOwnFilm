@@ -58,13 +58,14 @@ class LoginViewController: CommonViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let apiRespose = try decoder.decode(LoginResponse.self, from: data)
+                    let apiResponse = try decoder.decode(LoginResponse.self, from: data)
                     
-                    switch apiRespose.code {
+                    switch apiResponse.code {
                     case ResultCode.ok.rawValue:
+                        self.saveAccount(responseData: apiResponse)
                         self.goToMain()
                     case ResultCode.fail.rawValue:
-                        self.alertMessage(message: apiRespose.message ?? "오류가 발생했습니다.")
+                        self.alertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
                     default:
                         break
                     }
@@ -80,6 +81,9 @@ class LoginViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        #if DEBUG
+        emailField.text = "test777@test.com"
+        passwordField.text = "Test123456#"
+        #endif
     }
 }
