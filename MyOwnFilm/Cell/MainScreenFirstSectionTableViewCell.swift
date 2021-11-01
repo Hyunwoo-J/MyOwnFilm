@@ -36,11 +36,6 @@ class MainScreenFirstSectionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // 백그라운드 색상 설정
-        backgroundColor = .black
-        firstSectionCollectionView.backgroundColor = .black
-        
-        // firstSectionCollectionView의 델리게이트, 데이터소스 지정
         firstSectionCollectionView.dataSource = self
         firstSectionCollectionView.delegate = self
     }

@@ -32,8 +32,6 @@ class MainScreenFirstSectionCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // 백그라운드 색상 설정
-        backgroundColor = .black
         // 뷰 외곽선 깎기
         firstSectionImageView.layer.cornerRadius = 16
     }

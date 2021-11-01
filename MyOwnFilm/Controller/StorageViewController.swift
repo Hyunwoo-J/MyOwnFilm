@@ -53,7 +53,7 @@ class StorageViewController: CommonViewController {
     /// 내가 본 날짜순 정렬  오름차순 플래그
     var isDateAscending = false
     
-    /// 영화이름순 정렬  오름차순 플래그  => enum(리팩토링) 오름차순, 내림차순
+    /// 영화이름순 정렬  오름차순 플래그
     var isMovieNameAscending = true
     
     /// 최근 저장한 리뷰 목록
@@ -72,8 +72,9 @@ class StorageViewController: CommonViewController {
         }
         
         UIView.animate(withDuration: 0.3) {
-            self.recentlyMovieBottomView.backgroundColor = sender.tag == 100 ? .darkGray : .black
-            self.allMovieBottomView.backgroundColor = sender.tag == 101 ? .darkGray : .black
+            let backgroundColor = UIColor(named: "backgroundColor")
+            self.recentlyMovieBottomView.backgroundColor = sender.tag == 100 ? .darkGray : backgroundColor
+            self.allMovieBottomView.backgroundColor = sender.tag == 101 ? .darkGray : backgroundColor
         }
         
         if sender.tag == 100 {

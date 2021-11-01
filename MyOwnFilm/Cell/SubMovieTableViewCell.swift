@@ -46,9 +46,6 @@ class SubMovieTableViewCell: UITableViewCell {
     /// 초기화 작업을 실행합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
-        // 백그라운드 색상 설정
-        backgroundColor = .black
-        subMovieCollectionView.backgroundColor = .black
         
         subMovieCollectionView.dataSource = self
         subMovieCollectionView.delegate = self

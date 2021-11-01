@@ -70,7 +70,6 @@ class MovieDetailViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .black
         [storyLabel, titleLabel, dateLabel].forEach { $0?.textColor = .white }
         
         if let index = index {

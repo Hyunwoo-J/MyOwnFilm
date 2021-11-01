@@ -110,14 +110,13 @@ class SearchMovieTableViewCell: UITableViewCell {
     
     
     /// 초기화 작업을 실행합니다.
+    ///
+    /// 뷰와 레이블의 백그라운드 색상을 설정합니다.
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // 백그라운드 색상 설정
-        backgroundColor = .black
         [firstView, secondView].forEach { $0?.backgroundColor = .clear }
         
-        // 텍스트 색상 설정
         [titleLabel, releaseDateLabel, genreLabel, storyLabel].forEach {
             $0?.textColor = .white
         }

@@ -180,7 +180,7 @@ class ReviewViewController: CommonViewController {
     /// 메모 화면 UI를 설정합니다.
     func setMemoView() {
         memoView.layer.cornerRadius = 8
-        memoView.layer.shadowColor = UIColor.black.cgColor
+        memoView.layer.shadowColor = UIColor(named: "backgroundColor")?.cgColor
         memoView.layer.shadowRadius = 1
         memoView.layer.shadowOpacity = 0.3
         memoView.layer.masksToBounds = true

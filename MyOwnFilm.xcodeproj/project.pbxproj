@@ -116,7 +116,6 @@
 		2CD6C73B26AC6F9D00E82A06 /* SubMovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubMovieTableViewCell.swift; sourceTree = "<group>"; };
 		2CE2F5B326EF38DD0021C642 /* StorageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCollectionViewCell.swift; sourceTree = "<group>"; };
 		2CE4F014267242C7008BB895 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		2CF18D7C269ADA5A001B1497 /* MovieItem.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MovieItem.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2CF18D7E269AF22B001B1497 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		2CF18D81269AF260001B1497 /* MovieDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDataSource.swift; sourceTree = "<group>"; };
 		4864EAE35440F52037B2D653 /* Pods_MyOwnFilm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyOwnFilm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,7 +164,6 @@
 			children = (
 				2CA8691D2729A994000B6A8E /* MyOwnFilm.entitlements */,
 				2C16A02426AC216100802BD6 /* Extension */,
-				2CF18D7B269ADA0D001B1497 /* Prototype */,
 				2CF18D7D269AF1F6001B1497 /* Model */,
 				2CF18D80269AF243001B1497 /* Service */,
 				2C117F29266231AC00335B74 /* Resources */,
@@ -246,14 +244,6 @@
 				2C9DCD16272859DB00C87810 /* ReplaceRootSegue.swift */,
 			);
 			path = Segue;
-			sourceTree = "<group>";
-		};
-		2CF18D7B269ADA0D001B1497 /* Prototype */ = {
-			isa = PBXGroup;
-			children = (
-				2CF18D7C269ADA5A001B1497 /* MovieItem.playground */,
-			);
-			path = Prototype;
 			sourceTree = "<group>";
 		};
 		2CF18D7D269AF1F6001B1497 /* Model */ = {

@@ -31,10 +31,6 @@ class MainScreenViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 백그라운드 색상 설정
-        view.backgroundColor = .black
-        mainScreenTableView.backgroundColor = .black
-        
         #if DEBUG
         print(Date().releaseDate)
         #endif

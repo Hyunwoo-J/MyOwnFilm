@@ -31,10 +31,6 @@ class SearchViewController: CommonViewController {
         super.viewDidLoad()
         
         searchBar.becomeFirstResponder()
-        
-        [view, movieTableView].forEach {
-            $0?.backgroundColor = .black
-        }
     }
 }
 
