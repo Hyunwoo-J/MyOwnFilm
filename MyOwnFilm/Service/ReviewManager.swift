@@ -20,6 +20,7 @@ extension Notification.Name {
 
 /// 리뷰 매니저
 class ReviewManager {
+    
     /// 싱글톤
     static let shared = ReviewManager()
     
@@ -102,6 +103,7 @@ class ReviewManager {
     
     
     /// 영화 리뷰를 다운로드합니다.
+    /// - Parameter completion: 완료 블록
     func fetchReview(completion: @escaping () -> ()) {
         guard let url = URL(string: "https://mofapi.azurewebsites.net/review") else { return }
         
@@ -138,7 +140,6 @@ class ReviewManager {
                 
                 do {
                     let result = try decoder.decode(ReviewListResponse.self, from: data)
-                    
                     self.reviewList = result.list
                 } catch {
                     print(error)
@@ -158,7 +159,6 @@ class ReviewManager {
     ///   - movieTheater: 영화관
     ///   - person: 같이 본 친구
     ///   - memo: 메모
-    
     func saveReviewData(index: Int?, movieList: [MovieData.Result], reviewData: ReviewListResponse.Review?, starPoint: Double, viewingDate: String, movieTheater: String, person: String, memo: String) {
         
         let updateDate = postDateFormatter.string(from: Date())
@@ -166,7 +166,7 @@ class ReviewManager {
         if let index = index {
             let target = movieList[index]
             
-            let reviewData = ReviewPostData(movieId: target.id, movieTitle: target.titleStr, posterPath: target.posterPath, backdropPath: target.backdropPath, releaseDate: target.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: movieTheater, person: person, memo: memo, updateDate: updateDate)
+            let reviewData = ReviewPostData(movieId: target.id, movieTitle: target.titleStr, backdropPath: target.backdropPath, posterPath: target.posterPath, releaseDate: target.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: movieTheater, person: person, memo: memo, updateDate: updateDate)
             
             guard let url = URL(string: "https://mofapi.azurewebsites.net/review") else { return }
             
@@ -179,7 +179,7 @@ class ReviewManager {
                 return
             }
             
-            let reviewPutData = ReviewPutData(reviewId: reviewData.reviewId ,movieId: reviewData.movieId, movieTitle: reviewData.movieTitle, posterPath: reviewData.posterPath, backdropPath: reviewData.backdropPath, releaseDate: reviewData.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: movieTheater, person: person, memo: memo, updateDate: updateDate)
+            let reviewPutData = ReviewPutData(reviewId: reviewData.reviewId ,movieId: reviewData.movieId, movieTitle: reviewData.movieTitle, backdropPath: reviewData.backdropPath, posterPath: reviewData.posterPath, releaseDate: reviewData.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: movieTheater, person: person, memo: memo, updateDate: updateDate)
             
             guard let url = URL(string: "https://mofapi.azurewebsites.net/review/\(reviewData.reviewId)") else { return }
             
@@ -192,9 +192,9 @@ class ReviewManager {
     
     
     /// 작성한 영화 리뷰를 삭제합니다.
-    /// - Parameter id: 리뷰 id
-    /// - Parameter collectionView: 컬렉션뷰
-    func deleteReview(id: Int, collectionView: UICollectionView) {
+    /// - Parameter id: 리뷰 ID
+    /// - Parameter completion: 완료 블록
+    func deleteReview(id: Int, completion: @escaping () -> ()) {
         guard let url = URL(string: "https://mofapi.azurewebsites.net/review/\(id)") else { return }
         
         var request = URLRequest(url: url)
@@ -226,18 +226,12 @@ class ReviewManager {
                     let apiResponse = try decoder.decode(CommonResponse.self, from: data)
                     
                     if apiResponse.code == ResultCode.ok.rawValue {
-                        if let index = self.reviewList.firstIndex(where: { $0.reviewId == id }) {
-                            DispatchQueue.main.async {
-                                let indexPath = IndexPath(row: index, section: 0)
-                                collectionView.deleteItems(at: [indexPath])
-                            }
-                            
-                            self.reviewList.remove(at: index)
-                        }
+                        DispatchQueue.main.async {
+                            completion()
+                        } 
                     } else {
                         if let message = apiResponse.message {
                             print(message)
-                            // 경고창
                         }
                     }
                 } catch {

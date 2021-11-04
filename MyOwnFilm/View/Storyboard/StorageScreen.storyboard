@@ -101,9 +101,9 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="156" height="236"/>
                                         <connections>
-                                            <outlet property="dateLabel" destination="ICY-Gc-WVu" id="sIX-vF-cjo"/>
                                             <outlet property="movieImageView" destination="Fiw-zL-6ob" id="XkI-At-gBV"/>
                                             <outlet property="placeLabel" destination="8M5-1k-JIe" id="5tX-9P-2hp"/>
+                                            <outlet property="viewingDateLabel" destination="ICY-Gc-WVu" id="me0-S1-H6I"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -241,7 +241,7 @@
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.058823529409999999" green="0.062745098040000002" blue="0.086274509799999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="backgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="8lM-ai-e3K" secondAttribute="trailing" id="4IM-dS-hu5"/>
                                                     <constraint firstItem="PSg-83-8vB" firstAttribute="top" secondItem="NGA-2X-2Z9" secondAttribute="top" id="Suz-1G-nbZ"/>
@@ -355,10 +355,10 @@
         <image name="text.justifyleft" catalog="system" width="128" height="100"/>
         <image name="up-arrow" width="16" height="16"/>
         <namedColor name="StorageBackgroundColor">
-            <color red="0.078431372549019607" green="0.078431372549019607" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.078000001609325409" green="0.078000001609325409" blue="0.078000001609325409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="backgroundColor">
-            <color red="0.058823529411764705" green="0.062745098039215685" blue="0.086274509803921567" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.059000000357627869" green="0.063000001013278961" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

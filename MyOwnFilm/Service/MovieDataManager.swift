@@ -9,10 +9,10 @@ import UIKit
 
 
 /// 영화 데이터 매니저
-class MovieDataSource {
+class MovieDataManager {
     
     /// 싱글톤
-    static let shared = MovieDataSource()
+    static let shared = MovieDataManager()
     
     /// 싱글톤
     private init() { }
@@ -20,42 +20,43 @@ class MovieDataSource {
     /// 영화 결과를 저장하기 위한 2차원 배열
     var movieLists = [[MovieData.Result]]()
     
-    /// 검색한 영화 리스트
+    /// 검색한 영화 목록
     var searchMovieList = [MovieData.Result]()
     
-    /// 현재 상영중인 영화 리스트
+    /// 현재 상영중인 영화 목록
     var nowPlayingMovieList = [MovieData.Result]()
     
-    /// 인기있는 영화 리스트
+    /// 인기있는 영화 목록
     private var popularMovieList = [MovieData.Result]()
     
-    /// 액션 영화 리스트
+    /// 액션 영화 목록
     private var actionMovieList = [MovieData.Result]()
     
-    /// 코메디 영화 리스트
+    /// 코미디 영화 목록
     private var comedyMovieList = [MovieData.Result]()
     
-    /// 로맨스 영화 리스트
+    /// 로맨스 영화 목록
     private var ramanceMovieList = [MovieData.Result]()
     
-    /// 판타지 영화 리스트
+    /// 판타지 영화 목록
     private var fantasyMovieList = [MovieData.Result]()
     
     
-    /// Prefetch를 위한 변수
+    /// Prefetch를 위한 속성
     /// 불러올 페이지
     var page = 0
     
-    /// 현재 Fetch중인지 구분
+    /// 패치 플래그
     private var isFetching = false
     
     /// 불러올 데이터가 더 있는지 확인
     var hasMore = true
     
+    
     /// 검색 API를 호출합니다.
     /// - Parameters:
-    ///   - movieName: 검색할 영화 이름
-    ///   - completion:  API응답을 받은 후에 호출할 코드
+    ///   - movieName: 영화 이름
+    ///   - completion: 완료 블록
     func fetchQueryMovie(about movieName: String, completion: @escaping () -> ()) {
         guard !isFetching && hasMore else { return }
         
@@ -111,13 +112,14 @@ class MovieDataSource {
     }
     
     
-    /// fetchMovie에서 사용할 DispatchGroup
+    /// DispatchGroup
     let group = DispatchGroup()
     
-    ///  요청한 API 응답을 모두 받고나서 테이블뷰를 업데이트합니다.
+    
+    ///  요청한 API 응답을 모두 받고나서 완료 블록을 호출합니다.
     /// - Parameters:
     ///   - date: 영화를 불러올 기준 날짜
-    ///   - completion: API응답을 받은 후에 호출할 코드
+    ///   - completion: 완료 블록
     func fetchMovie(by date: String, completion: @escaping () -> ()) {
         group.enter()
         fetchNowPlayingMovie(by: date) {
@@ -155,10 +157,10 @@ class MovieDataSource {
     }
     
     
-    /// 현재 상영중인 영화 API
+    /// 현재 상영중인 영화 데이터를 다운로드합니다.
     /// - Parameters:
-    ///   - date: 영화를 불러올 기준 날짜
-    ///   - completion: API응답을 받은 후에 호출할 코드
+    ///   - date: 기준 날짜
+    ///   - completion: 완료 블록
     func fetchNowPlayingMovie(by date: String, completion: @escaping () -> ()) {
         let urlStr = "https://api.themoviedb.org/3/movie/now_playing?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&region=KR&release_lte=\(date)"
 
@@ -198,10 +200,10 @@ class MovieDataSource {
     }
     
     
-    /// 인기작 영화 API를 받아옵니다.
+    /// 인기작 영화 데이터를 다운로드합니다.
     /// - Parameters:
-    ///   - date: 영화를 불러올 기준 날짜
-    ///   - completion: API응답을 받은 후에 호출할 코드
+    ///   - date: 기준 날짜
+    ///   - completion: 완료 블록
     func fetchPopularMovie(by date: String, completion: @escaping () -> ()) {
         let urlStr = "https://api.themoviedb.org/3/movie/popular?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&region=KR&release_lte=\(date)"
 
@@ -246,10 +248,10 @@ class MovieDataSource {
     }
     
     
-    /// 액션 영화 API를 받아옵니다.
+    /// 액션 영화 데이터를 다운로드합니다.
     /// - Parameters:
-    ///   - date: 영화를 불러올 기준 날짜
-    ///   - completion: API응답을 받은 후에 호출할 코드
+    ///   - date: 기준 날짜
+    ///   - completion: 완료 블록
     func fetchActionMovie(by date: String, completion: @escaping () -> ()) {
         let urlStr = "https://api.themoviedb.org/3/genre/28/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&release_lte=\(date)"
 
@@ -294,10 +296,10 @@ class MovieDataSource {
     }
     
     
-    /// 코미디 영화 API를 받아옵니다.
+    /// 코미디 영화 데이터를 다운로드합니다.
     /// - Parameters:
-    ///   - date: 영화를 불러올 기준 날짜
-    ///   - completion: API응답을 받은 후에 호출할 코드
+    ///   - date: 기준 날짜
+    ///   - completion: 완료 블록
     func fetchComedyMovie(by date: String, completion: @escaping () -> ()) {
         let urlStr = "https://api.themoviedb.org/3/genre/35/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&release_lte=\(date)"
 
@@ -342,10 +344,10 @@ class MovieDataSource {
     }
     
     
-    /// 로맨스 영화 API를 받아옵니다.
+    /// 로맨스 영화 데이터를 다운로드합니다.
     /// - Parameters:
-    ///   - date: 영화를 불러올 기준 날짜
-    ///   - completion: API응답을 받은 후에 호출할 코드
+    ///   - date: 기준 날짜
+    ///   - completion: 완료 블록
     func fetchRomanceMovie(by date: String, completion: @escaping () -> ()) {
         let urlStr = "https://api.themoviedb.org/3/genre/10749/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&release_lte=\(date)"
 
@@ -390,12 +392,12 @@ class MovieDataSource {
     }
     
     
-    /// 판타지 영화 API를 받아옵니다.
+    /// 판타지 영화 데이터를 다운로드합니다.
     /// - Parameters:
-    ///   - date: 영화를 불러올 기준 날짜
-    ///   - completion: API응답을 받은 후에 호출할 코드
-    func fetchFantasyMovie(completion: @escaping () -> ()) { // by date: String
-        let urlStr = "https://api.themoviedb.org/3/genre/14/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&" // release_lte=\(date)
+    ///   - date: 기준 날짜
+    ///   - completion: 완료 블록
+    func fetchFantasyMovie(completion: @escaping () -> ()) {
+        let urlStr = "https://api.themoviedb.org/3/genre/14/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&"
 
         let url = URL(string: urlStr)!
 

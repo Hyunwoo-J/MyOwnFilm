@@ -82,11 +82,4 @@ class JoinViewController: CommonViewController {
             }
         }.resume()
     }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        
-    }
 }

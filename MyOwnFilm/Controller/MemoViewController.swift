@@ -15,7 +15,7 @@ extension Notification.Name {
 
 
 
-/// 메모를 작성하는 화면과 관련된 뷰컨트롤러 클래스
+/// 메모 작성 화면
 class MemoViewController: UIViewController {
     
     /// 메모 텍스트뷰

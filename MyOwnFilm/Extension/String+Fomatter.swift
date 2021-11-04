@@ -13,8 +13,8 @@ fileprivate let formatter = DateFormatter()
 
 
 extension String {
-    /// 관리자가 사용하는 날짜 형식으로 변환합니다.
-    /// - Returns: Date 타입
+    /// 관리자가 사용하는 날짜 형식으로 날짜를 변환합니다.
+    /// - Returns: 날짜
     func toManagerDBDate() -> Date? {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         formatter.timeZone = TimeZone(identifier: "UTC")
@@ -25,6 +25,9 @@ extension String {
         }
     }
     
+    
+    /// 관리자가 사용하는 날짜 형식으로 날짜를 변환합니다.
+    /// - Returns: 날짜
     func toManagerDate() -> Date? {
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.timeZone = TimeZone(identifier: "UTC")
@@ -36,8 +39,8 @@ extension String {
     }
     
     
-    /// 관리자가 사용하는 날짜 형식으로 변환합니다.
-    /// - Returns: Date 타입
+    /// 관리자가 사용하는 날짜 형식으로 날짜를 변환합니다.
+    /// - Returns: 날짜
     func toManagerMemoDate() -> Date? {
         formatter.dateFormat = "yyyy년 MM월 dd일 EEEE"
         formatter.timeZone = TimeZone(identifier: "UTC")

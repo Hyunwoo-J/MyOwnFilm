@@ -13,7 +13,7 @@ extension Int {
     var day: TimeInterval {
         return TimeInterval(60 * 60 * 24 * TimeInterval(self))
     }
-    
+
     /// TimeInterval로 계산해서 월을 반환
     var month: TimeInterval {
         return TimeInterval(day * 30)

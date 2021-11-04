@@ -8,8 +8,15 @@
 import Foundation
 
 
+/// SNS 로그인 POST 모델
 struct SocialLoginPostData: Codable {
+    
+    /// 공급자
     let provider: String
+    
+    /// ID
     let id: String
+    
+    /// 이메일
     let email: String
 }

@@ -8,27 +8,30 @@
 import UIKit
 
 
-/// 보관함 화면 컬렉션뷰 셀
+/// 보관함 화면 셀
 class StorageCollectionViewCell: UICollectionViewCell {
-    /// 날짜를 넣을 레이블
-    @IBOutlet weak var dateLabel: UILabel!
     
-    /// 본 장소를 넣을 레이블
+    /// 영화 본 날짜 레이블
+    @IBOutlet weak var viewingDateLabel: UILabel!
+    
+    /// 본 장소 레이블
     @IBOutlet weak var placeLabel: UILabel!
     
-    /// 영화 이미지를 넣을 이미지뷰
+    /// 영화 이미지뷰
     @IBOutlet weak var movieImageView: UIImageView!
     
     
     /// 컬렉션뷰셀에 표시할 내용을 설정합니다.
-    /// - Parameter movieData: StorageCollectionViewCell에서 받을 영화 데이터
+    ///
+    /// 영화 본 날짜와 본 장소, 영화 이미지를 표시합니다.
+    /// - Parameter movieData: 영화 데이터 객체
     func configure(with movieData: ReviewListResponse.Review) {
-        dateLabel.text = movieData.viewingDate.toManagerDBDate()?.toUserDateString()
+        viewingDateLabel.text = movieData.viewingDate.toManagerDBDate()?.toUserDateString()
         placeLabel.text = movieData.movieTheater
         
         guard let posterPath = movieData.posterPath else { return }
         
-        MovieImageSource.shared.loadImage(from: posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
+        MovieImageManager.shared.loadImage(from: posterPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
             if let img = img {
                 self.movieImageView.image = img
             } else {
@@ -39,10 +42,11 @@ class StorageCollectionViewCell: UICollectionViewCell {
     
     
     /// 초기화 작업을 실행합니다.
+    ///
+    /// 뷰의 외곽선을 깎습니다.
     override func awakeFromNib() {
         super.awakeFromNib()
         
         movieImageView.layer.cornerRadius = 6
-        [dateLabel, placeLabel].forEach { $0?.textColor = .white }
     }
 }

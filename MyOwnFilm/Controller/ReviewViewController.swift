@@ -61,7 +61,7 @@ class ReviewViewController: CommonViewController {
     /// 리뷰 데이터
     var reviewData: ReviewListResponse.Review?
     
-    /// 영화 리스트
+    /// 영화 목록
     var movieList = [MovieData.Result]()
     
     
@@ -166,7 +166,7 @@ class ReviewViewController: CommonViewController {
     /// 이미지를 다운로드하고 표시합니다.
     func loadImage() {
         if let index = index {
-            MovieImageSource.shared.loadImage(from: movieList[index].backdropPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
+            MovieImageManager.shared.loadImage(from: movieList[index].backdropPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
                 if let img = img {
                     self.memoBackdropImageView.image = img
                 } else {
@@ -223,7 +223,7 @@ class ReviewViewController: CommonViewController {
         }
         
         if let movieData = reviewData {
-            MovieImageSource.shared.loadImage(from: movieData.backdropPath ?? "", posterImageSize: PosterImageSize.w780.rawValue) { img in
+            MovieImageManager.shared.loadImage(from: movieData.backdropPath ?? "", posterImageSize: PosterImageSize.w780.rawValue) { img in
                 if let img = img {
                     self.memoBackdropImageView.image = img
                 } else {

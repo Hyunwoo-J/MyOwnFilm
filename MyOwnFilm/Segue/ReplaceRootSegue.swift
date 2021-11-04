@@ -8,10 +8,12 @@
 import UIKit
 
 
-/// <#Description#>
+/// 커스텀 Segue
+///
+/// 로그인 화면 전환에 사용하기 위해서 만들었습니다.
 class ReplaceRootSegue: UIStoryboardSegue {
     
-    /// <#Description#>
+    /// Subclasses can override this method to augment or replace the effect of this segue.
     override func perform() {
         var window: UIWindow?
         

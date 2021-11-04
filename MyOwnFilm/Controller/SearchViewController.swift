@@ -43,7 +43,7 @@ extension SearchViewController: UITableViewDataSourcePrefetching {
     ///   - tableView: 이 메소드를 호출하는 테이블뷰
     ///   - indexPaths: 데이터를 미리 가져올 항목의 위치를 지정하는 IndexPath
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        let shared = MovieDataSource.shared
+        let shared = MovieDataManager.shared
         guard indexPaths.contains(where: { $0.row >= shared.searchMovieList.count - 3 }) else { return }
         
         #if DEBUG
@@ -66,7 +66,7 @@ extension SearchViewController: UITableViewDataSource {
     ///   - section: 테이블뷰 섹션을 식별하는 Index 번호
     /// - Returns: 섹션에 있는 행의 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MovieDataSource.shared.searchMovieList.count
+        return MovieDataManager.shared.searchMovieList.count
     }
     
     
@@ -78,7 +78,7 @@ extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchMovieTableViewCell", for: indexPath) as! SearchMovieTableViewCell
         
-        let target = MovieDataSource.shared.searchMovieList[indexPath.row]
+        let target = MovieDataManager.shared.searchMovieList[indexPath.row]
         cell.configure(with: target)
         
         return cell
@@ -105,8 +105,8 @@ extension SearchViewController: UITableViewDelegate {
             print(vc)
             #endif
             
-            vc.movieData = MovieDataSource.shared.searchMovieList[indexPath.row]
-            vc.movieList = MovieDataSource.shared.searchMovieList
+            vc.movieData = MovieDataManager.shared.searchMovieList[indexPath.row]
+            vc.movieList = MovieDataManager.shared.searchMovieList
             
             show(vc, sender: nil)
         }
@@ -120,8 +120,8 @@ extension SearchViewController: UISearchBarDelegate {
     /// 델리게이트에게 검색 버튼이 눌렸음을 알립니다.
     /// - Parameter searchBar: 탭한 searchBar
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        MovieDataSource.shared.searchMovieList = []
-        MovieDataSource.shared.hasMore = true
+        MovieDataManager.shared.searchMovieList = []
+        MovieDataManager.shared.hasMore = true
         
         movieTableView.reloadData()
         
@@ -131,13 +131,13 @@ extension SearchViewController: UISearchBarDelegate {
         
         searchBar.resignFirstResponder()
         
-        MovieDataSource.shared.page = 0
+        MovieDataManager.shared.page = 0
         
         text = hasText
         
         movieTableView.alpha = 0
         
-        MovieDataSource.shared.fetchQueryMovie(about: hasText) {
+        MovieDataManager.shared.fetchQueryMovie(about: hasText) {
             self.movieTableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.movieTableView.alpha = 1.0

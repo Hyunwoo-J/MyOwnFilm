@@ -31,7 +31,7 @@ class MovieDetailViewController: CommonViewController {
     /// 영화 데이터
     var movieData: MovieData.Result?
     
-    /// 영화 리스트
+    /// 영화 목록
     var movieList = [MovieData.Result]()
     
     
@@ -80,7 +80,7 @@ class MovieDetailViewController: CommonViewController {
         
         // 상세 화면에 표시할 이미지를 다운로드합니다.
         if let movieData = movieData {
-            MovieImageSource.shared.loadImage(from: movieData.backdropPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
+            MovieImageManager.shared.loadImage(from: movieData.backdropPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
                 self.backgroundmovieImageView.image = img
             }
         } else {

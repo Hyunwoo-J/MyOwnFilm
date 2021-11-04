@@ -31,7 +31,7 @@ class MovieTheaterListViewController: UIViewController {
     
     /// 기초단체 목록
     ///
-    /// 중복 데이터를 제거한 Set 리스트를 다시 Array에 넣습니다.
+    /// 중복 데이터를 제거한 집합을 다시 배열에 넣습니다.
     var basicOrganizationList = [String]()
     
     /// 세션

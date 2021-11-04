@@ -10,35 +10,35 @@ import UIKit
 
 /// SubScreenTableViewCell 안에 있는 CollectionViewCell과 관련된 델리게이트 프로토콜
 protocol SubCollectionViewCellDelegate: AnyObject {
-    /// 컬렉션뷰 셀의 인덱스를 MainScreenViewController에 전달해줄 메소드
+    /// 컬렉션뷰 셀의 인덱스를 MainScreenViewController에 전달해줍니다.
     func collectionView(collectionviewCell: SubMovieCollectionViewCell?, index: Int, didTappedInTableViewCell: SubMovieTableViewCell)
 }
 
 
 
-/// 두번째 섹션 테이블뷰 셀
+/// 분류별 영화 목록 컬렉션뷰를 포함한 셀
 class SubMovieTableViewCell: UITableViewCell {
     
-    /// 영화 분류 텍스트를 넣을 레이블
+    /// 영화 분류 레이블
     @IBOutlet weak var movieClassificationLabel: UILabel!
     
-    /// 두번째 섹션의 컬렉션뷰
+    /// 분류별 영화 목록 컬렉션뷰
     @IBOutlet weak var subMovieCollectionView: UICollectionView!
     
     /// CollectionViewCellDelegate 변수
     weak var cellDelegate: SubCollectionViewCellDelegate?
     
-    /// 영화 데이터 배열을 받을 변수
-    var movie: [MovieData.Result]?
+    /// 영화 데이터 목록
+    var movieList: [MovieData.Result]?
     
     
     /// 테이블뷰셀에 표시할 내용을 설정합니다.
     /// - Parameters:
-    ///   - movieData: SubMovieTableViewCell에서 받을 영화 데이터 배열
+    ///   - movieData: 영화 데이터 객체
     ///   - text: 영화 분류 텍스트(ex. 인기작, 액션)
     func configure(with movieData: [MovieData.Result], text: String) {
         movieClassificationLabel.text = text
-        movie = movieData
+        movieList = movieData
         subMovieCollectionView.reloadData()
     }
     
@@ -54,33 +54,35 @@ class SubMovieTableViewCell: UITableViewCell {
 
 
 
+/// 분류별 영화 목록 컬렉션뷰 데이터 관리
 extension SubMovieTableViewCell: UICollectionViewDataSource {
-    /// 데이터소스 객체에게 지정된 섹션에 아이템 수를 물어봅니다.
+    
+    /// 섹션의 아이템 수를 리턴합니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
-    ///   - section: 컬렉션뷰 섹션을 식별하는 Index 번호
-    /// - Returns: 섹션 아이템의 수
+    ///   - collectionView: 분류별 영화 목록 컬렉션뷰
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션 아이템 수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let movie = movie else { return 0 }
+        guard let movieList = movieList else { return 0 }
         
-        return movie.count
+        return movieList.count
     }
     
     
-    /// 데이터소스 객체에게 지정된 위치에 해당하는 셀에 데이터를 요청합니다.
+    /// 다운로드한 이미지로 셀을 구성합니다.
     /// - Parameters:
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
+    ///   - collectionView: 분류별 영화 목록 컬렉션뷰
     ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
-    /// - Returns: 설정한 셀
+    /// - Returns: 구성한 셀
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubMovieCollectionViewCell", for: indexPath) as! SubMovieCollectionViewCell
         
-        guard let movie = movie else { return UICollectionViewCell() }
-        let posterPath = movie[indexPath.item].posterPath
+        guard let movieList = movieList else { return UICollectionViewCell() }
+        let posterPath = movieList[indexPath.item].posterPath
         
         cell.subMovieImageView.isHidden = true
         
-        MovieImageSource.shared.loadImage(from: posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
+        MovieImageManager.shared.loadImage(from: posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
             if let img = img {
                 cell.subMovieImageView.image = img
                 cell.subMovieImageView.isHidden = false
@@ -95,10 +97,14 @@ extension SubMovieTableViewCell: UICollectionViewDataSource {
 
 
 
+/// 분류별 영화 목록 컬렉션뷰의 탭 이벤트 처리
 extension SubMovieTableViewCell: UICollectionViewDelegate {
-    /// - Parameters: 델리게이트에게 셀이 선택되었음을 알립니다.
-    ///   - collectionView: 이 메소드를 호출하는 컬렉션뷰
-    ///   - indexPath: 선택한 셀의 IndexPath
+    
+    
+    /// 셀을 탭하면 셀의 인덱스를 대리자에게 전달합니다.
+    /// - Parameters:
+    ///   - collectionView: 분류별 영화 목록 컬렉션뷰
+    ///   - indexPath: 아이템의 위치를 나타내는 IndexPath
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SubMovieCollectionViewCell", for: indexPath) as! SubMovieCollectionViewCell
         

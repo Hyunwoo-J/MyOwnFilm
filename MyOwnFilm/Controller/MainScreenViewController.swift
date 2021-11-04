@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 메인 화면을 표시하는 화면과 관련된 뷰컨트롤러 클래스
+/// 메인 화면
 class MainScreenViewController: CommonViewController {
     
     /// 메인 화면 테이블뷰
@@ -28,15 +28,12 @@ class MainScreenViewController: CommonViewController {
     
     
     /// 초기화 작업을 실행합니다.
+    ///
+    /// 지정한 날짜의 영화 데이터를 가져옵니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        #if DEBUG
-        print(Date().releaseDate)
-        #endif
-        
-        // 지정한 날짜의 영화 데이터를 가져옵니다.
-        MovieDataSource.shared.fetchMovie(by: Date().releaseDate) {
+        MovieDataManager.shared.fetchMovie(by: Date().releaseDate) {
             self.mainScreenTableView.reloadData()
         }
     }
@@ -55,8 +52,8 @@ extension MainScreenViewController: CollectionViewCellDelegate {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController {
             vc.index = index
             
-            vc.movieData = MovieDataSource.shared.nowPlayingMovieList[index]
-            vc.movieList = MovieDataSource.shared.nowPlayingMovieList
+            vc.movieData = MovieDataManager.shared.nowPlayingMovieList[index]
+            vc.movieList = MovieDataManager.shared.nowPlayingMovieList
             
             show(vc, sender: nil)
         }
@@ -76,7 +73,7 @@ extension MainScreenViewController: SubCollectionViewCellDelegate {
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController {
             vc.index = index
             
-            guard let movieList = didTappedInTableViewCell.movie else { return }
+            guard let movieList = didTappedInTableViewCell.movieList else { return }
             
             vc.movieData = movieList[index]
             vc.movieList = movieList
@@ -108,7 +105,7 @@ extension MainScreenViewController: UITableViewDataSource {
             return 1
         }
         
-        return MovieDataSource.shared.movieLists.count
+        return MovieDataManager.shared.movieLists.count
     }
     
     
@@ -123,9 +120,7 @@ extension MainScreenViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MainScreenFirstSectionTableViewCell", for: indexPath) as! MainScreenFirstSectionTableViewCell
             
             cell.cellDelegate = self
-            
-            let target = MovieDataSource.shared.nowPlayingMovieList
-            cell.configure(with: target)
+            cell.reloadCollectionViewData()
             
             return cell
             
@@ -134,7 +129,7 @@ extension MainScreenViewController: UITableViewDataSource {
             
             cell.cellDelegate = self
             
-            let target = MovieDataSource.shared.movieLists[indexPath.row]
+            let target = MovieDataManager.shared.movieLists[indexPath.row]
             cell.configure(with: target, text: titleList[indexPath.row]) 
             
             return cell
@@ -148,6 +143,9 @@ extension MainScreenViewController: UITableViewDataSource {
 
 
 extension MainScreenViewController: UIScrollViewDelegate {
+    
+    /// <#Description#>
+    /// - Parameter scrollView: <#scrollView description#>
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 1 {
             nowPlayingView.isHidden = true

@@ -124,10 +124,10 @@ class StorageViewController: CommonViewController {
     }
     
     
-    /// 정렬 상태가 변경됩니다.
+    /// 정렬 상태를 변경합니다.
     ///
-    /// 오름차순이면 내림차순으로, 내림차순이면 오름차순으로 정렬 상태가 변경됩니다.
-    /// - Parameter sender: 정렬 상태 관련 버튼
+    /// 오름차순이면 내림차순으로, 내림차순이면 오름차순으로 정렬 상태를 변경합니다.
+    /// - Parameter sender: 정렬 상태 버튼
     @IBAction func toggleAlignmentOption(_ sender: Any) {
         if let alignmentText = alignmentLabel.text {
             switch alignmentText {
@@ -390,7 +390,14 @@ extension StorageViewController: UICollectionViewDelegate {
                 let delete = UIAlertAction(title: "확인", style: .destructive) { action in
                     let id = ReviewManager.shared.reviewList[indexPath.row].reviewId
                     
-                    ReviewManager.shared.deleteReview(id: id, collectionView: self.storageCollectionView)
+                    ReviewManager.shared.deleteReview(id: id) {
+                        if let index = ReviewManager.shared.reviewList.firstIndex(where: { $0.reviewId == id }) {
+                            let indexPath = IndexPath(row: index, section: 0)
+                            self.storageCollectionView.deleteItems(at: [indexPath])
+                            
+                            ReviewManager.shared.reviewList.remove(at: index)
+                        }
+                    }
                 }
                 alert.addAction(delete)
                 

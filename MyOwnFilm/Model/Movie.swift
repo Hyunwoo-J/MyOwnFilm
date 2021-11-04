@@ -8,69 +8,76 @@
 import Foundation
 
 
-/// 영화 API에서 가져올 데이터를 정의한 구조체
+/// 영화 API 모델
 struct MovieData: Codable {
     
     struct Result: Codable {
+        
         /// 영화 Id
         let id: Int
         
+        
         /// 배경 이미지 경로
         private let backdrop_path: String?
-        /// 배경 이미지 경로의 기본값을 넣어주는 코드
         
+        /// 배경 이미지 경로 기본값
         var backdropPath: String {
             return backdrop_path ?? "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
         }
         
+        
         /// 장르 아이디
         private let genre_ids: [Int]?
         
-        /// 장르 아이디의 기본값을 넣어주는 코드
+        /// 장르 아이디 기본값
         var genreIds: [Int] {
             return genre_ids ?? []
         }
         
+        
         /// 줄거리 요약
         private let overview: String?
         
-        /// 줄거리 기본값을 넣어주는 코드
+        /// 줄거리 기본값
         var overviewStr: String {
             return overview ?? ""
         }
         
+        
         /// 개봉일
         private let release_date: String?
         
-        /// 개봉일 기본값을 넣어주는 코드
+        /// 개봉일 기본값
         var releaseDate: String {
             return release_date ?? ""
         }
         
+        
         /// 영화 제목
         private let title: String?
         
-        /// 영화 제목 기본값을 넣어주는 코드
+        /// 영화 제목 기본값
         var titleStr: String {
             return title ?? ""
         }
         
+        
         /// 포스터 이미지 경로
         private let poster_path: String?
         
-        /// 포스터 이미지 경로 기본값을 넣어주는 코드
+        /// 포스터 이미지 경로 기본값
         var posterPath: String {
             return poster_path ?? "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
         }
     }
     
-    /// 영화 데이터가 담겨있는 배열
+    /// 영화 데이터 목록
     let results: [Result]
 }
 
 
 
-/// PosterImage의 크기를 정의한 열거형
+/// PosterImage 크기
 enum PosterImageSize: String {
     case w92
     case w154
@@ -82,7 +89,7 @@ enum PosterImageSize: String {
 
 
 
-/// 영화 장르 열거형
+/// 영화 장르
 enum MovieGenre: Int {
     case action = 28
     case adventure = 12

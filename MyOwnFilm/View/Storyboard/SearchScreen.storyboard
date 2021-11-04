@@ -7,7 +7,6 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -41,7 +40,7 @@
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="N16-8p-wIu" firstAttribute="centerX" secondItem="zsL-LO-DGT" secondAttribute="centerX" id="BPl-XH-uEi"/>
                                                         <constraint firstItem="N16-8p-wIu" firstAttribute="centerY" secondItem="zsL-LO-DGT" secondAttribute="centerY" id="ikO-zt-f3b"/>
@@ -123,7 +122,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" name="backgroundColor"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="2Cb-Rw-m1S" secondAttribute="trailing" id="8ys-VM-Bov"/>
                                                         <constraint firstItem="2Cb-Rw-m1S" firstAttribute="leading" secondItem="6jC-Vk-MTn" secondAttribute="leading" constant="20" id="EUc-3s-dhv"/>
@@ -161,11 +160,9 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="backgroundColor"/>
                                         <connections>
-                                            <outlet property="firstView" destination="zsL-LO-DGT" id="W0b-cv-gZp"/>
                                             <outlet property="genreLabel" destination="VoI-PV-kjI" id="2xZ-tp-m0m"/>
                                             <outlet property="movieImageView" destination="N16-8p-wIu" id="DcT-NT-gZ4"/>
                                             <outlet property="releaseDateLabel" destination="lrx-aW-9en" id="Cf2-jA-Fd6"/>
-                                            <outlet property="secondView" destination="6jC-Vk-MTn" id="s8W-zb-TIW"/>
                                             <outlet property="storyLabel" destination="9Cn-uc-oQr" id="Ra6-l4-SGn"/>
                                             <outlet property="titleLabel" destination="2Cb-Rw-m1S" id="vHn-VG-In2"/>
                                         </connections>
@@ -215,10 +212,7 @@
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <namedColor name="backgroundColor">
-            <color red="0.058823529411764705" green="0.062745098039215685" blue="0.086274509803921567" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.059000000357627869" green="0.063000001013278961" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

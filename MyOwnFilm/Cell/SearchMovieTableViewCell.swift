@@ -8,32 +8,29 @@
 import UIKit
 
 
-/// 검색 화면 테이블뷰 셀
+/// 검색 화면 셀
 class SearchMovieTableViewCell: UITableViewCell {
-    /// 영화 포스터를 넣을 이미지뷰
+    
+    /// 영화 포스터 이미지뷰
     @IBOutlet weak var movieImageView: UIImageView!
     
-    /// 영화 제목을 넣을 레이블
+    /// 영화 제목 레이블
     @IBOutlet weak var titleLabel: UILabel!
     
-    /// 개봉 일자를 넣을 레이블
+    /// 개봉일 레이블
     @IBOutlet weak var releaseDateLabel: UILabel!
     
-    /// 장르를 넣을 레이블
+    /// 장르 레이블
     @IBOutlet weak var genreLabel: UILabel!
     
-    /// 영화 줄거리를 넣을 레이블
+    /// 영화 줄거리 레이블
     @IBOutlet weak var storyLabel: UILabel!
-    
-    /// 공간을 나누기 위해 추가한 뷰 중 첫번째 뷰
-    @IBOutlet weak var firstView: UIView!
-    
-    /// 공간을 나누기 위해 추가한 뷰 중 두번째 뷰
-    @IBOutlet weak var secondView: UIView!
     
     
     /// 테이블뷰셀에 표시할 내용을 설정합니다.
-    /// - Parameter movieData: SearchMovieTableViewCell에서 받을 영화 데이터
+    ///
+    /// 영화 제목, 개봉일, 장르, 줄거리를 표시합니다.
+    /// - Parameter movieData: 영화 데이터 객체
     func configure(with movieData: MovieData.Result) {
         titleLabel.text = movieData.titleStr
         releaseDateLabel.text = movieData.releaseDate.toManagerDate()?.toUserDateStringForMovieData()
@@ -95,30 +92,17 @@ class SearchMovieTableViewCell: UITableViewCell {
             
             genreText.append(movieGenre)
         }
+        
         genreLabel.text = genreText
         movieImageView.isHidden = true
         
-        MovieImageSource.shared.loadImage(from: movieData.posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
+        MovieImageManager.shared.loadImage(from: movieData.posterPath, posterImageSize: PosterImageSize.w342.rawValue) { img in
             if let img = img {
                 self.movieImageView.image = img
                 self.movieImageView.isHidden = false
             } else {
                 self.movieImageView.image = UIImage(named: "Default Image")
             }
-        }
-    }
-    
-    
-    /// 초기화 작업을 실행합니다.
-    ///
-    /// 뷰와 레이블의 백그라운드 색상을 설정합니다.
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        [firstView, secondView].forEach { $0?.backgroundColor = .clear }
-        
-        [titleLabel, releaseDateLabel, genreLabel, storyLabel].forEach {
-            $0?.textColor = .white
         }
     }
 }
