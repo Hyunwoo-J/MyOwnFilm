@@ -10,6 +10,8 @@ import UIKit
 
 @IBDesignable
 /// 뷰를 둥글게 깎는 뷰
+///
+/// 영화 상세정보 화면에서 사용됩니다.
 class CircleView: UIView {
     
     /// Initializes and returns a newly allocated view object with the specified frame rectangle.

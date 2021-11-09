@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="za3-LM-Slj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DmH-S1-ZKl">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -75,7 +75,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="334" height="55"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <connections>
-                                                            <action selector="signupwithApple:" destination="nqy-fh-DDC" eventType="touchUpInside" id="nDi-cE-M9b"/>
+                                                            <action selector="signupWithApple:" destination="nqy-fh-DDC" eventType="touchUpInside" id="glz-Zi-nBS"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -224,27 +224,31 @@
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up with Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jf-Nt-aLw">
-                                                                <rect key="frame" x="48" y="0.0" width="123" height="35"/>
+                                                                <rect key="frame" x="48" y="0.0" width="246" height="35"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bqb-s2-cRe">
-                                                                <rect key="frame" x="201" y="0.0" width="93" height="35"/>
-                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <connections>
-                                                                    <segue destination="TaM-tc-yOl" kind="presentation" modalPresentationStyle="fullScreen" id="pIF-CV-gPT"/>
-                                                                </connections>
-                                                            </button>
                                                         </subviews>
                                                     </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bqb-s2-cRe">
+                                                        <rect key="frame" x="0.0" y="0.0" width="334" height="55"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <connections>
+                                                            <segue destination="TaM-tc-yOl" kind="presentation" id="otL-6E-F2O"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="Bqb-s2-cRe" secondAttribute="trailing" id="1av-vu-3l0"/>
                                                     <constraint firstAttribute="trailing" secondItem="V2A-8K-2Pq" secondAttribute="trailing" constant="20" id="7VJ-J3-tzg"/>
                                                     <constraint firstItem="V2A-8K-2Pq" firstAttribute="top" secondItem="vDg-Ri-gUx" secondAttribute="top" constant="10" id="DvH-zf-b8a"/>
+                                                    <constraint firstItem="Bqb-s2-cRe" firstAttribute="top" secondItem="vDg-Ri-gUx" secondAttribute="top" id="Jqh-hU-02j"/>
+                                                    <constraint firstItem="Bqb-s2-cRe" firstAttribute="leading" secondItem="vDg-Ri-gUx" secondAttribute="leading" id="K6t-so-fdU"/>
                                                     <constraint firstItem="V2A-8K-2Pq" firstAttribute="leading" secondItem="vDg-Ri-gUx" secondAttribute="leading" constant="20" id="aGG-bd-CHh"/>
                                                     <constraint firstAttribute="bottom" secondItem="V2A-8K-2Pq" secondAttribute="bottom" constant="10" id="hUR-LM-gw8"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Bqb-s2-cRe" secondAttribute="bottom" id="yMI-0o-oEv"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -417,77 +421,6 @@
             </objects>
             <point key="canvasLocation" x="2649" y="572"/>
         </scene>
-        <!--설정-->
-        <scene sceneID="CKS-wJ-SLo">
-            <objects>
-                <viewController id="GmA-ua-4hN" customClass="SettingViewController" customModule="MyOwnFilm" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="YFO-gB-C7a">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9EH-sN-1BU">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingTableViewCell" rowHeight="38" id="spD-Uc-G3A" customClass="SettingTableViewCell" customModule="MyOwnFilm" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="49.5" width="374" height="38"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="spD-Uc-G3A" id="Kcu-zv-AgK">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="38"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01Z-R1-3Re">
-                                                    <rect key="frame" x="20" y="10.5" width="49" height="17"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" systemColor="systemRedColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGC-2w-ayQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="38"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <connections>
-                                                        <action selector="logout:" destination="GmA-ua-4hN" eventType="touchUpInside" id="aSi-l6-qlp"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="01Z-R1-3Re" firstAttribute="leading" secondItem="Kcu-zv-AgK" secondAttribute="leading" constant="20" symbolic="YES" id="4Dh-Rb-zGE"/>
-                                                <constraint firstItem="wGC-2w-ayQ" firstAttribute="leading" secondItem="Kcu-zv-AgK" secondAttribute="leading" id="5Cp-KV-0DA"/>
-                                                <constraint firstAttribute="trailing" secondItem="wGC-2w-ayQ" secondAttribute="trailing" id="5fs-kL-l4l"/>
-                                                <constraint firstItem="01Z-R1-3Re" firstAttribute="centerY" secondItem="Kcu-zv-AgK" secondAttribute="centerY" id="5xB-Fr-GSE"/>
-                                                <constraint firstAttribute="bottom" secondItem="wGC-2w-ayQ" secondAttribute="bottom" id="ZmX-fY-b0y"/>
-                                                <constraint firstItem="wGC-2w-ayQ" firstAttribute="top" secondItem="Kcu-zv-AgK" secondAttribute="top" id="mc2-G1-QsQ"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="logoutLabel" destination="01Z-R1-3Re" id="Dhl-DI-VhK"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="GmA-ua-4hN" id="1qC-fc-ZDv"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="BtK-Lf-U6U"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="9EH-sN-1BU" firstAttribute="trailing" secondItem="BtK-Lf-U6U" secondAttribute="trailing" id="F3N-PS-Kvr"/>
-                            <constraint firstItem="9EH-sN-1BU" firstAttribute="top" secondItem="YFO-gB-C7a" secondAttribute="top" id="gA6-Ul-DbE"/>
-                            <constraint firstItem="BtK-Lf-U6U" firstAttribute="bottom" secondItem="9EH-sN-1BU" secondAttribute="bottom" id="pxd-ML-LhJ"/>
-                            <constraint firstItem="9EH-sN-1BU" firstAttribute="leading" secondItem="BtK-Lf-U6U" secondAttribute="leading" id="yQb-QO-awt"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="설정" image="person.circle" catalog="system" id="iN8-tZ-piT"/>
-                    <connections>
-                        <segue destination="DmH-S1-ZKl" kind="custom" identifier="introSegue" customClass="ReplaceRootSegue" customModule="MyOwnFilm" customModuleProvider="target" id="fyi-XI-8sn"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IjQ-L8-hZf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3870" y="893"/>
-        </scene>
         <!--StorageScreen-->
         <scene sceneID="QgZ-ho-MDw">
             <objects>
@@ -515,7 +448,6 @@
                         <segue destination="zj2-Mb-QZo" kind="relationship" relationship="viewControllers" id="2Wc-Rd-ytf"/>
                         <segue destination="YSM-jj-0Gk" kind="relationship" relationship="viewControllers" id="qhf-fW-rxX"/>
                         <segue destination="mdh-8Q-Rt5" kind="relationship" relationship="viewControllers" id="dwp-k9-DvO"/>
-                        <segue destination="GmA-ua-4hN" kind="relationship" relationship="viewControllers" id="9Ku-yY-Opk"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sxe-df-NSy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -674,7 +606,7 @@
         <!--Intro View Controller-->
         <scene sceneID="vqp-1j-tA8">
             <objects>
-                <viewController id="DmH-S1-ZKl" customClass="IntroViewController" customModule="MyOwnFilm" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IntroViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DmH-S1-ZKl" customClass="IntroViewController" customModule="MyOwnFilm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mIs-v7-G0p">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -752,11 +684,11 @@
             <objects>
                 <viewController id="TaM-tc-yOl" customClass="JoinViewController" customModule="MyOwnFilm" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ugz-7O-Hez">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Per-oO-xq9">
-                                <rect key="frame" x="40" y="44" width="334" height="600"/>
+                                <rect key="frame" x="40" y="0.0" width="334" height="600"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wXO-tQ-ciu">
                                         <rect key="frame" x="123.5" y="100" width="87.5" height="30"/>
@@ -897,7 +829,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Uba-90-Neu"/>
+        <segue reference="62r-q2-5OL"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="applelogo" catalog="system" width="103" height="128"/>
@@ -905,16 +837,12 @@
         <image name="kakao-talk" width="16" height="16"/>
         <image name="mail" width="16" height="16"/>
         <image name="naver" width="16" height="16"/>
-        <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="backgroundColor">
-            <color red="0.058823529411764705" green="0.062745098039215685" blue="0.086274509803921567" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.059000000357627869" green="0.063000001013278961" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

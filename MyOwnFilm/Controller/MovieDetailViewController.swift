@@ -41,7 +41,7 @@ class MovieDetailViewController: CommonViewController {
     }
     
     
-    /// X 버튼을 누르면 이전 화면으로 돌아갑니다.
+    /// 이전 화면으로 돌아갑니다.
     /// - Parameter sender: X 버튼
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
@@ -67,6 +67,8 @@ class MovieDetailViewController: CommonViewController {
     
     
     /// 초기화 작업을 실행합니다.
+    ///
+    /// 상세 화면에 표시할 이미지를 다운로드합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,7 +80,6 @@ class MovieDetailViewController: CommonViewController {
             dateLabel.text = movieList[index].releaseDate.toManagerDate()?.toUserDateStringForMovieData()
         }
         
-        // 상세 화면에 표시할 이미지를 다운로드합니다.
         if let movieData = movieData {
             MovieImageManager.shared.loadImage(from: movieData.backdropPath, posterImageSize: PosterImageSize.w780.rawValue) { img in
                 self.backgroundmovieImageView.image = img

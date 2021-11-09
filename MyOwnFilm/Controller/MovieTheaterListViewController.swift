@@ -34,20 +34,14 @@ class MovieTheaterListViewController: UIViewController {
     /// 중복 데이터를 제거한 집합을 다시 배열에 넣습니다.
     var basicOrganizationList = [String]()
     
-    /// 세션
-    lazy var session: URLSession = {
-        let configuration = URLSessionConfiguration.default
-        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: .main)
-        
-        return session
-    }()
-    
     
     /// 영화관 목록을 다운로드합니다.
-    func fetchMovieData() {
+    func fetchMovieTheaterData() {
         let urlStr = "https://mofapi.azurewebsites.net/movietheater"
         
         guard let url = URL(string: urlStr) else { return }
+        
+        let session = URLSession.shared
         
         session.dataTask(with: url) { data, response, error in
             if let error = error {
@@ -94,10 +88,12 @@ class MovieTheaterListViewController: UIViewController {
     
     
     /// 초기화 작업을 실행합니다.
+    ///
+    /// 영화관 목록을 다운로드합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchMovieData()
+        fetchMovieTheaterData()
     }
 }
 
@@ -182,15 +178,5 @@ extension MovieTheaterListViewController: UITableViewDelegate {
         NotificationCenter.default.post(name: .movieTheaterTableViewCellDidTapped, object: nil, userInfo: ["theater": target])
         
         dismiss(animated: true, completion: nil)
-    }
-}
-
-
-
-extension MovieTheaterListViewController: URLSessionDelegate {
-    
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let trust = challenge.protectionSpace.serverTrust!
-        completionHandler(.useCredential, URLCredential(trust: trust))
     }
 }

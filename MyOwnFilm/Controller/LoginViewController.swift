@@ -14,11 +14,14 @@ class LoginViewController: CommonViewController {
     /// 이메일 필드
     @IBOutlet weak var emailField: UITextField!
     
-    /// 패스워드 필드
+    /// 비밀번호 필드
     @IBOutlet weak var passwordField: UITextField!
     
     
-    /// 버튼을 누르면 다음 화면으로 이동합니다.
+    /// 이메일과 비밀번호로 로그인합니다.
+    ///
+    /// 로그인에 성공할 경우, 메인 화면으로 이동합니다.
+    /// 로그인에 실패할 경우, 경고창을 띄웁니다.
     /// - Parameter sender: 버튼
     @IBAction func login(_ sender: UIButton) {
         guard let email = emailField.text, let password = passwordField.text else { return }

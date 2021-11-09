@@ -71,7 +71,7 @@ class ReviewViewController: CommonViewController {
     }
     
     
-    /// 취소 버튼을 누르면 이전 화면으로 돌아갑니다.
+    /// 이전 화면으로 돌아갑니다.
     /// - Parameter sender: 취소 버튼
     @IBAction func close(_ sender: Any) {
         
@@ -83,8 +83,6 @@ class ReviewViewController: CommonViewController {
     
     
     /// 영화 리뷰를 저장합니다.
-    ///
-    /// 데이터베이스에 POST 합니다.
     /// - Parameter sender: 확인 버튼
     @IBAction func saveReview(_ sender: Any) {
         if starPointView.rating == 0 {
@@ -120,7 +118,7 @@ class ReviewViewController: CommonViewController {
     }
     
     
-    /// 관람일 관련 버튼을 클릭하면 데이트 피커를 띄웁니다.
+    /// 데이트 피커를 띄웁니다.
     /// - Parameter sender: 데이트 피커를 띄우는 버튼
     @IBAction func dateButtonTapped(_ sender: Any) {
         let dateAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -300,7 +298,7 @@ class ReviewViewController: CommonViewController {
 
 
 
-/// 사용자 동작을 처리하기 위한 extension
+/// 리턴 버튼을 클릭했을 때 발생하는 이벤트 처리
 extension ReviewViewController: UITextFieldDelegate {
     
     /// Return 버튼 처리 여부를 리턴합니다.

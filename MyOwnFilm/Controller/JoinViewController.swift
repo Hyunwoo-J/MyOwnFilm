@@ -14,7 +14,7 @@ class JoinViewController: CommonViewController {
     /// 이메일 필드
     @IBOutlet weak var emailField: UITextField!
     
-    /// 패스워드 필드
+    /// 비밀번호 필드
     @IBOutlet weak var passwordField: UITextField!
     
     
@@ -25,6 +25,8 @@ class JoinViewController: CommonViewController {
     }
     
     
+    /// 이메일과 비밀번호를 가지고 회원가입합니다.
+    /// - Parameter sender: 회원가입 버튼
     @IBAction func signup(_ sender: Any) {
         guard let email = emailField.text, let password = passwordField.text else { return }
         

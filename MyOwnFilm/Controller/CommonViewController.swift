@@ -65,6 +65,27 @@ class CommonViewController: UIViewController {
     }
     
     
+    /// 두 가지 액션이 있는 경고창을 출력합니다.
+    /// - Parameters:
+    ///   - alertTitle: 경고창 타이틀
+    ///   - message: 경고창 내용
+    ///   - okActionTitle: 확인 액션 타이틀
+    ///   - handler: 완료 블록
+    func twoActionAlertWithHandler(alertTitle: String, message: String, okActionTitle: String, handler: ((UIAlertAction) -> Void)?) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            alert.addAction(cancelAction)
+            
+            let okAction = UIAlertAction(title: okActionTitle, style: .destructive, handler: handler)
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
     /// window에 추가된 DimView를 제거합니다.
     func removeDimViewFromWindow() {
         guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
@@ -106,6 +127,7 @@ class CommonViewController: UIViewController {
     }
     
     
+    /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         

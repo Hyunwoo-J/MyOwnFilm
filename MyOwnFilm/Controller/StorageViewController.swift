@@ -351,7 +351,7 @@ extension StorageViewController: UICollectionViewDataSource {
 
 
 
-/// 리뷰를 작성한 영화 목록 컬렉션뷰와 관련된 사용자 동작을 처리
+/// 리뷰를 작성한 영화 목록 컬렉션뷰 관련 사용자 동작을 처리
 extension StorageViewController: UICollectionViewDelegate {
     
     /// 셀을 선택하면 호출됩니다.

@@ -14,13 +14,13 @@ class SearchViewController: CommonViewController {
     /// 영화를 검색할 서치바
     @IBOutlet weak var searchBar: UISearchBar!
     
-    /// 영화 목록 테이블뷰
-    @IBOutlet weak var movieTableView: UITableView!
+    /// 영화 검색 결과 테이블뷰
+    @IBOutlet weak var searchMovieTableView: UITableView!
     
     /// 검색어를 저장할 속성
     var text = ""
     
-    /// 상태바를 흰색으로 바꾸기 위해 추가한 메소드
+    /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -38,10 +38,10 @@ class SearchViewController: CommonViewController {
 
 extension SearchViewController: UITableViewDataSourcePrefetching {
     
-    /// 데이터 소스 객체에게 설정한 인덱스 경로에서 셀에 대한 데이터를 준비하도록 지시합니다.
+    /// 영화 데이터를 미리 다운로드합니다.
     /// - Parameters:
-    ///   - tableView: 이 메소드를 호출하는 테이블뷰
-    ///   - indexPaths: 데이터를 미리 가져올 항목의 위치를 지정하는 IndexPath
+    ///   - tableView: 영화 검색 결과 테이블뷰
+    ///   - indexPaths: 데이터를 미리 가져올 항목의 위치를 지정하는 IndexPath 배열
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         let shared = MovieDataManager.shared
         guard indexPaths.contains(where: { $0.row >= shared.searchMovieList.count - 3 }) else { return }
@@ -51,30 +51,31 @@ extension SearchViewController: UITableViewDataSourcePrefetching {
         #endif
         
         shared.fetchQueryMovie(about: text) {
-            self.movieTableView.reloadData()
+            self.searchMovieTableView.reloadData()
         }
     }
 }
 
 
 
+/// 영화 검색 결과 테이블뷰 데이터 관리
 extension SearchViewController: UITableViewDataSource {
     
-    /// 데이터 소스 객체에게 지정된 섹션에 있는 행의 수를 물어봅니다.
+    /// 섹션 행의 수를 리턴합니다.
     /// - Parameters:
-    ///   - tableView: 이 메소드를 호출하는 테이블뷰
-    ///   - section: 테이블뷰 섹션을 식별하는 Index 번호
-    /// - Returns: 섹션에 있는 행의 수
+    ///   - tableView: 영화 검색 결과 테이블뷰
+    ///   - section: 섹션 인덱스
+    /// - Returns: 섹션 행의 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MovieDataManager.shared.searchMovieList.count
     }
     
     
-    /// 데이터소스 객체에게 지정된 위치에 해당하는 셀에 데이터를 요청합니다.
+    /// 검색 결과로 셀을 구성합니다.
     /// - Parameters:
-    ///   - tableView: 이 메소드를 호출하는 테이블뷰
-    ///   - indexPath: 행의 위치를 나타내는 IndexPath
-    /// - Returns: 설정한 셀
+    ///   - tableView: 영화 검색 결과 테이블뷰
+    ///   - indexPath: 섹션 인덱스
+    /// - Returns: 영화 검색 결과 셀
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchMovieTableViewCell", for: indexPath) as! SearchMovieTableViewCell
         
@@ -87,12 +88,13 @@ extension SearchViewController: UITableViewDataSource {
 
 
 
+/// 영화 검색 결과 테이블뷰 탭 이벤트 처리
 extension SearchViewController: UITableViewDelegate {
     
-    /// 델리게이트에게 셀이 선택되었음을 알립니다.
+    /// 셀을 탭하면 영화 상세 정보 화면으로 이동합니다.
     /// - Parameters:
-    ///   - tableView: 이 메소드를 호출하는 테이블뷰
-    ///   - indexPath: 선택한 셀의 IndexPath
+    ///   - tableView: 영화 검색 결과 테이블뷰
+    ///   - indexPath: 섹션 인덱스
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         // 다른 스토리보드에 있는 뷰컨트롤러에 접근하기 위해 스토리보드 상수 생성
@@ -115,15 +117,18 @@ extension SearchViewController: UITableViewDelegate {
 
 
 
+/// 검색 버튼을 클릭했을 때 발생하는 이벤트 처리
 extension SearchViewController: UISearchBarDelegate {
     
-    /// 델리게이트에게 검색 버튼이 눌렸음을 알립니다.
-    /// - Parameter searchBar: 탭한 searchBar
+    /// 검색 버튼을 클릭한 다음 호출됩니다.
+    ///
+    /// 입력한 텍스트로 영화를 다운로드하고 테이블뷰에 표시합니다.
+    /// - Parameter searchBar: 서치바
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         MovieDataManager.shared.searchMovieList = []
         MovieDataManager.shared.hasMore = true
         
-        movieTableView.reloadData()
+        searchMovieTableView.reloadData()
         
         guard let hasText = searchBar.text else {
             return
@@ -135,12 +140,12 @@ extension SearchViewController: UISearchBarDelegate {
         
         text = hasText
         
-        movieTableView.alpha = 0
+        searchMovieTableView.alpha = 0
         
         MovieDataManager.shared.fetchQueryMovie(about: hasText) {
-            self.movieTableView.reloadData()
+            self.searchMovieTableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.movieTableView.alpha = 1.0
+                self.searchMovieTableView.alpha = 1.0
             }
         }
     }

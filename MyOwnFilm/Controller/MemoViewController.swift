@@ -24,6 +24,7 @@ class MemoViewController: UIViewController {
     /// 메모 플레이스홀더 레이블
     @IBOutlet weak var memoPlaceholderLabel: UILabel!
     
+    
     /// 이전 화면으로 돌아갑니다.
     /// - Parameter sender: X 버튼
     @IBAction func close(_ sender: Any) {
@@ -51,10 +52,11 @@ class MemoViewController: UIViewController {
 
 
 
+/// 메모를 입력했을 때 발생하는 이벤트 처리
 extension MemoViewController: UITextViewDelegate {
     
-    /// 사용자가 텍스트뷰에서 텍스트 또는 속성을 변경할 때 델리게이트에게 알립니다.
-    /// - Parameter textView: 이 메소드를 호출하는 텍스트뷰
+    /// 메모를 입력하면 플레이스 홀더 레이블을 숨깁니다.
+    /// - Parameter textView: 메모 텍스트뷰
     func textViewDidChange(_ textView: UITextView) {
         memoPlaceholderLabel.isHidden = textView.hasText
     }

@@ -200,8 +200,8 @@
                     <navigationItem key="navigationItem" id="ddq-BN-Pqb"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="movieTableView" destination="YDE-Jf-mVa" id="E6h-ao-CP0"/>
                         <outlet property="searchBar" destination="RRE-tg-Qql" id="68R-T2-chQ"/>
+                        <outlet property="searchMovieTableView" destination="YDE-Jf-mVa" id="P5i-SG-Jg3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jnJ-E1-qeh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

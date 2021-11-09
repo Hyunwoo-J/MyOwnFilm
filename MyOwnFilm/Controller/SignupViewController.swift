@@ -15,7 +15,7 @@ import NaverThirdPartyLogin
 import UIKit
 
 
-/// 회원 가입 화면
+/// 회원가입 화면
 class SignupViewController: CommonViewController {
     
     /// 페이스북 로그인 매니저
@@ -23,7 +23,9 @@ class SignupViewController: CommonViewController {
     
     
     @available(iOS 13.0, *)
-    @IBAction func signupwithApple(_ sender: Any) {
+    /// 애플로 회원가입하고 로그인합니다.
+    /// - Parameter sender: 애플 회원가입 버튼
+    @IBAction func signupWithApple(_ sender: Any) {
         let idProvider = ASAuthorizationAppleIDProvider()
         let request = idProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -35,8 +37,8 @@ class SignupViewController: CommonViewController {
     }
     
     
-    /// 네이버로 회원가입을 하고 로그인합니다.
-    /// - Parameter sender: 네이버 버튼
+    /// 네이버로 회원가입하고 로그인합니다.
+    /// - Parameter sender: 네이버 회원가입 버튼
     @IBAction func signupWithNaver(_ sender: Any) {
         if let naverLogin = NaverThirdPartyLoginConnection.getSharedInstance() {
             if let _ = naverLogin.accessToken {
@@ -51,7 +53,7 @@ class SignupViewController: CommonViewController {
     }
     
     
-    /// 네이버 프로필을 가져옵니다.
+    /// 네이버 프로필 정보를 가져옵니다.
     private func getNaverProfile() {
         guard let naverLogin = NaverThirdPartyLoginConnection.getSharedInstance() else { return }
         guard let token = naverLogin.accessToken else { return }
@@ -91,8 +93,8 @@ class SignupViewController: CommonViewController {
     }
     
     
-    /// 카카오로 회원가입을 하고 로그인합니다.
-    /// - Parameter sender: 카카오 버튼
+    /// 카카오로 회원가입하고 로그인합니다.
+    /// - Parameter sender: 카카오 회원가입 버튼
     @IBAction func signupWithKakao(_ sender: Any) {
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
             if let error = error {
@@ -100,7 +102,9 @@ class SignupViewController: CommonViewController {
             }
             
             else {
+                #if DEBUG
                 print("loginWithKakaoAccount() success.")
+                #endif
                 
                 if let _ = oauthToken {
                     if (AuthApi.hasToken()) {
@@ -114,14 +118,18 @@ class SignupViewController: CommonViewController {
                                 }
                             }
                             else {
+                                #if DEBUG
                                 print("토큰 유효성 체크 성공(필요 시 토큰 갱신됨)")
+                                #endif
                                 
                                 UserApi.shared.me() {(user, error) in
                                     if let error = error {
                                         print(error)
                                     }
                                     else {
+                                        #if DEBUG
                                         print("me() success.")
+                                        #endif
                                         
                                         if let user = user, let id = user.id, let email = user.kakaoAccount?.email {
                                             let data = SocialLoginPostData(provider: "KakaoTalk", id: "\(id)", email: email)
@@ -141,8 +149,8 @@ class SignupViewController: CommonViewController {
     }
     
     
-    /// 페이스북 계정으로 회원가입을 하고 로그인합니다.
-    /// - Parameter sender: 페이스북 버튼
+    /// 페이스북으로 회원가입하고 로그인합니다.
+    /// - Parameter sender: 페이스북 회원가입 버튼
     @IBAction func signupWithFacebook(_ sender: Any) {
         manager.logIn(permissions: ["email", "public_profile"], from: self) { result, error in
             if let error = error {
@@ -153,14 +161,21 @@ class SignupViewController: CommonViewController {
             
             if let result = result {
                 if result.isCancelled {
+                    #if DEBUG
                     print("사용자가 취소함")
+                    #endif
                 } else {
                     if let _ = AccessToken.current {
+                        #if DEBUG
                         print("페이스북 로그인 성공")
+                        #endif
+                        
                         self.getFacebookProfile()
                         self.goToMain()
                     } else {
+                        #if DEBUG
                         print("페이스북 로그인 실패")
+                        #endif
                     }
                 }
             }
@@ -168,7 +183,7 @@ class SignupViewController: CommonViewController {
     }
     
     
-    /// 페이스북 프로필을 가져옵니다.
+    /// 페이스북 프로필 정보를 가져옵니다.
     private func getFacebookProfile() {
         guard let token = AccessToken.current, !token.isExpired else {
             return
@@ -185,6 +200,8 @@ class SignupViewController: CommonViewController {
     }
     
     
+    /// SNS로 로그인합니다.
+    /// - Parameter data: 카카오, 네이버 로그인 데이터
     private func login(data: SocialLoginPostData) {
         guard let url = URL(string: "https://mofapi.azurewebsites.net/login/sso") else {
             return
@@ -237,20 +254,17 @@ class SignupViewController: CommonViewController {
             }
         }.resume()
     }
-    
-    
-    /// 초기화 작업을 실행합니다.
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
 }
 
 
 
 @available(iOS 13.0, *)
+/// 애플 로그인 기능 구현
 extension SignupViewController: ASAuthorizationControllerPresentationContextProviding {
     
+    /// 현재 뷰의 윈도우를 리턴합니다.
+    /// - Parameter controller: SignupViewController
+    /// - Returns: ASPresentationAnchor
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window!
     }
@@ -259,19 +273,28 @@ extension SignupViewController: ASAuthorizationControllerPresentationContextProv
 
 
 @available(iOS 13.0, *)
+/// 애플 로그인 기능 구현
 extension SignupViewController: ASAuthorizationControllerDelegate {
     
+    /// 애플 로그인에 실패하면 경고 메시지를 출력합니다.
+    /// - Parameters:
+    ///   - controller: SignupViewController
+    ///   - error: An error that explains the failure using one of the codes in ASAuthorizationError.Code.
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         alertMessage(message: error.localizedDescription)
     }
     
     
+    /// 애플 로그인에 성공하면 유저 정보에 이메일과 이름을 저장합니다.
+    /// - Parameters:
+    ///   - controller: SignupViewController
+    ///   - authorization: An encapsulation of the successful authorization.
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
             let userId = credential.user
             var email = credential.email
             let _ = credential.identityToken
-            var name = credential.fullName?.givenName // 이름
+            var name = credential.fullName?.givenName
             
             if let email = email, email.count > 0 {
                 UserDefaults.standard.set(email, forKey: "email")
@@ -293,22 +316,30 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
 
 
 
+/// 네이버 로그인 기능 구현
 extension SignupViewController: NaverThirdPartyLoginConnectionDelegate {
     
+    /// 네이버 로그인에 성공했을 경우, 프로필 정보를 가져옵니다.
     func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
         getNaverProfile()
     }
     
     
+    /// 접근 토큰이 갱신됐을 경우, 네이버 프로필 정보를 가져옵니다.
     func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
         getNaverProfile()
     }
     
     
+    /// 토큰을 삭제하면 호출됩니다.
     func oauth20ConnectionDidFinishDeleteToken() {
     }
     
     
+    /// 에러가 발생했을 경우 호출됩니다.
+    /// - Parameters:
+    ///   - oauthConnection: NaverThirdPartyLoginConnection
+    ///   - error: 에러
     func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
         alertMessage(message: error.localizedDescription)
     }
