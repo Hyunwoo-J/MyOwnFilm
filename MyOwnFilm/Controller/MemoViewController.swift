@@ -25,6 +25,18 @@ class MemoViewController: UIViewController {
     @IBOutlet weak var memoPlaceholderLabel: UILabel!
     
     
+    /// 상태바 스타일. 화면 전체가 검정색이라 상태바가 잘 보이지 않아서 흰색 스타일로 바꿔줬습니다.
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    
+    /// 메모 텍스트
+    ///
+    /// 이전 화면에서 전달됩니다.
+    var text: String?
+    
+    
     /// 이전 화면으로 돌아갑니다.
     /// - Parameter sender: X 버튼
     @IBAction func close(_ sender: Any) {
@@ -47,6 +59,11 @@ class MemoViewController: UIViewController {
         super.viewDidLoad()
         
         memoTextView.becomeFirstResponder()
+        
+        if text != nil {
+            memoTextView.text = text
+            memoPlaceholderLabel.isHidden = true
+        }
     }
 }
 

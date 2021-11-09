@@ -38,7 +38,7 @@ class ReviewViewController: CommonViewController {
     /// 영화 관람 장소 레이블
     @IBOutlet weak var placeLabel: UILabel!
     
-    /// 영화 장소 버튼
+    /// 영화 본 장소 버튼
     @IBOutlet weak var placeButton: UIButton!
     
     /// 같이 본 친구 입력 필드
@@ -158,6 +158,19 @@ class ReviewViewController: CommonViewController {
         dateAlert.addAction(cancelAction)
         
         present(dateAlert, animated: true, completion: nil)
+    }
+    
+    
+    /// 다음 화면으로 넘어가기 전에 실행할 작업을 추가합니다.
+    ///
+    /// MemoViewController 이동시: 작성된 메모 정보를 보냅니다.
+    /// - Parameters:
+    ///   - segue: viewController 정보를 가지고 있는 seuge
+    ///   - sender: 영화 본 장소 버튼, 메모 버튼
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? MemoViewController {
+            vc.text = memoTextView.text
+        }
     }
     
     
