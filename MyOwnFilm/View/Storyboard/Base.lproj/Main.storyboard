@@ -119,7 +119,7 @@
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.074509803921568626" green="0.8666666666666667" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.22184485200000001" green="0.78057676549999999" blue="0.35394346710000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="NVy-oK-NOa" firstAttribute="leading" secondItem="7Yl-51-aVe" secondAttribute="leading" constant="20" id="4Hf-a9-atO"/>
                                                     <constraint firstAttribute="bottom" secondItem="qTt-By-BFF" secondAttribute="bottom" id="4ZX-EI-s9w"/>
@@ -137,7 +137,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="hdN-vO-xLz">
                                                         <rect key="frame" x="20" y="10" width="294" height="35"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kakao-talk" translatesAutoresizingMaskIntoConstraints="NO" id="hWo-DS-EpE">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kakaoTalk" translatesAutoresizingMaskIntoConstraints="NO" id="hWo-DS-EpE">
                                                                 <rect key="frame" x="0.0" y="0.0" width="18" height="35"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="18" id="Tlf-WH-Ivs"/>
@@ -159,7 +159,7 @@
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" red="1" green="0.97254901960784312" blue="0.011764705882352941" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.99607843137254903" green="0.89803921568627454" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="9vo-mO-Id7" secondAttribute="trailing" id="1jh-5A-uKb"/>
                                                     <constraint firstAttribute="bottom" secondItem="hdN-vO-xLz" secondAttribute="bottom" constant="10" id="7jG-pF-hhW"/>
@@ -199,7 +199,7 @@
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.31289479139999998" green="0.43783396479999998" blue="0.66299003359999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.21960783" green="0.4588235021" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="hiV-ws-v2v" secondAttribute="trailing" id="1Eg-dA-JCx"/>
                                                     <constraint firstItem="JM5-y3-bSj" firstAttribute="top" secondItem="Rnp-rR-SWS" secondAttribute="top" constant="10" id="2Uf-f0-afn"/>
@@ -829,14 +829,14 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Uba-90-Neu"/>
+        <segue reference="62r-q2-5OL"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="applelogo" catalog="system" width="103" height="128"/>
-        <image name="facebook" width="16" height="16"/>
-        <image name="kakao-talk" width="16" height="16"/>
+        <image name="facebook" width="27" height="27"/>
+        <image name="kakaoTalk" width="27" height="23.5"/>
         <image name="mail" width="16" height="16"/>
-        <image name="naver" width="16" height="16"/>
+        <image name="naver" width="26.5" height="27.5"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="backgroundColor">
             <color red="0.059000000357627869" green="0.063000001013278961" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
