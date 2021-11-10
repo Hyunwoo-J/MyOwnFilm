@@ -11,5 +11,6 @@ pod 'Loaf'
 pod 'FBSDKLoginKit'
 pod 'KakaoSDK'
 pod 'naveridlogin-sdk-ios'
+pod 'KeychainSwift', '~> 19.0'
 
 end
