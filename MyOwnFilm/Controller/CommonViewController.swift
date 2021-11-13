@@ -5,6 +5,7 @@
 //  Created by Hyunwoo Jang on 2021/06/04.
 //
 
+import KeychainSwift
 import Loaf
 import UIKit
 
@@ -120,9 +121,9 @@ class CommonViewController: UIViewController {
     /// - Parameter responseData: 계정 응답 모델
     func saveAccount(responseData: CommonAccountResponseType) {
         if let userId = responseData.userId, let token = responseData.token {
-            UserDefaults.standard.set(userId, forKey: AccountKeys.userId.rawValue)
-            UserDefaults.standard.set(token, forKey: AccountKeys.apiToken.rawValue)
-            UserDefaults.standard.set("email", forKey: AccountKeys.provider.rawValue)
+            KeychainSwift().set(userId, forKey: AccountKeys.userId.rawValue, withAccess: .accessibleAfterFirstUnlock)
+            KeychainSwift().set(token, forKey: AccountKeys.apiToken.rawValue, withAccess: .accessibleAfterFirstUnlock)
+            KeychainSwift().set("email", forKey: AccountKeys.provider.rawValue, withAccess: .accessibleAfterFirstUnlock)
         }
     }
     

@@ -15,4 +15,5 @@ enum AccountKeys: String {
     case provider = "com.hyunwooJang.MyOwnFilm.provider"
     case userId = "com.hyunwooJang.MyOwnFilm.userId"
     case apiToken = "com.hyunwooJang.MyOwnFilm.apiToken"
+    case name = "com.hyunwooJang.MyOwnFilm.name"
 }

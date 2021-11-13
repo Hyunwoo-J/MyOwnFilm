@@ -5,6 +5,7 @@
 //  Created by Hyunwoo Jang on 2021/10/26.
 //
 
+import KeychainSwift
 import UIKit
 
 
@@ -56,15 +57,11 @@ class ReviewManager {
         request.httpBody = httpBody
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        if let token = UserDefaults.standard.string(forKey: AccountKeys.apiToken.rawValue) {
+        if let token = KeychainSwift().get(AccountKeys.apiToken.rawValue) {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
         session.dataTask(with: request) { data, response, error in
-            defer {
-                print(">>>END")
-            }
-            
             if let error = error {
                 print(error)
                 return
@@ -111,7 +108,7 @@ class ReviewManager {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        if let token = UserDefaults.standard.string(forKey: AccountKeys.apiToken.rawValue) {
+        if let token = KeychainSwift().get(AccountKeys.apiToken.rawValue) {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -201,7 +198,7 @@ class ReviewManager {
         request.httpMethod = "DELETE"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        if let token = UserDefaults.standard.string(forKey: AccountKeys.apiToken.rawValue) {
+        if let token = KeychainSwift().get(AccountKeys.apiToken.rawValue) {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         

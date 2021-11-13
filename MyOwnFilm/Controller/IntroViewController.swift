@@ -5,6 +5,7 @@
 //  Created by Hyunwoo Jang on 2021/10/28.
 //
 
+import KeychainSwift
 import UIKit
 
 
@@ -25,7 +26,7 @@ class IntroViewController: CommonViewController {
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        if let token = UserDefaults.standard.string(forKey: AccountKeys.apiToken.rawValue) {
+        if let token = KeychainSwift().get(AccountKeys.apiToken.rawValue) {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -56,8 +57,8 @@ class IntroViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let _ = UserDefaults.standard.string(forKey: AccountKeys.userId.rawValue),
-            let _ = UserDefaults.standard.string(forKey: AccountKeys.apiToken.rawValue) {
+        if let _ = KeychainSwift().get(AccountKeys.userId.rawValue),
+           let _ = KeychainSwift().get(AccountKeys.apiToken.rawValue) {
             validateToken()
         } else {
             goToLogin()

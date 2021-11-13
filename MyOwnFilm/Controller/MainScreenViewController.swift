@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import KeychainSwift
 
 
 /// 메인 화면
@@ -46,9 +47,10 @@ class MainScreenViewController: CommonViewController {
         
         let logoutAction = UIAlertAction(title: "로그아웃", style: .default) { _ in
             self.twoActionAlertWithHandler(alertTitle: "로그아웃", message: "로그아웃하시겠습니까?", okActionTitle: "로그아웃") { _ in
-                UserDefaults.standard.removeObject(forKey: AccountKeys.userId.rawValue)
-                UserDefaults.standard.removeObject(forKey: AccountKeys.apiToken.rawValue)
-                UserDefaults.standard.removeObject(forKey: AccountKeys.provider.rawValue)
+                KeychainSwift().delete(AccountKeys.userId.rawValue)
+                KeychainSwift().delete(AccountKeys.apiToken.rawValue)
+                KeychainSwift().delete(AccountKeys.provider.rawValue)
+                KeychainSwift().delete(AccountKeys.name.rawValue)
                 
                 self.goToIntro()
             }

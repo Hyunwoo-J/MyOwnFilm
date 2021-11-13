@@ -13,6 +13,7 @@ import KakaoSDKCommon
 import KakaoSDKUser
 import NaverThirdPartyLogin
 import UIKit
+import KeychainSwift
 
 
 /// 회원가입 화면
@@ -297,15 +298,15 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             var name = credential.fullName?.givenName
             
             if let email = email, email.count > 0 {
-                UserDefaults.standard.set(email, forKey: "email")
+                KeychainSwift().set(email, forKey: AccountKeys.provider.rawValue, withAccess: .accessibleAfterFirstUnlock)
             } else {
-                email = UserDefaults.standard.string(forKey: "email") ?? ""
+                email = KeychainSwift().get(AccountKeys.provider.rawValue) ?? ""
             }
             
             if let name = name, name.count > 0 {
-                UserDefaults.standard.set(name, forKey: "name")
+                KeychainSwift().set(name, forKey: AccountKeys.name.rawValue, withAccess: .accessibleAfterFirstUnlock)
             } else {
-                name = UserDefaults.standard.string(forKey: "name")
+                name = KeychainSwift().get(AccountKeys.name.rawValue) ?? ""
             }
             
             let postData = SocialLoginPostData(provider: "Apple", id: userId, email: email ?? "")
