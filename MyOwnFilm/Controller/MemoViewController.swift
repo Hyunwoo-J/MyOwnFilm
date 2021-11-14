@@ -5,6 +5,9 @@
 //  Created by Hyunwoo Jang on 2021/09/14.
 //
 
+import NSObject_Rx
+import RxCocoa
+import RxSwift
 import UIKit
 
 
@@ -60,10 +63,27 @@ class MemoViewController: UIViewController {
         
         memoTextView.becomeFirstResponder()
         
+        let memoObservable = Observable.just(text)
+        
         if text != nil {
-            memoTextView.text = text
+            memoObservable
+                .bind(to: memoTextView.rx.text)
+                .disposed(by: rx.disposeBag)
+            
             memoPlaceholderLabel.isHidden = true
         }
+        
+        let willShow = NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil)
+            .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue }
+            .map { $0.cgRectValue.height }
+        
+        let willHide = NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil)
+            .map { _ in CGFloat(0) }
+
+        Observable.merge(willShow, willHide)
+            .asDriver(onErrorJustReturn: 0)
+            .drive(memoTextView.rx.keyboardHeight)
+            .disposed(by: rx.disposeBag)
     }
 }
 

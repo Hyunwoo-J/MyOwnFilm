@@ -13,6 +13,7 @@
 		2C117F1B2662304100335B74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C117F1A2662304100335B74 /* Assets.xcassets */; };
 		2C117F1E2662304100335B74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C117F1C2662304100335B74 /* LaunchScreen.storyboard */; };
 		2C1432742740EF6500CF6F4F /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1432732740EF6500CF6F4F /* ActionType.swift */; };
+		2C1432792741534100CF6F4F /* Reactive+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1432782741534100CF6F4F /* Reactive+UITextView.swift */; };
 		2C16A01D26AC171500802BD6 /* MainScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C16A01C26AC171500802BD6 /* MainScreen.storyboard */; };
 		2C16A01F26AC172900802BD6 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C16A01E26AC172900802BD6 /* MainScreenViewController.swift */; };
 		2C16A02126AC1C3700802BD6 /* MainScreenFirstSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C16A02026AC1C3700802BD6 /* MainScreenFirstSectionTableViewCell.swift */; };
@@ -68,6 +69,7 @@
 		2C117F1D2662304100335B74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C117F1F2662304100335B74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C1432732740EF6500CF6F4F /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
+		2C1432782741534100CF6F4F /* Reactive+UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+UITextView.swift"; sourceTree = "<group>"; };
 		2C16A01C26AC171500802BD6 /* MainScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainScreen.storyboard; sourceTree = "<group>"; };
 		2C16A01E26AC172900802BD6 /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
 		2C16A02026AC1C3700802BD6 /* MainScreenFirstSectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenFirstSectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				2C16A02526AC21BF00802BD6 /* Date+Formatter.swift */,
 				2C7CDC05271E6656003E1E60 /* String+Fomatter.swift */,
 				2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */,
+				2C1432782741534100CF6F4F /* Reactive+UITextView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				2CA8691F2729D6D5000B6A8E /* AccountKeys.swift in Sources */,
 				2C9DCD21272882E000C87810 /* EmailJoinPostData.swift in Sources */,
 				2C9DCD2527288BB100C87810 /* SocialLoginPostData.swift in Sources */,
+				2C1432792741534100CF6F4F /* Reactive+UITextView.swift in Sources */,
 				2C16A02626AC21BF00802BD6 /* Date+Formatter.swift in Sources */,
 				2C16A01F26AC172900802BD6 /* MainScreenViewController.swift in Sources */,
 				2C9DCD1F2728822300C87810 /* JoinViewController.swift in Sources */,
