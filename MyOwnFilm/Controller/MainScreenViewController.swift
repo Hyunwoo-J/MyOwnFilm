@@ -5,8 +5,12 @@
 //  Created by Hyunwoo Jang on 2021/07/24.
 //
 
-import UIKit
 import KeychainSwift
+import NSObject_Rx
+import RxCocoa
+import RxSwift
+import UIKit
+
 
 
 /// 메인 화면
@@ -39,20 +43,39 @@ class MainScreenViewController: CommonViewController {
         alert.addAction(editProfileAction)
         
         let leaveAccountAction = UIAlertAction(title: "회원 탈퇴", style: .default) { _ in
-            self.twoActionAlertWithHandler(alertTitle: "회원 탈퇴", message: "탈퇴하시겠습니까?", okActionTitle: "회원 탈퇴") { _ in
-                
+            DispatchQueue.main.async {
+                self.showTwoActionAlertMessageWithHandler(alertTitle: "회원 탈퇴", message: "탈퇴하시겠습니까?", okActionTitle: "회원 탈퇴", okActionStyle: .destructive)
+                    .filter { $0 == .ok }
+                    .map { _ in }
+                    .subscribe{ _ in
+                        #if DEBUG
+                        print("탈퇴 완료")
+                        #endif
+                    }
+                    .disposed(by: self.rx.disposeBag)
             }
+            
         }
         alert.addAction(leaveAccountAction)
         
         let logoutAction = UIAlertAction(title: "로그아웃", style: .default) { _ in
-            self.twoActionAlertWithHandler(alertTitle: "로그아웃", message: "로그아웃하시겠습니까?", okActionTitle: "로그아웃") { _ in
-                KeychainSwift().delete(AccountKeys.userId.rawValue)
-                KeychainSwift().delete(AccountKeys.apiToken.rawValue)
-                KeychainSwift().delete(AccountKeys.provider.rawValue)
-                KeychainSwift().delete(AccountKeys.name.rawValue)
-                
-                self.goToIntro()
+            DispatchQueue.main.async {
+                self.showTwoActionAlertMessageWithHandler(alertTitle: "로그아웃", message: "로그아웃하시겠습니까?", okActionTitle: "로그아웃", okActionStyle: .default)
+                    .subscribe(onNext: { actionType in
+                        switch actionType {
+                        case .ok:
+                            KeychainSwift().delete(AccountKeys.userId.rawValue)
+                            KeychainSwift().delete(AccountKeys.apiToken.rawValue)
+                            KeychainSwift().delete(AccountKeys.provider.rawValue)
+                            KeychainSwift().delete(AccountKeys.name.rawValue)
+                            
+                            self.goToIntro()
+                            
+                        default:
+                            break
+                        }
+                    })
+                    .disposed(by: self.rx.disposeBag)
             }
         }
         alert.addAction(logoutAction)
@@ -183,7 +206,7 @@ extension MainScreenViewController: UITableViewDataSource {
             cell.cellDelegate = self
             
             let target = MovieDataManager.shared.movieLists[indexPath.row]
-            cell.configure(with: target, text: titleList[indexPath.row]) 
+            cell.configure(with: target, text: titleList[indexPath.row])
             
             return cell
             

@@ -7,6 +7,9 @@
 
 import KeychainSwift
 import Loaf
+import NSObject_Rx
+import RxCocoa
+import RxSwift
 import UIKit
 
 
@@ -38,48 +41,11 @@ class CommonViewController: UIViewController {
     ///   - message: 경고창 내용
     ///   - actionTitle: 액션 타이틀
     ///   - actionStyle: 액션 스타일
-    func alertMessage(title: String = "알림", message: String, actionTitle: String = "확인", actionStyle: UIAlertAction.Style = .default) {
+    func showAlertMessage(title: String = "알림", message: String, actionTitle: String = "확인", actionStyle: UIAlertAction.Style = .default) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             
-            let alertAction = UIAlertAction(title: actionTitle, style: actionStyle, handler: nil)
-            alert.addAction(alertAction)
-            
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    
-    /// 경고창을 출력합니다.
-    /// - Parameters:
-    ///   - message: 경고창 내용
-    ///   - handler: 완료 블록
-    func alertMessageWithHandler(message: String, handler: ((UIAlertAction) -> Void)?) {
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
-            
-            let alertAction = UIAlertAction(title: "확인", style: .default, handler: handler)
-            alert.addAction(alertAction)
-            
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    
-    /// 두 가지 액션이 있는 경고창을 출력합니다.
-    /// - Parameters:
-    ///   - alertTitle: 경고창 타이틀
-    ///   - message: 경고창 내용
-    ///   - okActionTitle: 확인 액션 타이틀
-    ///   - handler: 완료 블록
-    func twoActionAlertWithHandler(alertTitle: String, message: String, okActionTitle: String, handler: ((UIAlertAction) -> Void)?) {
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
-            
-            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            alert.addAction(cancelAction)
-            
-            let okAction = UIAlertAction(title: okActionTitle, style: .destructive, handler: handler)
+            let okAction = UIAlertAction(title: actionTitle, style: actionStyle, handler: nil)
             alert.addAction(okAction)
             
             self.present(alert, animated: true, completion: nil)
@@ -146,6 +112,66 @@ class CommonViewController: UIViewController {
         
         for token in tokens {
             NotificationCenter.default.removeObserver(token)
+        }
+    }
+}
+
+
+
+/// Rx로 경고창 구현
+extension CommonViewController {
+    
+    /// 경고창을 출력합니다.
+    /// - Parameters:
+    ///   - message: 경고창 내용
+    /// - Returns: ActionType을 방출하는 옵저버블
+    func showAlertMessageWithHandler(message: String) -> Observable<ActionType> {
+        return Observable<ActionType>.create { observer in
+            let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+                observer.onNext(.ok)
+                observer.onCompleted()
+            }
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true, completion: nil)
+            
+            return Disposables.create {
+                alert.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
+    
+    /// 두 가지 액션이 있는 경고창을 출력합니다.
+    /// - Parameters:
+    ///   - alertTitle: 경고창 타이틀
+    ///   - message: 경고창 내용
+    ///   - okActionTitle: 확인 액션 타이틀
+    ///   - okActionStyle: 확인 액션 스타일
+    /// - Returns: ActionType을 방출하는 옵저버블
+    func showTwoActionAlertMessageWithHandler(alertTitle: String, message: String, okActionTitle: String, okActionStyle: UIAlertAction.Style) -> Observable<ActionType> {
+        return Observable<ActionType>.create { observer in
+            let alert = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel) { _ in
+                observer.onNext(.cancel)
+                observer.onCompleted()
+            }
+            alert.addAction(cancelAction)
+            
+            let okAction = UIAlertAction(title: okActionTitle, style: okActionStyle) { _ in
+                observer.onNext(.ok)
+                observer.onCompleted()
+            }
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true, completion: nil)
+            
+            return Disposables.create {
+                alert.dismiss(animated: true, completion: nil)
+            }
         }
     }
 }

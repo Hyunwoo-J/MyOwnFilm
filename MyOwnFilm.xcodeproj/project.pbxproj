@@ -12,6 +12,7 @@
 		2C117F192662303B00335B74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C117F172662303B00335B74 /* Main.storyboard */; };
 		2C117F1B2662304100335B74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C117F1A2662304100335B74 /* Assets.xcassets */; };
 		2C117F1E2662304100335B74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C117F1C2662304100335B74 /* LaunchScreen.storyboard */; };
+		2C1432742740EF6500CF6F4F /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1432732740EF6500CF6F4F /* ActionType.swift */; };
 		2C16A01D26AC171500802BD6 /* MainScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C16A01C26AC171500802BD6 /* MainScreen.storyboard */; };
 		2C16A01F26AC172900802BD6 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C16A01E26AC172900802BD6 /* MainScreenViewController.swift */; };
 		2C16A02126AC1C3700802BD6 /* MainScreenFirstSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C16A02026AC1C3700802BD6 /* MainScreenFirstSectionTableViewCell.swift */; };
@@ -66,6 +67,7 @@
 		2C117F1A2662304100335B74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C117F1D2662304100335B74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C117F1F2662304100335B74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2C1432732740EF6500CF6F4F /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		2C16A01C26AC171500802BD6 /* MainScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainScreen.storyboard; sourceTree = "<group>"; };
 		2C16A01E26AC172900802BD6 /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
 		2C16A02026AC1C3700802BD6 /* MainScreenFirstSectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenFirstSectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				2C9DCD2427288BB000C87810 /* SocialLoginPostData.swift */,
 				2C9DCD2627289F7700C87810 /* NaverResponse.swift */,
 				2CA8691E2729D6D5000B6A8E /* AccountKeys.swift */,
+				2C1432732740EF6500CF6F4F /* ActionType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				2C581DEC26693ECE0040C6EA /* CommonViewController.swift in Sources */,
 				2C117F122662303B00335B74 /* AppDelegate.swift in Sources */,
 				2C9DCD17272859DB00C87810 /* ReplaceRootSegue.swift in Sources */,
+				2C1432742740EF6500CF6F4F /* ActionType.swift in Sources */,
 				2C9DCD102727CED700C87810 /* ReviewPutData.swift in Sources */,
 				2C117F142662303B00335B74 /* SceneDelegate.swift in Sources */,
 				2C9DCD19272862FD00C87810 /* RoundedView.swift in Sources */,

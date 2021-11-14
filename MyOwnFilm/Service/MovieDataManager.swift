@@ -79,6 +79,7 @@ class MovieDataManager {
             
             if let error = error {
                 self.hasMore = false
+                
                 print(error)
             }
             

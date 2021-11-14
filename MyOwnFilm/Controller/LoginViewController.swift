@@ -39,12 +39,12 @@ class LoginViewController: CommonViewController {
             let encoder = JSONEncoder()
             request.httpBody = try encoder.encode(loginData)
         } catch {
-            print(error)
+            self.showAlertMessage(message: error.localizedDescription)
         }
         
         session.dataTask(with: request) { data, response, error in
             if let error = error {
-                print(error)
+                self.showAlertMessage(message: error.localizedDescription)
                 
                 return
             }
@@ -68,12 +68,12 @@ class LoginViewController: CommonViewController {
                         self.saveAccount(responseData: apiResponse)
                         self.goToMain()
                     case ResultCode.fail.rawValue:
-                        self.alertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
+                        self.showAlertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
                     default:
                         break
                     }
                 } catch {
-                    print(error)
+                    self.showAlertMessage(message: error.localizedDescription)
                 }
             }
         }.resume()

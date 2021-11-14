@@ -11,9 +11,10 @@ import FBSDKLoginKit
 import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
+import KeychainSwift
 import NaverThirdPartyLogin
 import UIKit
-import KeychainSwift
+
 
 
 /// 회원가입 화면
@@ -69,7 +70,13 @@ class SignupViewController: CommonViewController {
         request.setValue("2EyfP25Rdb", forHTTPHeaderField: "X-Naver-Client-Secret")
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        session.dataTask(with: request) { data, response, error in
+        session.dataTask(with: request) { data, _, error in
+            if let error = error {
+                self.showAlertMessage(message: error.localizedDescription)
+                
+                return
+            }
+            
             if let data = data {
                 let decoder = JSONDecoder()
                 
@@ -87,7 +94,7 @@ class SignupViewController: CommonViewController {
                         break
                     }
                 } catch {
-                    self.alertMessage(message: error.localizedDescription)
+                    self.showAlertMessage(message: error.localizedDescription)
                 }
             }
         }.resume()
@@ -99,7 +106,9 @@ class SignupViewController: CommonViewController {
     @IBAction func signupWithKakao(_ sender: Any) {
         UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
             if let error = error {
-                print(error)
+                self.showAlertMessage(message: error.localizedDescription)
+                
+                return
             }
             
             else {
@@ -112,10 +121,10 @@ class SignupViewController: CommonViewController {
                         UserApi.shared.accessTokenInfo { (_, error) in
                             if let error = error {
                                 if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
-                                    self.alertMessage(message: sdkError.localizedDescription)
+                                    self.showAlertMessage(message: sdkError.localizedDescription)
                                 }
                                 else {
-                                    self.alertMessage(message: "카카오에 로그인 할 수 없습니다.")
+                                    self.showAlertMessage(message: "카카오에 로그인 할 수 없습니다.")
                                 }
                             }
                             else {
@@ -125,7 +134,7 @@ class SignupViewController: CommonViewController {
                                 
                                 UserApi.shared.me() {(user, error) in
                                     if let error = error {
-                                        print(error)
+                                        self.showAlertMessage(message: error.localizedDescription)
                                     }
                                     else {
                                         #if DEBUG
@@ -142,7 +151,7 @@ class SignupViewController: CommonViewController {
                         }
                     }
                     else {
-                        self.alertMessage(message: "로그인이 만료되었습니다. 다시 로그인 해 주세요.")
+                        self.showAlertMessage(message: "로그인이 만료되었습니다. 다시 로그인 해 주세요.")
                     }
                 }
             }
@@ -155,7 +164,7 @@ class SignupViewController: CommonViewController {
     @IBAction func signupWithFacebook(_ sender: Any) {
         manager.logIn(permissions: ["email", "public_profile"], from: self) { result, error in
             if let error = error {
-                print(error)
+                self.showAlertMessage(message: error.localizedDescription)
                 
                 return
             }
@@ -193,7 +202,7 @@ class SignupViewController: CommonViewController {
         let request = GraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
         request.start { connection, result, error in
             if let error = error {
-                print(error)
+                self.showAlertMessage(message: error.localizedDescription)
                 
                 return
             }
@@ -217,12 +226,12 @@ class SignupViewController: CommonViewController {
             let encoder = JSONEncoder()
             request.httpBody = try encoder.encode(data)
         } catch {
-            print(error)
+            self.showAlertMessage(message: error.localizedDescription)
         }
         
         session.dataTask(with: request) { data, response, error in
             if let error = error {
-                print(error)
+                self.showAlertMessage(message: error.localizedDescription)
                 
                 return
             }
@@ -245,12 +254,12 @@ class SignupViewController: CommonViewController {
                     case ResultCode.ok.rawValue:
                         self.goToMain()
                     case ResultCode.fail.rawValue:
-                        self.alertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
+                        self.showAlertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
                     default:
                         break
                     }
                 } catch {
-                    print(error)
+                    self.showAlertMessage(message: error.localizedDescription)
                 }
             }
         }.resume()
@@ -282,7 +291,7 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
     ///   - controller: SignupViewController
     ///   - error: An error that explains the failure using one of the codes in ASAuthorizationError.Code.
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        alertMessage(message: error.localizedDescription)
+        showAlertMessage(message: error.localizedDescription)
     }
     
     
@@ -342,6 +351,6 @@ extension SignupViewController: NaverThirdPartyLoginConnectionDelegate {
     ///   - oauthConnection: NaverThirdPartyLoginConnection
     ///   - error: 에러
     func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
-        alertMessage(message: error.localizedDescription)
+        showAlertMessage(message: error.localizedDescription)
     }
 }

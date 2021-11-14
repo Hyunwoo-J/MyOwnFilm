@@ -43,12 +43,12 @@ class JoinViewController: CommonViewController {
             let encoder = JSONEncoder()
             request.httpBody = try encoder.encode(joinData)
         } catch {
-            print(error)
+            self.showAlertMessage(message: error.localizedDescription)
         }
         
         session.dataTask(with: request) { data, response, error in
             if let error = error {
-                print(error)
+                self.showAlertMessage(message: error.localizedDescription)
                 
                 return
             }
@@ -70,16 +70,20 @@ class JoinViewController: CommonViewController {
                     switch apiResponse.code {
                     case ResultCode.ok.rawValue:
                         self.saveAccount(responseData: apiResponse)
-                        self.alertMessageWithHandler(message: "회원가입에 성공하였습니다.") { _ in
-                            self.dismiss(animated: true, completion: nil)
+                        DispatchQueue.main.async {
+                            self.showAlertMessageWithHandler(message: "회원가입에 성공하였습니다.")
+                                .subscribe(onNext: { _ in
+                                    self.dismiss(animated: true, completion: nil)
+                                })
+                                .disposed(by: self.rx.disposeBag)
                         }
                     case ResultCode.fail.rawValue:
-                        self.alertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
+                        self.showAlertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
                     default:
                         break
                     }
                 } catch {
-                    print(error)
+                    self.showAlertMessage(message: error.localizedDescription)
                 }
             }
         }.resume()
