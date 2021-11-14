@@ -12,5 +12,8 @@ pod 'FBSDKLoginKit'
 pod 'KakaoSDK'
 pod 'naveridlogin-sdk-ios'
 pod 'KeychainSwift', '~> 19.0'
+pod 'RxSwift'
+pod 'RxCocoa'
+pod 'NSObject+Rx'
 
 end
