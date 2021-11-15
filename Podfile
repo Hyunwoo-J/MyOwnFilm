@@ -15,5 +15,6 @@ pod 'KeychainSwift', '~> 19.0'
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'NSObject+Rx'
+pod 'Moya/RxSwift'
 
 end
