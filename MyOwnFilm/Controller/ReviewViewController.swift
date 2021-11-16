@@ -59,7 +59,7 @@ class ReviewViewController: CommonViewController {
     var index: Int?
     
     /// 리뷰 데이터
-    var reviewData: ReviewListResponse.Review?
+    var reviewData: ReviewList.Review?
     
     /// 영화 목록
     var movieList = [MovieData.Result]()
@@ -108,10 +108,24 @@ class ReviewViewController: CommonViewController {
         let starPoint = starPointView.rating
         let memo = memoTextView.text
         
-        let viewingDate = ReviewManager.shared.postDateFormatter.string(from: date)
+        let viewingDate = ReviewDataManager.shared.postDateFormatter.string(from: date)
         
         DispatchQueue.global().async {
-            ReviewManager.shared.saveReviewData(index: self.index, movieList: self.movieList, reviewData: self.reviewData, starPoint: starPoint, viewingDate: viewingDate, movieTheater: place, person: person, memo: memo ?? "")
+            let updateDate = ReviewDataManager.shared.postDateFormatter.string(from: date)
+            
+            if let reviewData = self.reviewData {
+                let reviewPutdata = ReviewPutData(reviewId: reviewData.reviewId, movieId: reviewData.movieId, movieTitle: reviewData.movieTitle, backdropPath: reviewData.backdropPath, posterPath: reviewData.posterPath, releaseDate: reviewData.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: place, person: person, memo: memo, updateDate: updateDate)
+                
+                ReviewDataManager.shared.editReview(reviewPutData: reviewPutdata)
+            } else {
+                guard let index = self.index else { return }
+                
+                let movie = self.movieList[index]
+                
+                let reviewPostData = ReviewPostData(movieId: movie.id, movieTitle: movie.titleStr, backdropPath: movie.backdropPath, posterPath: movie.posterPath, releaseDate: movie.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: place, person: person, memo: memo, updateDate: updateDate)
+                
+                ReviewDataManager.shared.saveReview(reviewPostData: reviewPostData)
+            }
         }
         
         close(self)
@@ -233,8 +247,8 @@ class ReviewViewController: CommonViewController {
             $0?.layer.borderColor = UIColor.white.cgColor
         }
         
-        if let movieData = reviewData {
-            MovieImageManager.shared.loadImage(from: movieData.backdropPath ?? "", posterImageSize: PosterImageSize.w780.rawValue) { img in
+        if let reviewData = reviewData {
+            MovieImageManager.shared.loadImage(from: reviewData.backdropPath ?? "", posterImageSize: PosterImageSize.w780.rawValue) { img in
                 if let img = img {
                     self.memoBackdropImageView.image = img
                 } else {
@@ -242,11 +256,11 @@ class ReviewViewController: CommonViewController {
                 }
             }
             
-            starPointView.rating = movieData.starPoint
-            dateLabel.text = movieData.viewingDate.toManagerDBDate()?.toUserDateString()
-            placeLabel.text = movieData.movieTheater
-            friendTextField.text = movieData.person
-            memoTextView.text = movieData.memo
+            starPointView.rating = reviewData.starPoint
+            dateLabel.text = reviewData.viewingDate.toManagerDBDate()?.toUserDateString()
+            placeLabel.text = reviewData.movieTheater
+            friendTextField.text = reviewData.person
+            memoTextView.text = reviewData.memo
             
             dateLabel.textColor = .white
             placeLabel.textColor = .white

@@ -34,6 +34,9 @@ class CommonViewController: UIViewController {
     /// 노티피케이션 옵저버 토큰 배열
     var tokens = [NSObjectProtocol]()
     
+    /// 로그인 키체인 인스턴스
+    let loginKeychain = KeychainSwift()
+    
     
     /// 경고창을 출력합니다.
     /// - Parameters:
@@ -87,9 +90,9 @@ class CommonViewController: UIViewController {
     /// - Parameter responseData: 계정 응답 모델
     func saveAccount(responseData: CommonAccountResponseType) {
         if let userId = responseData.userId, let token = responseData.token {
-            KeychainSwift().set(userId, forKey: AccountKeys.userId.rawValue, withAccess: .accessibleAfterFirstUnlock)
-            KeychainSwift().set(token, forKey: AccountKeys.apiToken.rawValue, withAccess: .accessibleAfterFirstUnlock)
-            KeychainSwift().set("email", forKey: AccountKeys.provider.rawValue, withAccess: .accessibleAfterFirstUnlock)
+            loginKeychain.set(userId, forKey: AccountKeys.userId.rawValue, withAccess: .accessibleAfterFirstUnlock)
+            loginKeychain.set(token, forKey: AccountKeys.apiToken.rawValue, withAccess: .accessibleAfterFirstUnlock)
+            loginKeychain.set("email", forKey: AccountKeys.provider.rawValue, withAccess: .accessibleAfterFirstUnlock)
         }
     }
     

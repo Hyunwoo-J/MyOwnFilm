@@ -9,7 +9,7 @@ import Foundation
 
 
 /// 서버 리뷰 목록 응답 모델
-struct ReviewListResponse: Codable {
+struct ReviewList: Codable {
     
     /// 서버 리뷰 모델
     struct Review: Codable {
@@ -62,4 +62,24 @@ struct ReviewListResponse: Codable {
     
     /// 메시지
     let message: String?
+    
+    
+    /// 리뷰 데이터를 파싱합니다.
+    /// - Parameter data: 리뷰 데이터
+    /// - Returns: 리뷰 목록
+    static func parse(data: Data) -> [Review] {
+        var list = [Review]()
+        
+        do {
+            let decoder = JSONDecoder()
+            let reviewList = try decoder.decode(ReviewList.self, from: data)
+            
+            if reviewList.code == 200 {
+                list = reviewList.list
+            }
+        } catch {
+            print(error)
+        }
+        return list
+    }
 }

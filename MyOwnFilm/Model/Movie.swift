@@ -20,7 +20,9 @@ struct MovieData: Codable {
         /// 배경 이미지 경로
         private let backdrop_path: String?
         
-        /// 배경 이미지 경로 기본값
+        /// 배경 이미지 경로
+        ///
+        /// 값이 없을 경우, 기본값을 리턴합니다.
         var backdropPath: String {
             return backdrop_path ?? "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
         }
@@ -29,7 +31,9 @@ struct MovieData: Codable {
         /// 장르 아이디
         private let genre_ids: [Int]?
         
-        /// 장르 아이디 기본값
+        /// 장르 아이디
+        ///
+        /// 값이 없을 경우, 기본값을 리턴합니다.
         var genreIds: [Int] {
             return genre_ids ?? []
         }
@@ -38,7 +42,9 @@ struct MovieData: Codable {
         /// 줄거리 요약
         private let overview: String?
         
-        /// 줄거리 기본값
+        /// 줄거리
+        ///
+        /// 값이 없을 경우, 기본값을 리턴합니다.
         var overviewStr: String {
             return overview ?? ""
         }
@@ -47,7 +53,9 @@ struct MovieData: Codable {
         /// 개봉일
         private let release_date: String?
         
-        /// 개봉일 기본값
+        /// 개봉일
+        ///
+        /// 값이 없을 경우, 기본값을 리턴합니다.
         var releaseDate: String {
             return release_date ?? ""
         }
@@ -56,7 +64,9 @@ struct MovieData: Codable {
         /// 영화 제목
         private let title: String?
         
-        /// 영화 제목 기본값
+        /// 영화 제목
+        ///
+        /// 값이 없을 경우, 기본값을 리턴합니다.
         var titleStr: String {
             return title ?? ""
         }
@@ -65,7 +75,9 @@ struct MovieData: Codable {
         /// 포스터 이미지 경로
         private let poster_path: String?
         
-        /// 포스터 이미지 경로 기본값
+        /// 포스터 이미지 경로
+        ///
+        /// 값이 없을 경우, 기본값을 리턴합니다.
         var posterPath: String {
             return poster_path ?? "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
         }

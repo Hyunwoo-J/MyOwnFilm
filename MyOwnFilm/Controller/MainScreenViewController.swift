@@ -64,10 +64,10 @@ class MainScreenViewController: CommonViewController {
                     .subscribe(onNext: { actionType in
                         switch actionType {
                         case .ok:
-                            KeychainSwift().delete(AccountKeys.userId.rawValue)
-                            KeychainSwift().delete(AccountKeys.apiToken.rawValue)
-                            KeychainSwift().delete(AccountKeys.provider.rawValue)
-                            KeychainSwift().delete(AccountKeys.name.rawValue)
+                            self.loginKeychain.delete(AccountKeys.userId.rawValue)
+                            self.loginKeychain.delete(AccountKeys.apiToken.rawValue)
+                            self.loginKeychain.delete(AccountKeys.provider.rawValue)
+                            self.loginKeychain.delete(AccountKeys.name.rawValue)
                             
                             self.goToIntro()
                             

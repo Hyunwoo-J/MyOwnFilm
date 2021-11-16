@@ -307,15 +307,15 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             var name = credential.fullName?.givenName
             
             if let email = email, email.count > 0 {
-                KeychainSwift().set(email, forKey: AccountKeys.provider.rawValue, withAccess: .accessibleAfterFirstUnlock)
+                loginKeychain.set(email, forKey: AccountKeys.provider.rawValue, withAccess: .accessibleAfterFirstUnlock)
             } else {
-                email = KeychainSwift().get(AccountKeys.provider.rawValue) ?? ""
+                email = loginKeychain.get(AccountKeys.provider.rawValue) ?? ""
             }
             
             if let name = name, name.count > 0 {
-                KeychainSwift().set(name, forKey: AccountKeys.name.rawValue, withAccess: .accessibleAfterFirstUnlock)
+                loginKeychain.set(name, forKey: AccountKeys.name.rawValue, withAccess: .accessibleAfterFirstUnlock)
             } else {
-                name = KeychainSwift().get(AccountKeys.name.rawValue) ?? ""
+                name = loginKeychain.get(AccountKeys.name.rawValue) ?? ""
             }
             
             let postData = SocialLoginPostData(provider: "Apple", id: userId, email: email ?? "")

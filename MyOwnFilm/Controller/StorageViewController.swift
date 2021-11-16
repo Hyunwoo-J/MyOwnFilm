@@ -57,7 +57,7 @@ class StorageViewController: CommonViewController {
     var isMovieNameAscending = true
     
     /// 최근 저장한 리뷰 목록
-    var recentlyReviewList = [ReviewListResponse.Review]()
+    var recentlyReviewList = [ReviewList.Review]()
     
     
     /// 선택된 항목에 따라 영화 데이터를 표시합니다.
@@ -78,7 +78,7 @@ class StorageViewController: CommonViewController {
         }
         
         if sender.tag == 100 {
-            recentlyReviewList = ReviewManager.shared.reviewList.filter { reviewData in
+            recentlyReviewList = ReviewDataManager.shared.reviewList.filter { reviewData in
                 let dateBeforeThreeMonth = Date() - 3.month
                 
                 guard let date = reviewData.viewingDate.toManagerDBDate() else {
@@ -152,13 +152,13 @@ class StorageViewController: CommonViewController {
         
         if self.isOpeningYearAscending {
             recentlyReviewList.sort { $0.releaseDate < $1.releaseDate }
-            ReviewManager.shared.reviewList.sort { $0.releaseDate < $1.releaseDate }
+            ReviewDataManager.shared.reviewList.sort { $0.releaseDate < $1.releaseDate }
             
             self.alignmentStateLabel.text = "오래된 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
         } else {
             recentlyReviewList.sort { $0.releaseDate > $1.releaseDate }
-            ReviewManager.shared.reviewList.sort { $0.releaseDate > $1.releaseDate }
+            ReviewDataManager.shared.reviewList.sort { $0.releaseDate > $1.releaseDate }
             
             self.alignmentStateLabel.text = "최근 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
@@ -178,13 +178,13 @@ class StorageViewController: CommonViewController {
         
         if self.isDateAscending {
             recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
-            ReviewManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
             
             self.alignmentStateLabel.text = "오래된 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
         } else {
             recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
-            ReviewManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
             
             self.alignmentStateLabel.text = "최근 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
@@ -204,13 +204,13 @@ class StorageViewController: CommonViewController {
         
         if self.isMovieNameAscending {
             recentlyReviewList.sort { $0.movieTitle < $1.movieTitle }
-            ReviewManager.shared.reviewList.sort { $0.movieTitle < $1.movieTitle }
+            ReviewDataManager.shared.reviewList.sort { $0.movieTitle < $1.movieTitle }
             
             self.alignmentStateLabel.text = "가나다"
             self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
         } else {
             recentlyReviewList.sort { $0.movieTitle > $1.movieTitle }
-            ReviewManager.shared.reviewList.sort { $0.movieTitle > $1.movieTitle }
+            ReviewDataManager.shared.reviewList.sort { $0.movieTitle > $1.movieTitle }
             
             self.alignmentStateLabel.text = "하파타"
             self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
@@ -227,27 +227,27 @@ class StorageViewController: CommonViewController {
     /// 정렬 기준과 기준 순서에 따라 데이터를 정렬합니다.
     func sortReviewData() {
         if alignmentLabel.text == "개봉연도" && alignmentStateLabel.text == "오래된 날짜순" {
-            ReviewManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() < $1.releaseDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() < $1.releaseDate.toManagerDBDate() ?? Date() }
             recentlyReviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() < $1.releaseDate.toManagerDBDate() ?? Date() }
         } else if alignmentLabel.text == "개봉연도" && alignmentStateLabel.text == "최근 날짜순" {
-            ReviewManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() > $1.releaseDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() > $1.releaseDate.toManagerDBDate() ?? Date() }
             recentlyReviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() > $1.releaseDate.toManagerDBDate() ?? Date() }
         }
         
         
         if alignmentLabel.text == "내가 본 날짜" && alignmentStateLabel.text == "오래된 날짜순" {
-            ReviewManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
             recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
         } else if alignmentLabel.text == "내가 본 날짜" && alignmentStateLabel.text == "최근 날짜순" {
-            ReviewManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
             recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
         }
         
         if alignmentLabel.text == "영화 이름" && alignmentStateLabel.text == "가나다" {
-            ReviewManager.shared.reviewList.sort { $0.movieTitle < $1.movieTitle }
+            ReviewDataManager.shared.reviewList.sort { $0.movieTitle < $1.movieTitle }
             recentlyReviewList.sort { $0.movieTitle < $1.movieTitle }
         } else if alignmentLabel.text == "영화 이름" && alignmentStateLabel.text == "하파타" {
-            ReviewManager.shared.reviewList.sort { $0.movieTitle > $1.movieTitle }
+            ReviewDataManager.shared.reviewList.sort { $0.movieTitle > $1.movieTitle }
             recentlyReviewList.sort { $0.movieTitle > $1.movieTitle }
         }
         
@@ -259,7 +259,6 @@ class StorageViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(ReviewManager.shared.reviewList.count)
         NotificationCenter.default.addObserver(forName: .reviewWillCancelled, object: nil, queue: .main) {[weak self] _ in
             guard let self = self else { return }
             
@@ -271,7 +270,7 @@ class StorageViewController: CommonViewController {
         NotificationCenter.default.addObserver(forName: .reviewDidUpdate, object: nil, queue: .main) {[weak self] _ in
             guard let self = self else { return }
             
-            ReviewManager.shared.fetchReview {
+            ReviewDataManager.shared.fetchReview {
                 self.storageCollectionView.reloadData()
             }
         }
@@ -285,7 +284,7 @@ class StorageViewController: CommonViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ReviewManager.shared.fetchReview {
+        ReviewDataManager.shared.fetchReview {
             self.storageCollectionView.reloadData()
         }
     }
@@ -321,7 +320,7 @@ extension StorageViewController: UICollectionViewDataSource {
             return recentlyReviewList.count
         }
 
-        return ReviewManager.shared.reviewList.count
+        return ReviewDataManager.shared.reviewList.count
     }
     
     
@@ -342,7 +341,7 @@ extension StorageViewController: UICollectionViewDataSource {
             return cell
         }
 
-        let target = ReviewManager.shared.reviewList[indexPath.row]
+        let target = ReviewDataManager.shared.reviewList[indexPath.row]
         cell.configure(with: target)
         
         return cell
@@ -370,7 +369,7 @@ extension StorageViewController: UICollectionViewDelegate {
             if isRecentlyMovieButtonSelected {
                 vc.reviewData = recentlyReviewList[indexPath.item]
             } else {
-                vc.reviewData = ReviewManager.shared.reviewList[indexPath.item]
+                vc.reviewData = ReviewDataManager.shared.reviewList[indexPath.item]
             }
             
             vc.modalPresentationStyle = .overFullScreen
@@ -388,14 +387,14 @@ extension StorageViewController: UICollectionViewDelegate {
                 let alert = UIAlertController(title: "리뷰 삭제", message: "리뷰를 삭제하시겠습니까?", preferredStyle: .alert)
                 
                 let delete = UIAlertAction(title: "확인", style: .destructive) { action in
-                    let id = ReviewManager.shared.reviewList[indexPath.row].reviewId
+                    let id = ReviewDataManager.shared.reviewList[indexPath.row].reviewId
                     
-                    ReviewManager.shared.deleteReview(id: id) {
-                        if let index = ReviewManager.shared.reviewList.firstIndex(where: { $0.reviewId == id }) {
+                    ReviewDataManager.shared.deleteReview(id: id) {
+                        if let index = ReviewDataManager.shared.reviewList.firstIndex(where: { $0.reviewId == id }) {
                             let indexPath = IndexPath(row: index, section: 0)
                             self.storageCollectionView.deleteItems(at: [indexPath])
                             
-                            ReviewManager.shared.reviewList.remove(at: index)
+                            ReviewDataManager.shared.reviewList.remove(at: index)
                         }
                     }
                 }

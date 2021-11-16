@@ -26,7 +26,7 @@ class IntroViewController: CommonViewController {
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        if let token = KeychainSwift().get(AccountKeys.apiToken.rawValue) {
+        if let token = loginKeychain.get(AccountKeys.apiToken.rawValue) {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -57,8 +57,8 @@ class IntroViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let _ = KeychainSwift().get(AccountKeys.userId.rawValue),
-           let _ = KeychainSwift().get(AccountKeys.apiToken.rawValue) {
+        if let _ = loginKeychain.get(AccountKeys.userId.rawValue),
+           let _ = loginKeychain.get(AccountKeys.apiToken.rawValue) {
             validateToken()
         } else {
             goToLogin()
