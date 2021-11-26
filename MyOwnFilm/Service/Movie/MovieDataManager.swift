@@ -63,7 +63,7 @@ class MovieDataManager {
         isFetching = true
         page += 1
         
-        let urlStr = "https://api.themoviedb.org/3/search/movie?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&page=\(page)&include_adult=false&query=\(movieName)"
+        let urlStr = "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&language=ko-KR&page=\(page)&include_adult=false&query=\(movieName)"
         
         // 한글 입력도 가능하게 설정
         let urlWithPercentEscapes = urlStr.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
@@ -163,7 +163,7 @@ class MovieDataManager {
     ///   - date: 기준 날짜
     ///   - completion: 완료 블록
     func fetchNowPlayingMovie(by date: String, completion: @escaping () -> ()) {
-        let urlStr = "https://api.themoviedb.org/3/movie/now_playing?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&region=KR&release_lte=\(date)"
+        let urlStr = "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)&language=ko-KR&region=KR&release_lte=\(date)"
 
         let url = URL(string: urlStr)!
 
@@ -206,7 +206,7 @@ class MovieDataManager {
     ///   - date: 기준 날짜
     ///   - completion: 완료 블록
     func fetchPopularMovie(by date: String, completion: @escaping () -> ()) {
-        let urlStr = "https://api.themoviedb.org/3/movie/popular?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&region=KR&release_lte=\(date)"
+        let urlStr = "https://api.themoviedb.org/3/movie/popular?api_key=\(apiKey)&language=ko-KR&region=KR&release_lte=\(date)"
 
         let url = URL(string: urlStr)!
 
@@ -254,7 +254,7 @@ class MovieDataManager {
     ///   - date: 기준 날짜
     ///   - completion: 완료 블록
     func fetchActionMovie(by date: String, completion: @escaping () -> ()) {
-        let urlStr = "https://api.themoviedb.org/3/genre/28/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&release_lte=\(date)"
+        let urlStr = "https://api.themoviedb.org/3/genre/28/movies?api_key=\(apiKey)&language=ko-KR&release_lte=\(date)"
 
         let url = URL(string: urlStr)!
 
@@ -302,7 +302,7 @@ class MovieDataManager {
     ///   - date: 기준 날짜
     ///   - completion: 완료 블록
     func fetchComedyMovie(by date: String, completion: @escaping () -> ()) {
-        let urlStr = "https://api.themoviedb.org/3/genre/35/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&release_lte=\(date)"
+        let urlStr = "https://api.themoviedb.org/3/genre/35/movies?api_key=\(apiKey)&language=ko-KR&release_lte=\(date)"
 
         let url = URL(string: urlStr)!
 
@@ -350,7 +350,7 @@ class MovieDataManager {
     ///   - date: 기준 날짜
     ///   - completion: 완료 블록
     func fetchRomanceMovie(by date: String, completion: @escaping () -> ()) {
-        let urlStr = "https://api.themoviedb.org/3/genre/10749/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&release_lte=\(date)"
+        let urlStr = "https://api.themoviedb.org/3/genre/10749/movies?api_key=\(apiKey)&language=ko-KR&release_lte=\(date)"
 
         let url = URL(string: urlStr)!
 
@@ -398,7 +398,7 @@ class MovieDataManager {
     ///   - date: 기준 날짜
     ///   - completion: 완료 블록
     func fetchFantasyMovie(completion: @escaping () -> ()) {
-        let urlStr = "https://api.themoviedb.org/3/genre/14/movies?api_key=f8fe112d01a08bb8e4e39895d7d71c61&language=ko-KR&"
+        let urlStr = "https://api.themoviedb.org/3/genre/14/movies?api_key=\(apiKey)&language=ko-KR&"
 
         let url = URL(string: urlStr)!
 

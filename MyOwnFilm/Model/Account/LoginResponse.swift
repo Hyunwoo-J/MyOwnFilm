@@ -14,7 +14,7 @@ struct LoginResponse: Codable, CommonResponseType, CommonAccountResponseType {
     /// 응답 코드
     var code: Int
     
-    /// 메시지
+    /// 서버 메시지
     var message: String?
     
     /// 유저 ID

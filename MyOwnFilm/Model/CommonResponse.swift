@@ -8,22 +8,22 @@
 import Foundation
 
 
-/// 기본 서버 응답 속성을 정의
+/// 기본 서버 응답 타입
 protocol CommonResponseType {
     
     /// 응답 코드
     var code: Int { get }
     
-    /// 메시지
+    /// 서버 메시지
     var message: String? { get }
 }
 
 
 
-/// 기본 계정 응답 속성을 정의
+/// 계정 관련 기본 서버 응답 타입
 protocol CommonAccountResponseType {
     
-    /// 유저 ID
+    /// 유저 아이디
     var userId: String? { get }
     
     /// 토큰
@@ -38,6 +38,6 @@ struct CommonResponse: Codable, CommonResponseType {
     /// 응답 코드
     let code: Int
     
-    /// 메시지
+    /// 서버 메시지
     let message: String?
 }

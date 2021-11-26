@@ -65,7 +65,7 @@ class JoinViewController: CommonViewController {
                 let decoder = JSONDecoder()
                 
                 do {
-                    let apiResponse = try decoder.decode(LoginResponse.self, from: data)
+                    let apiResponse = try decoder.decode(JoinResponse.self, from: data)
                     
                     switch apiResponse.code {
                     case ResultCode.ok.rawValue:

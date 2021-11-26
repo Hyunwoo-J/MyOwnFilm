@@ -8,7 +8,7 @@
 import UIKit
 
 
-/// 영화 이미지 매니저
+/// 영화 이미지 데이터 관리
 class MovieImageManager {
     
     /// 싱글톤
