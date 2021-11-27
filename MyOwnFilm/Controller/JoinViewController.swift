@@ -30,62 +30,8 @@ class JoinViewController: CommonViewController {
     @IBAction func signup(_ sender: Any) {
         guard let email = emailField.text, let password = passwordField.text else { return }
         
-        guard let url = URL(string: "https://mofapi.azurewebsites.net/join/email") else { return }
+        let joinData = EmailJoinPostData(email: email, password: password)
         
-        let session = URLSession.shared
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        do {
-            let joinData = EmailJoinPostData(email: email, password: password)
-            
-            let encoder = JSONEncoder()
-            request.httpBody = try encoder.encode(joinData)
-        } catch {
-            self.showAlertMessage(message: error.localizedDescription)
-        }
-        
-        session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                self.showAlertMessage(message: error.localizedDescription)
-                
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    print(httpResponse.statusCode)
-                }
-                
-                return
-            }
-            
-            if let data = data {
-                let decoder = JSONDecoder()
-                
-                do {
-                    let apiResponse = try decoder.decode(JoinResponse.self, from: data)
-                    
-                    switch apiResponse.code {
-                    case ResultCode.ok.rawValue:
-                        self.saveAccount(responseData: apiResponse)
-                        DispatchQueue.main.async {
-                            self.showAlertMessageWithHandler(message: "회원가입에 성공하였습니다.")
-                                .subscribe(onNext: { _ in
-                                    self.dismiss(animated: true, completion: nil)
-                                })
-                                .disposed(by: self.rx.disposeBag)
-                        }
-                    case ResultCode.fail.rawValue:
-                        self.showAlertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
-                    default:
-                        break
-                    }
-                } catch {
-                    self.showAlertMessage(message: error.localizedDescription)
-                }
-            }
-        }.resume()
+        LoginDataManager.shared.singup(emailJoinPostData: joinData, vc: self)
     }
 }

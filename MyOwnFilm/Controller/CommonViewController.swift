@@ -86,13 +86,10 @@ class CommonViewController: UIViewController {
     }
     
     
-    /// 계정을 저장합니다.
-    /// - Parameter responseData: 계정 응답 모델
-    func saveAccount(responseData: CommonAccountResponseType) {
-        if let userId = responseData.userId, let token = responseData.token {
-            loginKeychain.set(userId, forKey: AccountKeys.userId.rawValue, withAccess: .accessibleAfterFirstUnlock)
-            loginKeychain.set(token, forKey: AccountKeys.apiToken.rawValue, withAccess: .accessibleAfterFirstUnlock)
-            loginKeychain.set("email", forKey: AccountKeys.provider.rawValue, withAccess: .accessibleAfterFirstUnlock)
+    /// 로그인 화면으로 이동합니다.
+    func goToLogin() {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "loginSegue", sender: nil)
         }
     }
     
@@ -128,7 +125,7 @@ extension CommonViewController {
     /// - Parameters:
     ///   - message: 경고창 내용
     /// - Returns: ActionType을 방출하는 옵저버블
-    func showAlertMessageWithHandler(message: String) -> Observable<ActionType> {
+    func showAlertMessageWithRx(message: String) -> Observable<ActionType> {
         return Observable<ActionType>.create { observer in
             let alert = UIAlertController(title: "알림", message: message, preferredStyle: .alert)
             
