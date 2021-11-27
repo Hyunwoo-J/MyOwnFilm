@@ -17,6 +17,7 @@ extension Date {
     /// Api에서 내려오는 날짜 형식으로 변환
     var releaseDate: String {
         formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = TimeZone(abbreviation: "KST")
         
         return formatter.string(from: self)
     }
@@ -28,6 +29,7 @@ extension Date {
         formatter.dateFormat = "yyyy년 MM월 dd일 EEEE"
         formatter.locale = Locale(identifier: "ko_kr")
         formatter.timeZone = TimeZone(identifier: "UTC")
+        
         return formatter.string(from: self)
     }
     
@@ -38,6 +40,7 @@ extension Date {
         formatter.dateFormat = "yyyy년 MM월 dd일"
         formatter.locale = Locale(identifier: "ko_kr")
         formatter.timeZone = TimeZone(identifier: "UTC")
+        
         return formatter.string(from: self)
     }
 }

@@ -32,6 +32,7 @@ extension String {
     func toManagerDate() -> Date? {
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.timeZone = TimeZone(identifier: "UTC")
+        formatter.locale = Locale(identifier: "ko_kr")
         if let date = formatter.date(from: self) {
             return date
         } else {

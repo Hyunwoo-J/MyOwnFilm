@@ -43,7 +43,4 @@ struct ReviewPutData: Codable {
     
     /// 메모
     let memo: String?
-    
-    /// 업데이트 날짜
-    let updateDate: String
 }

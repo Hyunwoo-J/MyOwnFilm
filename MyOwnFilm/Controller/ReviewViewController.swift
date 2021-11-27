@@ -111,10 +111,8 @@ class ReviewViewController: CommonViewController {
         let viewingDate = ReviewDataManager.shared.postDateFormatter.string(from: date)
         
         DispatchQueue.global().async {
-            let updateDate = ReviewDataManager.shared.postDateFormatter.string(from: date)
-            
             if let reviewData = self.reviewData {
-                let reviewPutdata = ReviewPutData(reviewId: reviewData.reviewId, movieId: reviewData.movieId, movieTitle: reviewData.movieTitle, backdropPath: reviewData.backdropPath, posterPath: reviewData.posterPath, releaseDate: reviewData.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: place, person: person, memo: memo, updateDate: updateDate)
+                let reviewPutdata = ReviewPutData(reviewId: reviewData.reviewId, movieId: reviewData.movieId, movieTitle: reviewData.movieTitle, backdropPath: reviewData.backdropPath, posterPath: reviewData.posterPath, releaseDate: reviewData.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: place, person: person, memo: memo)
                 
                 ReviewDataManager.shared.editReview(reviewPutData: reviewPutdata)
             } else {
@@ -122,7 +120,7 @@ class ReviewViewController: CommonViewController {
                 
                 let movie = self.movieList[index]
                 
-                let reviewPostData = ReviewPostData(movieId: movie.id, movieTitle: movie.titleStr, backdropPath: movie.backdropPath, posterPath: movie.posterPath, releaseDate: movie.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: place, person: person, memo: memo, updateDate: updateDate)
+                let reviewPostData = ReviewPostData(movieId: movie.id, movieTitle: movie.titleStr, backdropPath: movie.backdropPath, posterPath: movie.posterPath, releaseDate: movie.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: place, person: person, memo: memo)
                 
                 ReviewDataManager.shared.saveReview(reviewPostData: reviewPostData)
             }
@@ -140,8 +138,6 @@ class ReviewViewController: CommonViewController {
         let datePicker = UIDatePicker()
         if #available(iOS 13.4, *) {
             datePicker.preferredDatePickerStyle = .wheels
-        } else {
-            
         }
         
         datePicker.datePickerMode = .date
@@ -161,7 +157,6 @@ class ReviewViewController: CommonViewController {
         
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
             guard let date = datePicker.date.releaseDate.toManagerDate() else { return }
-            
             self.dateLabel.textColor = .white
             
             self.dateLabel.text = date.toUserDateString()
