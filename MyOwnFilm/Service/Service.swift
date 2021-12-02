@@ -1,16 +1,19 @@
 //
-//  ReviewService.swift
+//  Service.swift
 //  MyOwnFilm
 //
-//  Created by Hyunwoo Jang on 2021/11/27.
+//  Created by Hyunwoo Jang on 2021/12/03.
 //
 
 import Foundation
 import Moya
 
 
-/// 영화 리뷰 서비스
-enum ReviewService {
+/// 네트워크 요청 서비스
+enum Service {
+    case signup(EmailJoinPostData)
+    case login(EmailLoginPostData)
+    case validateToken
     case reviewList
     case saveReview(ReviewPostData)
     case editReview(ReviewPutData)
@@ -19,14 +22,9 @@ enum ReviewService {
 
 
 
-extension ReviewService: TargetType, AccessTokenAuthorizable {
+extension Service: TargetType, AccessTokenAuthorizable {
     
-    /// 인증 타입
-    var authorizationType: AuthorizationType? {
-        return .bearer
-    }
-    
-    /// 서버 기본 URL
+    /// 기본 URL
     var baseURL: URL {
         return URL(string: "https://mofapi.azurewebsites.net")!
     }
@@ -34,6 +32,12 @@ extension ReviewService: TargetType, AccessTokenAuthorizable {
     /// 기본 URL을 제외한 나머지 경로
     var path: String {
         switch self {
+        case .signup:
+            return "/join/email"
+        case .login:
+            return "/login/email"
+        case .validateToken:
+            return "/validation"
         case .reviewList, .saveReview:
             return "/review"
         case .editReview(let reviewPutData):
@@ -46,9 +50,9 @@ extension ReviewService: TargetType, AccessTokenAuthorizable {
     /// HTTP 요청 메소드
     var method: Moya.Method {
         switch self {
-        case .reviewList:
+        case .validateToken, .reviewList:
             return .get
-        case .saveReview:
+        case .signup, .login, .saveReview:
             return .post
         case .editReview:
             return .put
@@ -60,8 +64,12 @@ extension ReviewService: TargetType, AccessTokenAuthorizable {
     /// HTTP 작업 유형
     var task: Task {
         switch self {
-        case .reviewList, .removeReview:
+        case .validateToken, .reviewList, .removeReview:
             return .requestPlain
+        case .signup(let emailJoinPostData):
+            return .requestJSONEncodable(emailJoinPostData)
+        case .login(let emailLoginPostData):
+            return .requestJSONEncodable(emailLoginPostData)
         case .saveReview(let reviewPostData):
             return .requestJSONEncodable(reviewPostData)
         case .editReview(let reviewPutData):
@@ -71,6 +79,11 @@ extension ReviewService: TargetType, AccessTokenAuthorizable {
     
     /// HTTP 헤더
     var headers: [String : String]? {
-        return ["Content-type": "application/json"]
+        return ["Content-Type": "application/json"]
+    }
+    
+    /// 인증 타입
+    var authorizationType: AuthorizationType? {
+        .bearer
     }
 }

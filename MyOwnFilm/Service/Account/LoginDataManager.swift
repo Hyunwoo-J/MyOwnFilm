@@ -29,11 +29,11 @@ class LoginDataManager {
     /// 네트워크 서비스 객체
     ///
     /// Bearer 토큰 인증 방식을 사용합니다.
-    private lazy var provider: MoyaProvider<LoginService> = {
+    private lazy var provider: MoyaProvider<Service> = {
         let token = loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
         let authPlugin = AccessTokenPlugin { _ in token }
         
-        return MoyaProvider<LoginService>(plugins: [authPlugin])
+        return MoyaProvider<Service>(plugins: [authPlugin])
     }()
     
     

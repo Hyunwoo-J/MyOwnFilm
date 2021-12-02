@@ -49,11 +49,11 @@ class ReviewDataManager {
     /// 네트워크 서비스 객체
     ///
     /// Bearer 토큰 인증 방식을 사용합니다.
-    lazy var provider: MoyaProvider<ReviewService> = {
+    lazy var provider: MoyaProvider<Service> = {
         let token = loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
         let authPlugin = AccessTokenPlugin { _ in token }
         
-        return MoyaProvider<ReviewService>(plugins: [authPlugin])
+        return MoyaProvider<Service>(plugins: [authPlugin])
     }()
     
     
