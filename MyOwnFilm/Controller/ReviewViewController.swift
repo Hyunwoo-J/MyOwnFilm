@@ -7,14 +7,9 @@
 
 import Cosmos
 import Loaf
+import NSObject_Rx
+import RxSwift
 import UIKit
-
-
-extension Notification.Name {
-    /// 리뷰 작성이 취소되면 보낼 노티피케이션
-    static let reviewWillCancelled = Notification.Name(rawValue: "reviewWillCancelled")
-}
-
 
 
 /// 리뷰 작성 화면
@@ -261,60 +256,58 @@ class ReviewViewController: CommonViewController {
             placeLabel.textColor = .white
         }
         
-        token = NotificationCenter.default.addObserver(forName: .memoDidSaved, object: nil, queue: .main) { [weak self] noti in
-            guard let self = self else { return }
-            
-            if let memoText = noti.userInfo?["memo"] as? String {
-                self.memoTextView.text = memoText
-            }
-        }
+        NotificationCenter.default.rx.notification(.memoDidSaved, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] noti in
+                guard let self = self else { return }
+                
+                if let memo = noti.userInfo?[NotificationUserInfoKey.memoDidSavedNotificationMemo.rawValue] as? String {
+                    self.memoTextView.text = memo
+                }
+            })
+            .disposed(by: rx.disposeBag)
         
-        if let token = token {
-            tokens.append(token)
-        }
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                
+                self.memoViewTopConstraint.constant = 70
+                self.memoViewBottomConstraint.constant = 90
+                
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
+                }
+
+            })
+            .disposed(by: rx.disposeBag)
+
+        NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                
+                self.memoViewTopConstraint.constant = 80
+                self.memoViewBottomConstraint.constant = 80
+                
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutIfNeeded()
+                }
+
+            })
+            .disposed(by: rx.disposeBag)
         
-        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            
-            self.memoViewTopConstraint.constant = 70
-            self.memoViewBottomConstraint.constant = 90
-            
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-        }
-        
-        if let token = token {
-            tokens.append(token)
-        }
-        
-        token = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            
-            self.memoViewTopConstraint.constant = 80
-            self.memoViewBottomConstraint.constant = 80
-            
-            UIView.animate(withDuration: 0.3) {
-                self.view.layoutIfNeeded()
-            }
-        }
-        
-        if let token = token {
-            tokens.append(token)
-        }
-        
-        token = NotificationCenter.default.addObserver(forName: .movieTheaterTableViewCellDidTapped, object: nil, queue: .main) { [weak self] noti in
-            guard let self = self else { return }
-            
-            if let theater = noti.userInfo?["theater"] as? String {
-                self.placeLabel.text = theater
-                self.placeLabel.textColor = .white
-            }
-        }
-        
-        if let token = token {
-            tokens.append(token)
-        }
+        NotificationCenter.default.rx.notification(.movieTheaterTableViewCellDidTapped, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] noti in
+                guard let self = self else { return }
+                
+                if let theaterName = noti.userInfo?[NotificationUserInfoKey.movieTheaterTableViewCellDidTappedNotificationTheaterName.rawValue] as? String {
+                    self.placeLabel.text = theaterName
+                    self.placeLabel.textColor = .white
+                }
+            })
+            .disposed(by: rx.disposeBag)
     }
 }
 

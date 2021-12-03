@@ -8,13 +8,6 @@
 import UIKit
 
 
-extension Notification.Name {
-    /// 테이블뷰 셀이 선택되면 보낼 노티피케이션
-    static let movieTheaterTableViewCellDidTapped = Notification.Name(rawValue: "movieTheaterTableViewCellDidTapped")
-}
-
-
-
 /// 영화관 목록 화면
 class MovieTheaterListViewController: UIViewController {
     
@@ -168,14 +161,16 @@ extension MovieTheaterListViewController: UITableViewDelegate {
     
     /// 셀을 선택하면 이전 화면에 노티피케이션을 보냅니다.
     ///
-    /// 선택한 셀에 출력된 기초단체 이름을 이전 화면에 보내고 화면을 닫습니다.
+    /// 선택한 셀에 출력된 영화관 이름을 이전 화면에 보내고 화면을 닫습니다.
     /// - Parameters:
     ///   - tableView: 영화 목록 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let target = movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row].name
         
-        NotificationCenter.default.post(name: .movieTheaterTableViewCellDidTapped, object: nil, userInfo: ["theater": target])
+        NotificationCenter.default.post(name: .movieTheaterTableViewCellDidTapped,
+                                        object: nil,
+                                        userInfo: [NotificationUserInfoKey.movieTheaterTableViewCellDidTappedNotificationTheaterName.rawValue: target])
         
         dismiss(animated: true, completion: nil)
     }

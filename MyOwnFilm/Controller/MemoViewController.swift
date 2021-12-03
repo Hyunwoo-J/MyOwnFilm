@@ -11,13 +11,6 @@ import RxSwift
 import UIKit
 
 
-extension Notification.Name {
-    /// 메모 확인 버튼을 누르면 보낼 노티피케이션
-    static let memoDidSaved = Notification.Name(rawValue: "memoDidSaved")
-}
-
-
-
 /// 메모 작성 화면
 class MemoViewController: UIViewController {
     
@@ -51,7 +44,9 @@ class MemoViewController: UIViewController {
     /// - Parameter sender: 확인 버튼
     @IBAction func saveMemo(_ sender: Any) {
         guard let memoText = memoTextView.text else { return }
-        NotificationCenter.default.post(name: .memoDidSaved, object: nil, userInfo: ["memo": memoText])
+        NotificationCenter.default.post(name: .memoDidSaved,
+                                        object: nil,
+                                        userInfo: [NotificationUserInfoKey.memoDidSavedNotificationMemo.rawValue: memoText])
         
         close(self)
     }

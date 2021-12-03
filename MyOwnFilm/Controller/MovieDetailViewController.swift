@@ -5,6 +5,8 @@
 //  Created by Hyunwoo Jang on 2021/07/06.
 //
 
+import NSObject_Rx
+import RxSwift
 import UIKit
 
 
@@ -88,12 +90,15 @@ class MovieDetailViewController: CommonViewController {
             self.backgroundmovieImageView.image = UIImage(named: "Default Image")
         }
         
-        token = NotificationCenter.default.addObserver(forName: .reviewWillCancelled, object: nil, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            
-            UIView.animate(withDuration: 0.3) {
-                self.removeDimViewFromWindow()
+        NotificationCenter.default.rx.notification(.reviewWillCancelled, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                
+                UIView.animate(withDuration: 0.3) {
+                    self.dimView.removeFromSuperview()
+                }
             }
-        }
+            .disposed(by: rx.disposeBag)
     }
 }

@@ -11,16 +11,6 @@ import RxSwift
 import UIKit
 
 
-extension Notification.Name {
-    /// 새로운 리뷰를 저장할 때 보낼 노티피케이션
-    static let reviewDidSaved = Notification.Name(rawValue: "reviewDidSaved")
-    
-    /// 리뷰를 업데이트할 때 보낼 노티피케이션
-    static let reviewDidUpdate = Notification.Name(rawValue: "reviewDidUpdate")
-}
-
-
-
 /// 영화 리뷰 데이터 관리
 class ReviewDataManager {
     

@@ -28,12 +28,6 @@ class CommonViewController: UIViewController {
         return v
     }()
     
-    /// 노티피케이션 옵저버 토큰
-    var token: NSObjectProtocol?
-    
-    /// 노티피케이션 옵저버 토큰 배열
-    var tokens = [NSObjectProtocol]()
-    
     /// 로그인 키체인 인스턴스
     let loginKeychain = KeychainSwift()
     
@@ -52,17 +46,6 @@ class CommonViewController: UIViewController {
             alert.addAction(okAction)
             
             self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    
-    /// window에 추가된 DimView를 제거합니다.
-    func removeDimViewFromWindow() {
-        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
-        
-        for view in window.subviews as [UIView] where view == dimView {
-            view.removeFromSuperview()
-            break
         }
     }
     
@@ -105,14 +88,6 @@ class CommonViewController: UIViewController {
     
     deinit {
         print(#function, self) // self: 현재 인스턴스 정보
-        
-        if let token = token {
-            NotificationCenter.default.removeObserver(token)
-        }
-        
-        for token in tokens {
-            NotificationCenter.default.removeObserver(token)
-        }
     }
 }
 

@@ -25,6 +25,8 @@
 		2C2BADC026B54E2100138E58 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BADBF26B54E2100138E58 /* SearchViewController.swift */; };
 		2C2BADC226B55E3D00138E58 /* SearchMovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2BADC126B55E3D00138E58 /* SearchMovieTableViewCell.swift */; };
 		2C2FB2122759406F00DAB8DA /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FB2112759406F00DAB8DA /* Service.swift */; };
+		2C2FB217275A77A800DAB8DA /* NotificationUserInfoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FB216275A77A800DAB8DA /* NotificationUserInfoKey.swift */; };
+		2C2FB219275A7F7600DAB8DA /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FB218275A7F7600DAB8DA /* Notification+Extension.swift */; };
 		2C443A652716083700B1F5D1 /* ReviewPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C443A642716083700B1F5D1 /* ReviewPostData.swift */; };
 		2C443A672716085400B1F5D1 /* ResultCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C443A662716085400B1F5D1 /* ResultCode.swift */; };
 		2C443A692716087500B1F5D1 /* CommonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C443A682716087500B1F5D1 /* CommonResponse.swift */; };
@@ -84,6 +86,8 @@
 		2C2BADBF26B54E2100138E58 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2C2BADC126B55E3D00138E58 /* SearchMovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieTableViewCell.swift; sourceTree = "<group>"; };
 		2C2FB2112759406F00DAB8DA /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		2C2FB216275A77A800DAB8DA /* NotificationUserInfoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationUserInfoKey.swift; sourceTree = "<group>"; };
+		2C2FB218275A7F7600DAB8DA /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		2C443A642716083700B1F5D1 /* ReviewPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPostData.swift; sourceTree = "<group>"; };
 		2C443A662716085400B1F5D1 /* ResultCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCode.swift; sourceTree = "<group>"; };
 		2C443A682716087500B1F5D1 /* CommonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonResponse.swift; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				2CA8691D2729A994000B6A8E /* MyOwnFilm.entitlements */,
+				2C2FB215275A777A00DAB8DA /* Common */,
 				2C16A02426AC216100802BD6 /* Extension */,
 				2CF18D7D269AF1F6001B1497 /* Model */,
 				2CF18D80269AF243001B1497 /* Service */,
@@ -204,7 +209,6 @@
 				2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */,
 				2C2BADBF26B54E2100138E58 /* SearchViewController.swift */,
 				2C1B4BDF26EE690A000AAE1D /* StorageViewController.swift */,
-				2C581DEB26693ECE0040C6EA /* CommonViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -237,8 +241,18 @@
 				2C7CDC05271E6656003E1E60 /* String+Fomatter.swift */,
 				2CAB1AC126CFE32400EA3C8B /* Int+TimeInterval.swift */,
 				2C1432782741534100CF6F4F /* Reactive+UITextView.swift */,
+				2C2FB218275A7F7600DAB8DA /* Notification+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		2C2FB215275A777A00DAB8DA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2C581DEB26693ECE0040C6EA /* CommonViewController.swift */,
+				2C2FB216275A77A800DAB8DA /* NotificationUserInfoKey.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		2C9DCD15272859B400C87810 /* Segue */ = {
@@ -484,6 +498,7 @@
 				2C9DCD2527288BB100C87810 /* SocialLoginPostData.swift in Sources */,
 				2C1432792741534100CF6F4F /* Reactive+UITextView.swift in Sources */,
 				2C16A02626AC21BF00802BD6 /* Date+Formatter.swift in Sources */,
+				2C2FB219275A7F7600DAB8DA /* Notification+Extension.swift in Sources */,
 				2C16A01F26AC172900802BD6 /* MainScreenViewController.swift in Sources */,
 				2C9DCD1F2728822300C87810 /* JoinViewController.swift in Sources */,
 				2CD6C73A26AC6F0600E82A06 /* SubMovieCollectionViewCell.swift in Sources */,
@@ -514,6 +529,7 @@
 				2C59B938270C0D6100CC492B /* MovieTheaterListViewController.swift in Sources */,
 				2C9DCD0E2727AA9700C87810 /* ReviewDataManager.swift in Sources */,
 				2CDDE3E12751625D0059833F /* LoginDataManager.swift in Sources */,
+				2C2FB217275A77A800DAB8DA /* NotificationUserInfoKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

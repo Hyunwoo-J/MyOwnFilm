@@ -5,6 +5,8 @@
 //  Created by Hyunwoo Jang on 2021/09/13.
 //
 
+import NSObject_Rx
+import RxSwift
 import UIKit
 
 
@@ -259,21 +261,27 @@ class StorageViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(forName: .reviewWillCancelled, object: nil, queue: .main) {[weak self] _ in
-            guard let self = self else { return }
-            
-            UIView.animate(withDuration: 0.3) {
-                self.removeDimViewFromWindow()
-            }
-        }
+        NotificationCenter.default.rx.notification(.reviewWillCancelled, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                
+                UIView.animate(withDuration: 0.3) {
+                    self.dimView.removeFromSuperview()
+                }
+            })
+            .disposed(by: rx.disposeBag)
         
-        NotificationCenter.default.addObserver(forName: .reviewDidUpdate, object: nil, queue: .main) {[weak self] _ in
-            guard let self = self else { return }
-            
-            ReviewDataManager.shared.fetchReview {
-                self.storageCollectionView.reloadData()
-            }
-        }
+        NotificationCenter.default.rx.notification(.reviewDidUpdate, object: nil)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                
+                ReviewDataManager.shared.fetchReview {
+                    self.storageCollectionView.reloadData()
+                }
+            })
+            .disposed(by: rx.disposeBag)
         
         [alignmentStateLabel, alignmentArrowImageView].forEach { $0?.isHidden = true }
     }
