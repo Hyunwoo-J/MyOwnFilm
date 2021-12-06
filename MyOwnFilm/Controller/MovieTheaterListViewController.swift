@@ -5,6 +5,8 @@
 //  Created by Hyunwoo Jang on 2021/10/05.
 //
 
+import NSObject_Rx
+import RxSwift
 import UIKit
 
 
@@ -13,6 +15,10 @@ class MovieTheaterListViewController: CommonViewController {
     
     /// 영화 목록 테이블뷰
     @IBOutlet weak var movieTheaterListTableView: UITableView!
+    
+    /// 영화관 목록
+    var movieTheaterList = [MovieTheaterData.MovieTheater]()
+    
     
     /// 기초단체 목록
     ///
@@ -31,21 +37,32 @@ class MovieTheaterListViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ReviewDataManager.shared.fetchMovieTheater(vc: self) {
-            for movieTheaterInfo in ReviewDataManager.shared.movieTheaterList {
-                self.basicOrganizationSetList.insert(movieTheaterInfo.basicOrganization)
-            }
-            
-            for basicOrganization in self.basicOrganizationSetList {
-                if !self.basicOrganizationList.contains(basicOrganization) {
-                    self.basicOrganizationList.append(basicOrganization)
+        ReviewDataManager.shared.fetchMovieTheater()
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    self.movieTheaterList = MovieTheaterData.parse(data: response.data, vc: self)
+                    
+                    for movieTheaterInfo in self.movieTheaterList {
+                        self.basicOrganizationSetList.insert(movieTheaterInfo.basicOrganization)
+                    }
+
+                    for basicOrganization in self.basicOrganizationSetList {
+                        if !self.basicOrganizationList.contains(basicOrganization) {
+                            self.basicOrganizationList.append(basicOrganization)
+                        }
+                    }
+
+                    self.basicOrganizationList.sort { $0 < $1 }
+
+                    self.movieTheaterListTableView.reloadData()
+                    
+                case .failure(let error):
+                    self.showAlertMessage(message: error.localizedDescription)
                 }
             }
-            
-            self.basicOrganizationList.sort { $0 < $1 }
-            
-            self.movieTheaterListTableView.reloadData()
-        }
+            .disposed(by: rx.disposeBag)
     }
 }
 
@@ -62,7 +79,7 @@ extension MovieTheaterListViewController: UITableViewDataSource {
     ///   - section: 섹션 인덱스
     /// - Returns: 섹션 행의 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let filteredBasicOrganization = ReviewDataManager.shared.movieTheaterList.filter { theater in
+        let filteredBasicOrganization = movieTheaterList.filter { theater in
             theater.basicOrganization == basicOrganizationList[section]
         }
         
@@ -78,7 +95,7 @@ extension MovieTheaterListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        let target = ReviewDataManager.shared.movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row]
+        let target = movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row]
         cell.textLabel?.text = target.name
         
         return cell
@@ -125,7 +142,7 @@ extension MovieTheaterListViewController: UITableViewDelegate {
     ///   - tableView: 영화 목록 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let target = ReviewDataManager.shared.movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row].name
+        let target = movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row].name
         
         NotificationCenter.default.post(name: .movieTheaterTableViewCellDidTapped,
                                         object: nil,

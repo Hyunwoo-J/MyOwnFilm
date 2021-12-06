@@ -49,9 +49,6 @@ class ReviewDataManager {
     /// 리소스 정리
     private let bag = DisposeBag()
     
-    /// 영화관 목록
-    var movieTheaterList = [MovieTheaterData.MovieTheater]()
-    
     
     /// 작성한 영화 리뷰를 다운로드합니다.
     /// - Parameter completion: 완료 블록
@@ -121,19 +118,9 @@ class ReviewDataManager {
     /// - Parameters:
     ///   - completion: 완료 블록
     ///   - vc: 메소드를 실행하는 뷰컨트롤러
-    func fetchMovieTheater(vc: CommonViewController, completion: @escaping () -> ()) {
-        provider.rx.request(.movieTheaterList)
-            .observe(on: MainScheduler.instance)
-            .subscribe { result in
-                switch result {
-                case .success(let response):
-                    self.movieTheaterList = MovieTheaterData.parse(data: response.data, vc: vc)
-                    
-                    completion()
-                case .failure(let error):
-                    vc.showAlertMessage(message: error.localizedDescription)
-                }
-            }
-            .disposed(by: bag)
+    func fetchMovieTheater() -> Single<Response> {
+        return provider.rx
+            .request(.movieTheaterList)
+            .retry(3)
     }
 }
