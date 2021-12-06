@@ -281,7 +281,6 @@
 			isa = PBXGroup;
 			children = (
 				2CF18D7E269AF22B001B1497 /* Movie.swift */,
-				2C443A6A27160B1500B1F5D1 /* MovieTheaterData.swift */,
 			);
 			path = Movie;
 			sourceTree = "<group>";
@@ -292,6 +291,7 @@
 				2C50D0872717FE5B00B2E112 /* ReviewList.swift */,
 				2C443A642716083700B1F5D1 /* ReviewPostData.swift */,
 				2C9DCD0F2727CED700C87810 /* ReviewPutData.swift */,
+				2C443A6A27160B1500B1F5D1 /* MovieTheaterData.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";

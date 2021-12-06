@@ -37,4 +37,27 @@ struct MovieTheaterData: Codable {
     
     /// 메시지
     let message: String?
+    
+    
+    /// 영화관 데이터를 파싱합니다.
+    /// - Parameters:
+    ///   - data: 영화관 데이터
+    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    /// - Returns: 영화관 목록
+    static func parse(data: Data, vc: CommonViewController) -> [MovieTheater] {
+        var list = [MovieTheater]()
+        
+        do {
+            let decoder = JSONDecoder()
+            let movieTheaterData = try decoder.decode(MovieTheaterData.self, from: data)
+            
+            if movieTheaterData.code == ResultCode.ok.rawValue {
+                list = movieTheaterData.list
+            }
+        } catch {
+            vc.showAlertMessage(message: error.localizedDescription)
+        }
+        
+        return list
+    }
 }

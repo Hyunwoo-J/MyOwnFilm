@@ -9,13 +9,10 @@ import UIKit
 
 
 /// 영화관 목록 화면
-class MovieTheaterListViewController: UIViewController {
+class MovieTheaterListViewController: CommonViewController {
     
     /// 영화 목록 테이블뷰
     @IBOutlet weak var movieTheaterListTableView: UITableView!
-    
-    /// 영화관 목록
-    var movieTheaterList = [MovieTheaterData.MovieTheater]()
     
     /// 기초단체 목록
     ///
@@ -28,65 +25,27 @@ class MovieTheaterListViewController: UIViewController {
     var basicOrganizationList = [String]()
     
     
-    /// 영화관 목록을 다운로드합니다.
-    func fetchMovieTheaterData() {
-        let urlStr = "https://mofapi.azurewebsites.net/movietheater"
-        
-        guard let url = URL(string: urlStr) else { return }
-        
-        let session = URLSession.shared
-        
-        session.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    print(httpResponse.statusCode)
-                }
-                
-                return
-            }
-            
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode(MovieTheaterData.self, from: data)
-                    
-                    self.movieTheaterList = result.list
-                    
-                    for movieTheaterInfo in result.list {
-                        self.basicOrganizationSetList.insert(movieTheaterInfo.basicOrganization)
-                    }
-                    
-                    for basicOrganization in self.basicOrganizationSetList {
-                        if !self.basicOrganizationList.contains(basicOrganization) {
-                            self.basicOrganizationList.append(basicOrganization)
-                        }
-                    }
-                    
-                    self.basicOrganizationList.sort { $0 < $1 }
-                    
-                    DispatchQueue.main.async {
-                        self.movieTheaterListTableView.reloadData()
-                    }
-                } catch {
-                    print(error)
-                }
-            }
-        }.resume()
-    }
-    
-    
     /// 초기화 작업을 실행합니다.
     ///
     /// 영화관 목록을 다운로드합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchMovieTheaterData()
+        ReviewDataManager.shared.fetchMovieTheater(vc: self) {
+            for movieTheaterInfo in ReviewDataManager.shared.movieTheaterList {
+                self.basicOrganizationSetList.insert(movieTheaterInfo.basicOrganization)
+            }
+            
+            for basicOrganization in self.basicOrganizationSetList {
+                if !self.basicOrganizationList.contains(basicOrganization) {
+                    self.basicOrganizationList.append(basicOrganization)
+                }
+            }
+            
+            self.basicOrganizationList.sort { $0 < $1 }
+            
+            self.movieTheaterListTableView.reloadData()
+        }
     }
 }
 
@@ -103,7 +62,7 @@ extension MovieTheaterListViewController: UITableViewDataSource {
     ///   - section: 섹션 인덱스
     /// - Returns: 섹션 행의 수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let filteredBasicOrganization = movieTheaterList.filter { theater in
+        let filteredBasicOrganization = ReviewDataManager.shared.movieTheaterList.filter { theater in
             theater.basicOrganization == basicOrganizationList[section]
         }
         
@@ -119,7 +78,7 @@ extension MovieTheaterListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        let target = movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row]
+        let target = ReviewDataManager.shared.movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row]
         cell.textLabel?.text = target.name
         
         return cell
@@ -166,7 +125,7 @@ extension MovieTheaterListViewController: UITableViewDelegate {
     ///   - tableView: 영화 목록 테이블뷰
     ///   - indexPath: 행의 위치를 나타내는 IndexPath
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let target = movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row].name
+        let target = ReviewDataManager.shared.movieTheaterList.filter { $0.basicOrganization == basicOrganizationList[indexPath.section]}[indexPath.row].name
         
         NotificationCenter.default.post(name: .movieTheaterTableViewCellDidTapped,
                                         object: nil,

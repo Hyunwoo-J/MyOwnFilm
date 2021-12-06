@@ -24,7 +24,7 @@ class ReviewDataManager {
     var reviewList = [ReviewList.Review]()
     
     /// 로그인 키체인 인스턴스
-    let loginKeychain = KeychainSwift()
+    private let loginKeychain = KeychainSwift()
     
     /// ISO8601DateFormatter
     ///
@@ -39,12 +39,18 @@ class ReviewDataManager {
     /// 네트워크 서비스 객체
     ///
     /// Bearer 토큰 인증 방식을 사용합니다.
-    lazy var provider: MoyaProvider<Service> = {
+    private lazy var provider: MoyaProvider<Service> = {
         let token = loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
         let authPlugin = AccessTokenPlugin { _ in token }
         
         return MoyaProvider<Service>(plugins: [authPlugin])
     }()
+    
+    /// 리소스 정리
+    private let bag = DisposeBag()
+    
+    /// 영화관 목록
+    var movieTheaterList = [MovieTheaterData.MovieTheater]()
     
     
     /// 작성한 영화 리뷰를 다운로드합니다.
@@ -59,7 +65,7 @@ class ReviewDataManager {
                     completion()
                 }
             case .failure(let error):
-                print(error.localizedDescription) // 경고창 알 수 없는 오류(네트워크 오류) -> 고객센터
+                print(error.localizedDescription)
             }
         }
     }
@@ -108,5 +114,26 @@ class ReviewDataManager {
                 print(error)
             }
         }
+    }
+    
+    
+    /// 영화관 목록을 다운로드합니다.
+    /// - Parameters:
+    ///   - completion: 완료 블록
+    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    func fetchMovieTheater(vc: CommonViewController, completion: @escaping () -> ()) {
+        provider.rx.request(.movieTheaterList)
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    self.movieTheaterList = MovieTheaterData.parse(data: response.data, vc: vc)
+                    
+                    completion()
+                case .failure(let error):
+                    vc.showAlertMessage(message: error.localizedDescription)
+                }
+            }
+            .disposed(by: bag)
     }
 }

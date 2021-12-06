@@ -11,13 +11,19 @@ import Moya
 
 /// 네트워크 요청 서비스
 enum Service {
+    // 로그인
     case signup(EmailJoinPostData)
     case login(EmailLoginPostData)
     case validateToken
+    
+    // 영화 리뷰
     case reviewList
     case saveReview(ReviewPostData)
     case editReview(ReviewPutData)
     case removeReview(Int)
+    
+    // 영화관
+    case movieTheaterList
 }
 
 
@@ -38,19 +44,23 @@ extension Service: TargetType, AccessTokenAuthorizable {
             return "/login/email"
         case .validateToken:
             return "/validation"
+            
         case .reviewList, .saveReview:
             return "/review"
         case .editReview(let reviewPutData):
             return "/review/\(reviewPutData.reviewId)"
         case .removeReview(let id):
             return "/review/\(id)"
+        
+        case .movieTheaterList:
+            return "/movietheater"
         }
     }
     
     /// HTTP 요청 메소드
     var method: Moya.Method {
         switch self {
-        case .validateToken, .reviewList:
+        case .validateToken, .reviewList, .movieTheaterList:
             return .get
         case .signup, .login, .saveReview:
             return .post
@@ -64,7 +74,7 @@ extension Service: TargetType, AccessTokenAuthorizable {
     /// HTTP 작업 유형
     var task: Task {
         switch self {
-        case .validateToken, .reviewList, .removeReview:
+        case .validateToken, .reviewList, .removeReview, .movieTheaterList:
             return .requestPlain
         case .signup(let emailJoinPostData):
             return .requestJSONEncodable(emailJoinPostData)
