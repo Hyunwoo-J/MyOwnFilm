@@ -67,7 +67,7 @@ struct ReviewList: Codable {
     /// 리뷰 데이터를 파싱합니다.
     /// - Parameter data: 리뷰 데이터
     /// - Returns: 리뷰 목록
-    static func parse(data: Data) -> [Review] {
+    static func parse(data: Data, vc: CommonViewController) -> [Review] {
         var list = [Review]()
         
         do {
@@ -78,7 +78,7 @@ struct ReviewList: Codable {
                 list = reviewList.list
             }
         } catch {
-            print(error)
+            vc.showAlertMessage(message: error.localizedDescription)
         }
         return list
     }

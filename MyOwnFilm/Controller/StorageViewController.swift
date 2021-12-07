@@ -277,7 +277,7 @@ class StorageViewController: CommonViewController {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 
-                ReviewDataManager.shared.fetchReview {
+                ReviewDataManager.shared.fetchReview(vc: self) {
                     self.storageCollectionView.reloadData()
                 }
             })
@@ -292,7 +292,7 @@ class StorageViewController: CommonViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        ReviewDataManager.shared.fetchReview {
+        ReviewDataManager.shared.fetchReview(vc: self) {
             self.storageCollectionView.reloadData()
         }
     }
@@ -397,7 +397,7 @@ extension StorageViewController: UICollectionViewDelegate {
                 let delete = UIAlertAction(title: "확인", style: .destructive) { action in
                     let id = ReviewDataManager.shared.reviewList[indexPath.row].reviewId
                     
-                    ReviewDataManager.shared.deleteReview(id: id) {
+                    ReviewDataManager.shared.deleteReview(id: id, vc: self) {
                         if let index = ReviewDataManager.shared.reviewList.firstIndex(where: { $0.reviewId == id }) {
                             let indexPath = IndexPath(row: index, section: 0)
                             self.storageCollectionView.deleteItems(at: [indexPath])

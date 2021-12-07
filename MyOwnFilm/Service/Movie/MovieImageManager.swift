@@ -59,7 +59,7 @@ class MovieImageManager {
                         completion(image)
                     }
                 } catch {
-                    print(error)
+                    print(error.localizedDescription)
                 }
             }
         }

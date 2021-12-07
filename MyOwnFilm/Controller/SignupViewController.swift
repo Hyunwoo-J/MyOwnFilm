@@ -237,7 +237,9 @@ class SignupViewController: CommonViewController {
             
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 if let httpResponse = response as? HTTPURLResponse {
+                    #if DEBUG
                     print(httpResponse.statusCode)
+                    #endif
                 }
                 
                 return

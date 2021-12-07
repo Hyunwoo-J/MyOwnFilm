@@ -51,18 +51,20 @@ class ReviewDataManager {
     
     
     /// 작성한 영화 리뷰를 다운로드합니다.
-    /// - Parameter completion: 완료 블록
-    func fetchReview(completion: @escaping () -> ()) {
+    /// - Parameters:
+    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    ///   - completion: 완료 블록
+    func fetchReview(vc: CommonViewController, completion: @escaping () -> ()) {
         provider.request(.reviewList) { result in
             switch result {
             case .success(let response):
-                self.reviewList = ReviewList.parse(data: response.data)
+                self.reviewList = ReviewList.parse(data: response.data, vc: vc)
                 
                 DispatchQueue.main.async {
                     completion()
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                vc.showAlertMessage(message: error.localizedDescription)
             }
         }
     }
@@ -71,8 +73,9 @@ class ReviewDataManager {
     /// 영화 리뷰를 삭제합니다.
     /// - Parameters:
     ///   - id: 리뷰 ID
+    ///   - vc: 메소드를 실행하는 뷰컨트롤러
     ///   - completion: 완료 블록
-    func deleteReview(id: Int, completion: @escaping () -> ()) {
+    func deleteReview(id: Int, vc: CommonViewController, completion: @escaping () -> ()) {
         provider.request(.removeReview(id)) { result in
             switch result {
             case .success:
@@ -80,7 +83,7 @@ class ReviewDataManager {
                     completion()
                 }
             case .failure(let error):
-                print(error)
+                vc.showAlertMessage(message: error.localizedDescription)
             }
         }
     }
@@ -88,13 +91,14 @@ class ReviewDataManager {
     
     /// 영화 리뷰를 저장합니다.
     /// - Parameter reviewPostData: 저장할 리뷰 데이터
-    func saveReview(reviewPostData: ReviewPostData) {
+    /// - Parameter vc: 메소드를 실행하는 뷰컨트롤러
+    func saveReview(reviewPostData: ReviewPostData, vc: CommonViewController) {
         provider.request(.saveReview(reviewPostData)) { result in
             switch result {
             case .success:
                 NotificationCenter.default.post(name: .reviewDidSaved, object: nil)
             case .failure(let error):
-                print(error)
+                vc.showAlertMessage(message: error.localizedDescription)
             }
         }
     }
@@ -102,22 +106,21 @@ class ReviewDataManager {
     
     /// 영화 리뷰를 수정합니다.
     /// - Parameter reviewPutData: 수정된 리뷰 데이터
-    func editReview(reviewPutData: ReviewPutData) {
+    /// - Parameter vc: 메소드를 실행하는 뷰컨트롤러
+    func editReview(reviewPutData: ReviewPutData, vc: CommonViewController) {
         provider.request(.editReview(reviewPutData)) { result in
             switch result {
             case .success:
                 NotificationCenter.default.post(name: .reviewDidUpdate, object: nil)
             case .failure(let error):
-                print(error)
+                vc.showAlertMessage(message: error.localizedDescription)
             }
         }
     }
     
     
-    /// 영화관 목록을 다운로드합니다.
-    /// - Parameters:
-    ///   - completion: 완료 블록
-    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    /// 영화관 목록 관련 네트워크 호출 결과를 방출하는 옵저버블을 리턴합니다.
+    /// - Returns: 영화관 목록 관련 네트워크 호출 결과를 방출하는 옵저버블
     func fetchMovieTheater() -> Single<Response> {
         return provider.rx
             .request(.movieTheaterList)

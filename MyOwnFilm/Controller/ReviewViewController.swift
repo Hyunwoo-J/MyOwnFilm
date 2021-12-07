@@ -109,7 +109,7 @@ class ReviewViewController: CommonViewController {
             if let reviewData = self.reviewData {
                 let reviewPutdata = ReviewPutData(reviewId: reviewData.reviewId, movieId: reviewData.movieId, movieTitle: reviewData.movieTitle, backdropPath: reviewData.backdropPath, posterPath: reviewData.posterPath, releaseDate: reviewData.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: place, person: person, memo: memo)
                 
-                ReviewDataManager.shared.editReview(reviewPutData: reviewPutdata)
+                ReviewDataManager.shared.editReview(reviewPutData: reviewPutdata, vc: self)
             } else {
                 guard let index = self.index else { return }
                 
@@ -117,7 +117,7 @@ class ReviewViewController: CommonViewController {
                 
                 let reviewPostData = ReviewPostData(movieId: movie.id, movieTitle: movie.titleStr, backdropPath: movie.backdropPath, posterPath: movie.posterPath, releaseDate: movie.releaseDate, starPoint: starPoint, viewingDate: viewingDate, movieTheater: place, person: person, memo: memo)
                 
-                ReviewDataManager.shared.saveReview(reviewPostData: reviewPostData)
+                ReviewDataManager.shared.saveReview(reviewPostData: reviewPostData, vc: self)
             }
         }
         
