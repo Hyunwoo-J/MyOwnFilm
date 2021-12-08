@@ -6,6 +6,8 @@
 //
 
 import KeychainSwift
+import NSObject_Rx
+import RxSwift
 import UIKit
 
 
@@ -21,7 +23,23 @@ class IntroViewController: CommonViewController {
 
         if let _ = loginKeychain.get(AccountKeys.userId.rawValue),
            let _ = loginKeychain.get(AccountKeys.apiToken.rawValue) {
-            LoginDataManager.shared.validateToken(vc: self)
+            LoginDataManager.shared.validateToken()
+                .observe(on: MainScheduler.instance)
+                .subscribe { result in
+                    switch result {
+                    case .success(let response):
+                        switch response.statusCode {
+                        case ResultCode.ok.rawValue:
+                            self.goToMain()
+                        default:
+                            self.goToLogin()
+                        }
+                        
+                    case .failure(let error):
+                        self.showAlertMessage(message: error.localizedDescription)
+                    }
+                }
+                .disposed(by: rx.disposeBag)
         } else {
             goToLogin()
         }

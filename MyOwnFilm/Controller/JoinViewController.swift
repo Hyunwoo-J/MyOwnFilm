@@ -5,6 +5,8 @@
 //  Created by Hyunwoo Jang on 2021/10/27.
 //
 
+import NSObject_Rx
+import RxSwift
 import UIKit
 
 
@@ -32,6 +34,25 @@ class JoinViewController: CommonViewController {
         
         let joinData = EmailJoinPostData(email: email, password: password)
         
-        LoginDataManager.shared.singup(emailJoinPostData: joinData, vc: self)
+        LoginDataManager.shared.singup(emailJoinPostData: joinData)
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    switch response.code {
+                    case ResultCode.ok.rawValue:
+                        LoginDataManager.shared.saveAccount(responseData: response)
+                        self.showAlertMessage(message: "회원가입에 성공하였습니다.")
+                    case ResultCode.fail.rawValue:
+                        self.showAlertMessage(message: response.message ?? "오류가 발생했습니다.")
+                    default:
+                        break
+                    }
+                    
+                case .failure(let error):
+                    self.showAlertMessage(message: error.localizedDescription)
+                }
+            }
+            .disposed(by: rx.disposeBag)
     }
 }

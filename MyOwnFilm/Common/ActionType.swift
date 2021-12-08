@@ -8,7 +8,7 @@
 import Foundation
 
 
-/// Alert Action 관련 타입
+/// Alert Action 타입
 ///
 /// Rx로 구현한 Alert 메소드에서 사용됩니다.
 enum ActionType {

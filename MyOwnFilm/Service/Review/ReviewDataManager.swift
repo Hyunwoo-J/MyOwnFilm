@@ -122,6 +122,6 @@ class ReviewDataManager {
     func fetchMovieTheater() -> Single<Response> {
         return provider.rx
             .request(.movieTheaterList)
-            .retry(3)
+            .retry(20)
     }
 }

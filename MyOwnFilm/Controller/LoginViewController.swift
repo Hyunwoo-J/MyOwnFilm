@@ -5,6 +5,8 @@
 //  Created by Hyunwoo Jang on 2021/06/10.
 //
 
+import NSObject_Rx
+import RxSwift
 import UIKit
 
 
@@ -28,7 +30,26 @@ class LoginViewController: CommonViewController {
         
         let loginData = EmailLoginPostData(email: email, password: password)
         
-        LoginDataManager.shared.login(emailLoginPostData: loginData, vc: self)
+        LoginDataManager.shared.login(emailLoginPostData: loginData)
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                switch result {
+                case .success(let response):
+                    switch response.code {
+                    case ResultCode.ok.rawValue:
+                        LoginDataManager.shared.saveAccount(responseData: response)
+                        self.goToMain()
+                    case ResultCode.fail.rawValue:
+                        self.showAlertMessage(message: response.message ?? "오류가 발생했습니다.")
+                    default:
+                        break
+                    }
+                    
+                case .failure(let error):
+                    self.showAlertMessage(message: error.localizedDescription)
+                }
+            }
+            .disposed(by: rx.disposeBag)
     }
     
     
