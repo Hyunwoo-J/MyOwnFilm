@@ -35,7 +35,7 @@ class StorageCollectionViewCell: UICollectionViewCell {
             if let img = img {
                 self.movieImageView.image = img
             } else {
-                self.movieImageView.image = UIImage(named: "Default Image")
+                self.movieImageView.image = UIImage(named: DefaultImageName.defaultImage.rawValue)
             }
         }
     }

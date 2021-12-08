@@ -185,7 +185,7 @@ class ReviewViewController: CommonViewController {
                 if let img = img {
                     self.memoBackdropImageView.image = img
                 } else {
-                    self.memoBackdropImageView.image = UIImage(named: "Default Image")
+                    self.memoBackdropImageView.image = UIImage(named: DefaultImageName.defaultImage.rawValue)
                 }
             }
         }
@@ -242,7 +242,7 @@ class ReviewViewController: CommonViewController {
                 if let img = img {
                     self.memoBackdropImageView.image = img
                 } else {
-                    self.memoBackdropImageView.image = UIImage(named: "Default Image")
+                    self.memoBackdropImageView.image = UIImage(named: DefaultImageName.defaultImage.rawValue)
                 }
             }
             

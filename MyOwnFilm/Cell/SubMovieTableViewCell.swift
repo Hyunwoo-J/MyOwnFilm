@@ -25,7 +25,7 @@ class SubMovieTableViewCell: UITableViewCell {
     /// 분류별 영화 목록 컬렉션뷰
     @IBOutlet weak var subMovieCollectionView: UICollectionView!
     
-    /// CollectionViewCellDelegate 변수
+    /// CollectionViewCellDelegate 속성
     weak var cellDelegate: SubCollectionViewCellDelegate?
     
     /// 영화 데이터 목록
@@ -87,7 +87,7 @@ extension SubMovieTableViewCell: UICollectionViewDataSource {
                 cell.subMovieImageView.image = img
                 cell.subMovieImageView.isHidden = false
             } else {
-                cell.subMovieImageView.image = UIImage(named: "Default Image")
+                cell.subMovieImageView.image = UIImage(named: DefaultImageName.defaultImage.rawValue)
             }
         }
         

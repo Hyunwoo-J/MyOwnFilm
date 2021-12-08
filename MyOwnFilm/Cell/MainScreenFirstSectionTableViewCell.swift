@@ -71,7 +71,7 @@ extension MainScreenFirstSectionTableViewCell: UICollectionViewDataSource {
             if let img = img {
                 cell.firstSectionImageView.image = img
             } else {
-                cell.firstSectionImageView.image = UIImage(named: "Default Image")
+                cell.firstSectionImageView.image = UIImage(named: DefaultImageName.defaultImage.rawValue)
             }
         }
         

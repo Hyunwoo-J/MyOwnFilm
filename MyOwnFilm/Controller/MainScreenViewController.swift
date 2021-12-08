@@ -12,7 +12,6 @@ import RxSwift
 import UIKit
 
 
-
 /// 메인 화면
 class MainScreenViewController: CommonViewController {
     
@@ -20,6 +19,8 @@ class MainScreenViewController: CommonViewController {
     @IBOutlet weak var mainScreenTableView: UITableView!
     
     /// Now Playing 뷰
+    ///
+    /// Now Playing 글씨를 표시하는 뷰입니다.
     @IBOutlet weak var nowPlayingView: UIView!
     
     /// 영화 구분 타이틀

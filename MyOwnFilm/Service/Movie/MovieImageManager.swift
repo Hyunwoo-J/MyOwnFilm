@@ -63,3 +63,10 @@ class MovieImageManager {
         }
     }
 }
+
+
+
+/// 기본 이미지 파일 이름
+enum DefaultImageName: String {
+    case defaultImage
+}

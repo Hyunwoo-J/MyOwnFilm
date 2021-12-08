@@ -101,7 +101,7 @@ class SearchMovieTableViewCell: UITableViewCell {
                 self.movieImageView.image = img
                 self.movieImageView.isHidden = false
             } else {
-                self.movieImageView.image = UIImage(named: "Default Image")
+                self.movieImageView.image = UIImage(named: DefaultImageName.defaultImage.rawValue)
             }
         }
     }

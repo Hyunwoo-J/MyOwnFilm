@@ -87,7 +87,7 @@ class MovieDetailViewController: CommonViewController {
                 self.backgroundmovieImageView.image = img
             }
         } else {
-            self.backgroundmovieImageView.image = UIImage(named: "Default Image")
+            self.backgroundmovieImageView.image = UIImage(named: DefaultImageName.defaultImage.rawValue)
         }
         
         NotificationCenter.default.rx.notification(.reviewWillCancelled, object: nil)
