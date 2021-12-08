@@ -50,7 +50,7 @@ extension SearchViewController: UITableViewDataSourcePrefetching {
         print(#function, indexPaths)
         #endif
         
-        shared.fetchQueryMovie(about: text) {
+        shared.fetchQueryMovie(about: text, vc: self) {
             self.searchMovieTableView.reloadData()
         }
     }
@@ -142,7 +142,7 @@ extension SearchViewController: UISearchBarDelegate {
         
         searchMovieTableView.alpha = 0
         
-        MovieDataManager.shared.fetchQueryMovie(about: hasText) {
+        MovieDataManager.shared.fetchQueryMovie(about: hasText, vc: self) {
             self.searchMovieTableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.searchMovieTableView.alpha = 1.0

@@ -9,8 +9,8 @@ import Foundation
 import Moya
 
 
-/// 네트워크 요청 서비스
-enum Service {
+/// 로그인, 영화관 네트워크 요청 서비스
+enum LoginAndMovieReviewService {
     // 로그인
     case signup(EmailJoinPostData)
     case login(EmailLoginPostData)
@@ -28,7 +28,7 @@ enum Service {
 
 
 
-extension Service: TargetType, AccessTokenAuthorizable {
+extension LoginAndMovieReviewService: TargetType, AccessTokenAuthorizable {
     
     /// 기본 URL
     var baseURL: URL {
@@ -38,13 +38,15 @@ extension Service: TargetType, AccessTokenAuthorizable {
     /// 기본 URL을 제외한 나머지 경로
     var path: String {
         switch self {
+        // 로그인
         case .signup:
             return "/join/email"
         case .login:
             return "/login/email"
         case .validateToken:
             return "/validation"
-            
+        
+        // 영화 리뷰
         case .reviewList, .saveReview:
             return "/review"
         case .editReview(let reviewPutData):
@@ -52,6 +54,7 @@ extension Service: TargetType, AccessTokenAuthorizable {
         case .removeReview(let id):
             return "/review/\(id)"
         
+        // 영화관
         case .movieTheaterList:
             return "/movietheater"
         }

@@ -13,7 +13,7 @@ struct MovieData: Codable {
     
     struct Result: Codable {
         
-        /// 영화 Id
+        /// 영화 아이디
         let id: Int
         
         
@@ -46,7 +46,7 @@ struct MovieData: Codable {
         ///
         /// 값이 없을 경우, 기본값을 리턴합니다.
         var overviewStr: String {
-            return overview ?? ""
+            return overview ?? "줄거리 정보가 존재하지 않습니다."
         }
         
         
@@ -57,7 +57,7 @@ struct MovieData: Codable {
         ///
         /// 값이 없을 경우, 기본값을 리턴합니다.
         var releaseDate: String {
-            return release_date ?? ""
+            return release_date ?? "날짜 정보가 존재하지 않습니다."
         }
         
         
@@ -68,7 +68,7 @@ struct MovieData: Codable {
         ///
         /// 값이 없을 경우, 기본값을 리턴합니다.
         var titleStr: String {
-            return title ?? ""
+            return title ?? "영화 제목 정보가 존재하지 않습니다."
         }
         
         
@@ -85,6 +85,27 @@ struct MovieData: Codable {
     
     /// 영화 데이터 목록
     let results: [Result]
+    
+    
+    /// 영화 데이터를 파싱합니다.
+    /// - Parameters:
+    ///   - data: 영화 데이터
+    ///   - vc: 메소드를 실행하는 뷰컨트롤러
+    /// - Returns: 영화 목록
+    static func parse(data: Data, vc: CommonViewController) -> [Result] {
+        var list = [Result]()
+        
+        do {
+            let decoder = JSONDecoder()
+            let movieData = try decoder.decode(MovieData.self, from: data)
+            
+            list = movieData.results
+        } catch {
+            vc.showAlertMessage(message: error.localizedDescription)
+        }
+        
+        return list
+    }
 }
 
 

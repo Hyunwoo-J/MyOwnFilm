@@ -11,10 +11,10 @@ import Foundation
 /// 서버 리뷰 PUT 모델
 struct ReviewPutData: Codable {
     
-    /// 리뷰 ID
+    /// 리뷰 아이디
     let reviewId: Int
     
-    /// 영화 ID
+    /// 영화 아이디
     let movieId: Int
     
     /// 영화 제목

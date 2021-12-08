@@ -17,7 +17,7 @@ struct JoinResponse: Codable, CommonResponseType, CommonAccountResponseType {
     /// 서버 메시지
     var message: String?
     
-    /// 유저 ID
+    /// 유저 아이디
     var userId: String?
     
     /// 토큰

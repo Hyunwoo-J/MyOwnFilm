@@ -16,7 +16,7 @@ struct MovieTheaterData: Codable {
     /// 영화관 정보 모델
     struct MovieTheater: Codable {
         
-        /// 영화관 ID
+        /// 영화관 아이디
         let movieTheaterId: Int
         
         /// 광역단체

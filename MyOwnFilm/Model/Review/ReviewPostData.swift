@@ -11,7 +11,7 @@ import Foundation
 /// 서버 리뷰 POST 모델
 struct ReviewPostData: Codable {
     
-    /// 영화 ID
+    /// 영화 아이디
     let movieId: Int
     
     /// 영화 제목

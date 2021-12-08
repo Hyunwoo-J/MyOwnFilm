@@ -14,10 +14,8 @@ import RxSwift
 /// 로그인 데이터 관리
 class LoginDataManager {
     
-    /// 싱글톤
+    /// 싱글톤 인스턴스
     static let shared = LoginDataManager()
-    
-    /// 싱글톤
     private init() { }
     
     /// 리소스 정리
@@ -29,11 +27,11 @@ class LoginDataManager {
     /// 네트워크 서비스 객체
     ///
     /// Bearer 토큰 인증 방식을 사용합니다.
-    private lazy var provider: MoyaProvider<Service> = {
+    private lazy var provider: MoyaProvider<LoginAndMovieReviewService> = {
         let token = loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
         let authPlugin = AccessTokenPlugin { _ in token }
         
-        return MoyaProvider<Service>(plugins: [authPlugin])
+        return MoyaProvider<LoginAndMovieReviewService>(plugins: [authPlugin])
     }()
     
     

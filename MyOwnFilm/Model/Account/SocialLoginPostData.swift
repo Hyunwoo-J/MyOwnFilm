@@ -14,7 +14,7 @@ struct SocialLoginPostData: Codable {
     /// 공급자
     let provider: String
     
-    /// ID
+    /// 아이디
     let id: String
     
     /// 이메일

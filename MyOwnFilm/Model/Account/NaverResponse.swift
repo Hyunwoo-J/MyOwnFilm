@@ -14,7 +14,7 @@ struct NaverResponse: Codable {
     /// 응답 모델
     struct Response: Codable {
         
-        /// ID
+        /// 아이디
         let id: String
         
         /// 이메일

@@ -14,10 +14,10 @@ struct ReviewList: Codable {
     /// 서버 리뷰 모델
     struct Review: Codable {
         
-        /// 리뷰 ID
+        /// 리뷰 아이디
         let reviewId: Int
         
-        /// 영화 ID
+        /// 영화 아이디
         let movieId: Int
         
         /// 영화 제목
@@ -66,6 +66,7 @@ struct ReviewList: Codable {
     
     /// 리뷰 데이터를 파싱합니다.
     /// - Parameter data: 리뷰 데이터
+    /// - Parameter vc: 메소드를 실행하는 뷰컨트롤러
     /// - Returns: 리뷰 목록
     static func parse(data: Data, vc: CommonViewController) -> [Review] {
         var list = [Review]()

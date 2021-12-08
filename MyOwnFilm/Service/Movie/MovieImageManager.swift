@@ -11,10 +11,8 @@ import UIKit
 /// 영화 이미지 데이터 관리
 class MovieImageManager {
     
-    /// 싱글톤
+    /// 싱글톤 인스턴스
     static let shared = MovieImageManager()
-    
-    /// 싱글톤
     private init() { }
     
     /// 이미지를 저장할 캐시

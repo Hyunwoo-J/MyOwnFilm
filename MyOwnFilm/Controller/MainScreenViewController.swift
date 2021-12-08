@@ -64,13 +64,9 @@ class MainScreenViewController: CommonViewController {
                     .subscribe(onNext: { actionType in
                         switch actionType {
                         case .ok:
-                            self.loginKeychain.delete(AccountKeys.userId.rawValue)
-                            self.loginKeychain.delete(AccountKeys.apiToken.rawValue)
-                            self.loginKeychain.delete(AccountKeys.provider.rawValue)
-                            self.loginKeychain.delete(AccountKeys.name.rawValue)
+                            self.loginKeychain.clear()
                             
                             self.goToIntro()
-                            
                         default:
                             break
                         }
@@ -105,7 +101,7 @@ class MainScreenViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        MovieDataManager.shared.fetchMovie(by: Date().releaseDate) {
+        MovieDataManager.shared.fetchMovie(by: Date().releaseDate, vc: self) {
             self.mainScreenTableView.reloadData()
         }
     }
