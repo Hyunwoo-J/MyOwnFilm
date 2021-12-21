@@ -21,15 +21,12 @@ class CommonViewController: UIViewController {
     /// 새로운 화면 뒤에 깔리는 화면을 어둡게 보이게 하기 위해서 만든 속성입니다.
     lazy var dimView: UIView = {
         let v = UIView()
-        v.frame = self.view.bounds
+        v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = .black
         v.alpha = 0.6
         
         return v
     }()
-    
-    /// 로그인 키체인 인스턴스
-    let loginKeychain = KeychainSwift()
     
     
     /// 경고창을 출력합니다.

@@ -26,7 +26,7 @@ class StorageCollectionViewCell: UICollectionViewCell {
     /// 영화 본 날짜와 본 장소, 영화 이미지를 표시합니다.
     /// - Parameter movieData: 영화 데이터 객체
     func configure(with movieData: ReviewList.Review) {
-        viewingDateLabel.text = movieData.viewingDate.toManagerDBDate()?.toUserDateString()
+        viewingDateLabel.text = movieData.viewingDate.toManagerDBDate().toUserDateString()
         placeLabel.text = movieData.movieTheater
         
         guard let posterPath = movieData.posterPath else { return }

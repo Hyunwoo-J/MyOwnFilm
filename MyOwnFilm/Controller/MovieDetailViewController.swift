@@ -58,10 +58,14 @@ class MovieDetailViewController: CommonViewController {
     ///   - segue: ViewController 정보를 가지고 있는 seuge
     ///   - sender: 리뷰 작성 버튼
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
-        
         if let vc = segue.destination as? ReviewViewController {
+            guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
             window.addSubview(self.dimView)
+            self.dimView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            self.dimView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            self.dimView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            self.dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            
             vc.index = index
             vc.movieList = movieList
         }

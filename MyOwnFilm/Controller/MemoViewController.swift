@@ -46,7 +46,7 @@ class MemoViewController: UIViewController {
         guard let memoText = memoTextView.text else { return }
         NotificationCenter.default.post(name: .memoDidSaved,
                                         object: nil,
-                                        userInfo: [NotificationUserInfoKey.memoDidSavedNotificationMemo.rawValue: memoText])
+                                        userInfo: [NotificationUserInfoKey.memo.rawValue: memoText])
         
         close(self)
     }

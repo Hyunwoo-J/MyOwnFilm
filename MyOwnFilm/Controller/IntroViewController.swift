@@ -21,8 +21,8 @@ class IntroViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let _ = loginKeychain.get(AccountKeys.userId.rawValue),
-           let _ = loginKeychain.get(AccountKeys.apiToken.rawValue) {
+        if let _ = LoginDataManager.shared.loginKeychain.get(AccountKeys.userId.rawValue),
+           let _ = LoginDataManager.shared.loginKeychain.get(AccountKeys.apiToken.rawValue) {
             LoginDataManager.shared.validateToken()
                 .observe(on: MainScheduler.instance)
                 .subscribe { result in

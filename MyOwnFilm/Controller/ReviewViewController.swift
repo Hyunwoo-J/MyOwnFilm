@@ -247,7 +247,7 @@ class ReviewViewController: CommonViewController {
             }
             
             starPointView.rating = reviewData.starPoint
-            dateLabel.text = reviewData.viewingDate.toManagerDBDate()?.toUserDateString()
+            dateLabel.text = reviewData.viewingDate.toManagerDBDate().toUserDateString()
             placeLabel.text = reviewData.movieTheater
             friendTextField.text = reviewData.person
             memoTextView.text = reviewData.memo
@@ -261,7 +261,7 @@ class ReviewViewController: CommonViewController {
             .subscribe(onNext: { [weak self] noti in
                 guard let self = self else { return }
                 
-                if let memo = noti.userInfo?[NotificationUserInfoKey.memoDidSavedNotificationMemo.rawValue] as? String {
+                if let memo = noti.userInfo?[NotificationUserInfoKey.memo.rawValue] as? String {
                     self.memoTextView.text = memo
                 }
             })
@@ -302,7 +302,7 @@ class ReviewViewController: CommonViewController {
             .subscribe(onNext: { [weak self] noti in
                 guard let self = self else { return }
                 
-                if let theaterName = noti.userInfo?[NotificationUserInfoKey.movieTheaterTableViewCellDidTappedNotificationTheaterName.rawValue] as? String {
+                if let theaterName = noti.userInfo?[NotificationUserInfoKey.theaterName.rawValue] as? String {
                     self.placeLabel.text = theaterName
                     self.placeLabel.textColor = .white
                 }

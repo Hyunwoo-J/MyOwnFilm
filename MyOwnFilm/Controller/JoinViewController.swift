@@ -38,19 +38,19 @@ class JoinViewController: CommonViewController {
             .observe(on: MainScheduler.instance)
             .subscribe { result in
                 switch result {
-                case .success(let response):
-                    switch response.code {
-                    case ResultCode.ok.rawValue:
+                case .error(let error):
+                    self.showAlertMessage(message: error.localizedDescription)
+                    
+                case .completed:
+                    if let response = result.element {
                         LoginDataManager.shared.saveAccount(responseData: response)
                         self.showAlertMessage(message: "회원가입에 성공하였습니다.")
-                    case ResultCode.fail.rawValue:
-                        self.showAlertMessage(message: response.message ?? "오류가 발생했습니다.")
-                    default:
-                        break
+                    } else {
+                        self.showAlertMessage(message: "서버 응답을 받아오지 못했습니다.")
                     }
-                    
-                case .failure(let error):
-                    self.showAlertMessage(message: error.localizedDescription)
+                
+                default:
+                    break
                 }
             }
             .disposed(by: rx.disposeBag)

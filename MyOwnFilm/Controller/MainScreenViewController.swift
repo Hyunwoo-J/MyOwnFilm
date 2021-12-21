@@ -48,14 +48,15 @@ class MainScreenViewController: CommonViewController {
                 self.showTwoActionAlertMessageWithHandler(alertTitle: "회원 탈퇴", message: "탈퇴하시겠습니까?", okActionTitle: "회원 탈퇴", okActionStyle: .destructive)
                     .filter { $0 == .ok }
                     .map { _ in }
-                    .subscribe{ _ in
+                    .subscribe(onNext: { _ in
                         #if DEBUG
                         print("탈퇴 완료")
                         #endif
-                    }
+                        
+                        self.goToIntro()
+                    })
                     .disposed(by: self.rx.disposeBag)
             }
-            
         }
         alert.addAction(leaveAccountAction)
         
@@ -65,7 +66,7 @@ class MainScreenViewController: CommonViewController {
                     .subscribe(onNext: { actionType in
                         switch actionType {
                         case .ok:
-                            self.loginKeychain.clear()
+                            LoginDataManager.shared.loginKeychain.clear()
                             
                             self.goToIntro()
                         default:

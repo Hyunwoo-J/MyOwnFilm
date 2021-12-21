@@ -16,14 +16,11 @@ extension String {
     
     /// 관리자가 사용하는 날짜 형식으로 날짜를 변환합니다.
     /// - Returns: 날짜
-    func toManagerDBDate() -> Date? {
+    func toManagerDBDate() -> Date {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         formatter.timeZone = TimeZone(identifier: "UTC")
-        if let date = formatter.date(from: self) {
-            return date
-        } else {
-            return nil
-        }
+        
+        return formatter.date(from: self) ?? Date()
     }
     
     

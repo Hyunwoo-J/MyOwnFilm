@@ -13,6 +13,8 @@ import KakaoSDKCommon
 import KakaoSDKUser
 import KeychainSwift
 import NaverThirdPartyLogin
+import NSObject_Rx
+import RxSwift
 import UIKit
 
 
@@ -88,7 +90,22 @@ class SignupViewController: CommonViewController {
                     
                     switch apiResponse.resultcode {
                     case "00":
-                        self.login(data: data)
+                        LoginDataManager.shared.ssoLogin(socialLoginPostData: data)
+                            .observe(on: MainScheduler.instance)
+                            .subscribe { result in
+                                switch result {
+                                case .error(let error):
+                                    self.showAlertMessage(message: error.localizedDescription)
+                                    
+                                case .completed:
+                                    self.goToMain()
+                                
+                                default:
+                                    break
+                                }
+                            }
+                            .disposed(by: self.rx.disposeBag)
+                            
                     default:
                         break
                     }
@@ -142,7 +159,21 @@ class SignupViewController: CommonViewController {
                                         
                                         if let user = user, let id = user.id, let email = user.kakaoAccount?.email {
                                             let data = SocialLoginPostData(provider: "KakaoTalk", id: "\(id)", email: email)
-                                            self.login(data: data)
+                                            LoginDataManager.shared.ssoLogin(socialLoginPostData: data)
+                                                .observe(on: MainScheduler.instance)
+                                                .subscribe { result in
+                                                    switch result {
+                                                    case .error(let error):
+                                                        self.showAlertMessage(message: error.localizedDescription)
+                                                        
+                                                    case .completed:
+                                                        self.goToMain()
+                                                    
+                                                    default :
+                                                        break
+                                                    }
+                                                }
+                                                .disposed(by: self.rx.disposeBag)
                                         }
                                     }
                                 }
@@ -207,64 +238,6 @@ class SignupViewController: CommonViewController {
             }
         }
     }
-    
-    
-    /// SNS로 로그인합니다.
-    /// - Parameter data: 카카오, 네이버 로그인 데이터
-    private func login(data: SocialLoginPostData) {
-        guard let url = URL(string: "https://mofapi.azurewebsites.net/login/sso") else {
-            return
-        }
-        
-        let session = URLSession.shared
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        do {
-            let encoder = JSONEncoder()
-            request.httpBody = try encoder.encode(data)
-        } catch {
-            self.showAlertMessage(message: error.localizedDescription)
-        }
-        
-        session.dataTask(with: request) { data, response, error in
-            if let error = error {
-                self.showAlertMessage(message: error.localizedDescription)
-                
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                if let httpResponse = response as? HTTPURLResponse {
-                    #if DEBUG
-                    print(httpResponse.statusCode)
-                    #endif
-                }
-                
-                return
-            }
-            
-            if let data = data {
-                let decoder = JSONDecoder()
-                
-                do {
-                    let apiResponse = try decoder.decode(LoginResponse.self, from: data)
-                    
-                    switch apiResponse.code {
-                    case ResultCode.ok.rawValue:
-                        self.goToMain()
-                    case ResultCode.fail.rawValue:
-                        self.showAlertMessage(message: apiResponse.message ?? "오류가 발생했습니다.")
-                    default:
-                        break
-                    }
-                } catch {
-                    self.showAlertMessage(message: error.localizedDescription)
-                }
-            }
-        }.resume()
-    }
 }
 
 
@@ -308,19 +281,39 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             var name = credential.fullName?.givenName
             
             if let email = email, email.count > 0 {
-                loginKeychain.set(email, forKey: AccountKeys.provider.rawValue, withAccess: .accessibleAfterFirstUnlock)
+                LoginDataManager.shared.loginKeychain.set(email, forKey: AccountKeys.provider.rawValue, withAccess: .accessibleAfterFirstUnlock)
             } else {
-                email = loginKeychain.get(AccountKeys.provider.rawValue) ?? ""
+                email = LoginDataManager.shared.loginKeychain.get(AccountKeys.provider.rawValue) ?? ""
+                
             }
             
             if let name = name, name.count > 0 {
-                loginKeychain.set(name, forKey: AccountKeys.name.rawValue, withAccess: .accessibleAfterFirstUnlock)
+                LoginDataManager.shared.loginKeychain.set(name, forKey: AccountKeys.name.rawValue, withAccess: .accessibleAfterFirstUnlock)
             } else {
-                name = loginKeychain.get(AccountKeys.name.rawValue) ?? ""
+                name = LoginDataManager.shared.loginKeychain.get(AccountKeys.name.rawValue) ?? ""
             }
             
             let postData = SocialLoginPostData(provider: "Apple", id: userId, email: email ?? "")
-            self.login(data: postData)
+            LoginDataManager.shared.ssoLogin(socialLoginPostData: postData)
+                .observe(on: MainScheduler.instance)
+                .subscribe { result in
+                    switch result {
+                    case .error(let error):
+                        self.showAlertMessage(message: error.localizedDescription)
+                        
+                    case .completed:
+                        if let response = result.element {
+                            LoginDataManager.shared.saveAccount(responseData: response)
+                            self.goToMain()
+                        } else {
+                            self.showAlertMessage(message: "서버 응답을 받아오지 못했습니다.")
+                        }
+                        
+                    default:
+                        break
+                    }
+                }
+                .disposed(by: self.rx.disposeBag)
         }
     }
 }

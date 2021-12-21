@@ -19,7 +19,7 @@ class LoginDataManager {
     private init() { }
     
     /// 로그인 키체인 인스턴스
-    private let loginKeychain = KeychainSwift()
+    let loginKeychain = KeychainSwift()
     
     /// 네트워크 서비스 객체
     ///
@@ -36,11 +36,13 @@ class LoginDataManager {
     /// - Parameters:
     ///   - emailJoinPostData: 회원가입 정보를 담은 객체
     ///   - vc: 메소드를 호출하는 뷰컨트롤러
-    func singup(emailJoinPostData: EmailJoinPostData) -> PrimitiveSequence<SingleTrait, JoinResponse> {
+    /// - Returns: 회원가입 응답 정보를 방출하는 옵저버블
+    func singup(emailJoinPostData: EmailJoinPostData) -> Observable<JoinResponse> {
         provider.rx
             .request(.signup(emailJoinPostData))
             .map(JoinResponse.self)
-            .retry(20)
+            .retry(3)
+            .asObservable()
     }
     
     
@@ -48,11 +50,25 @@ class LoginDataManager {
     /// - Parameters:
     ///   - emailLoginPostData: 로그인 정보를 담은 객체
     ///   - vc: 메소드를 호출하는 뷰컨트롤러
-    func login(emailLoginPostData: EmailLoginPostData) -> PrimitiveSequence<SingleTrait, LoginResponse> {
+    /// - Returns: 로그인 응답 정보를 방출하는 옵저버블
+    func login(emailLoginPostData: EmailLoginPostData) -> Observable<LoginResponse> {
         provider.rx
             .request(.login(emailLoginPostData))
             .map(LoginResponse.self)
-            .retry(20)
+            .retry(3)
+            .asObservable()
+    }
+    
+    
+    /// SNS로 로그인합니다.
+    /// - Parameter socialLoginPostData: 카카오, 네이버 로그인 데이터
+    /// - Returns: 로그인 응답 정보를 방출하는 옵저버블
+    func ssoLogin(socialLoginPostData: SocialLoginPostData) -> Observable<LoginResponse> {
+        provider.rx
+            .request(.ssoLogin(socialLoginPostData))
+            .map(LoginResponse.self)
+            .retry(3)
+            .asObservable()
     }
     
     
@@ -61,10 +77,10 @@ class LoginDataManager {
     /// 유효한 토큰일 경우, 메인 화면으로 이동합니다.
     /// 유효한 토큰이 아닐 경우, 로그인 화면으로 이동합니다.
     /// - Parameter vc: 메소드를 호출하는 뷰컨트롤러
+    /// - Returns: 네트워크 응답 정보를 방출하는 옵저버블
     func validateToken() -> Single<Response> {
         provider.rx
             .request(.validateToken)
-            .retry(20)
     }
     
     

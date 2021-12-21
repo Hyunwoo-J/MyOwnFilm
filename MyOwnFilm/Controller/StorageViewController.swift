@@ -82,10 +82,8 @@ class StorageViewController: CommonViewController {
         if sender.tag == 100 {
             recentlyReviewList = ReviewDataManager.shared.reviewList.filter { reviewData in
                 let dateBeforeThreeMonth = Date() - 3.month
+                let date = reviewData.viewingDate.toManagerDBDate()
                 
-                guard let date = reviewData.viewingDate.toManagerDBDate() else {
-                    return false
-                }
                 return date > dateBeforeThreeMonth
             }
             
@@ -179,14 +177,14 @@ class StorageViewController: CommonViewController {
         self.alignmentLabel.text = "내가 본 날짜"
         
         if self.isDateAscending {
-            recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
-            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
+            recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() < $1.viewingDate.toManagerDBDate() }
+            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() < $1.viewingDate.toManagerDBDate() }
             
             self.alignmentStateLabel.text = "오래된 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "up-arrow")
         } else {
-            recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
-            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
+            recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() > $1.viewingDate.toManagerDBDate() }
+            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() > $1.viewingDate.toManagerDBDate() }
             
             self.alignmentStateLabel.text = "최근 날짜순"
             self.alignmentArrowImageView.image = UIImage(named: "down-arrow")
@@ -229,20 +227,20 @@ class StorageViewController: CommonViewController {
     /// 정렬 기준과 기준 순서에 따라 데이터를 정렬합니다.
     func sortReviewData() {
         if alignmentLabel.text == "개봉연도" && alignmentStateLabel.text == "오래된 날짜순" {
-            ReviewDataManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() < $1.releaseDate.toManagerDBDate() ?? Date() }
-            recentlyReviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() < $1.releaseDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() < $1.releaseDate.toManagerDBDate() }
+            recentlyReviewList.sort { $0.releaseDate.toManagerDBDate() < $1.releaseDate.toManagerDBDate() }
         } else if alignmentLabel.text == "개봉연도" && alignmentStateLabel.text == "최근 날짜순" {
-            ReviewDataManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() > $1.releaseDate.toManagerDBDate() ?? Date() }
-            recentlyReviewList.sort { $0.releaseDate.toManagerDBDate() ?? Date() > $1.releaseDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.releaseDate.toManagerDBDate() > $1.releaseDate.toManagerDBDate() }
+            recentlyReviewList.sort { $0.releaseDate.toManagerDBDate() > $1.releaseDate.toManagerDBDate() }
         }
         
         
         if alignmentLabel.text == "내가 본 날짜" && alignmentStateLabel.text == "오래된 날짜순" {
-            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
-            recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() < $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() < $1.viewingDate.toManagerDBDate() }
+            recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() < $1.viewingDate.toManagerDBDate() }
         } else if alignmentLabel.text == "내가 본 날짜" && alignmentStateLabel.text == "최근 날짜순" {
-            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
-            recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() ?? Date() > $1.viewingDate.toManagerDBDate() ?? Date() }
+            ReviewDataManager.shared.reviewList.sort { $0.viewingDate.toManagerDBDate() > $1.viewingDate.toManagerDBDate() }
+            recentlyReviewList.sort { $0.viewingDate.toManagerDBDate() > $1.viewingDate.toManagerDBDate() }
         }
         
         if alignmentLabel.text == "영화 이름" && alignmentStateLabel.text == "가나다" {
@@ -373,6 +371,10 @@ extension StorageViewController: UICollectionViewDelegate {
         if let vc = storyboard.instantiateViewController(withIdentifier: "ReviewViewController") as? ReviewViewController {
             guard let window = UIApplication.shared.windows.first(where: \.isKeyWindow) else { return }
             window.addSubview(self.dimView)
+            self.dimView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            self.dimView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            self.dimView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            self.dimView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
             
             if isRecentlyMovieButtonSelected {
                 vc.reviewData = recentlyReviewList[indexPath.item]

@@ -130,7 +130,7 @@ extension SearchViewController: UISearchBarDelegate {
         
         searchMovieTableView.reloadData()
         
-        guard let hasText = searchBar.text else {
+        guard let hasText = searchBar.text, hasText.count > 0 else {
             return
         }
         

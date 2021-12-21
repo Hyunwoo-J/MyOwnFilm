@@ -14,6 +14,7 @@ enum LoginAndMovieReviewService {
     // 로그인
     case signup(EmailJoinPostData)
     case login(EmailLoginPostData)
+    case ssoLogin(SocialLoginPostData)
     case validateToken
     
     // 영화 리뷰
@@ -43,6 +44,8 @@ extension LoginAndMovieReviewService: TargetType, AccessTokenAuthorizable {
             return "/join/email"
         case .login:
             return "/login/email"
+        case .ssoLogin:
+            return "/login/sso"
         case .validateToken:
             return "/validation"
         
@@ -65,7 +68,7 @@ extension LoginAndMovieReviewService: TargetType, AccessTokenAuthorizable {
         switch self {
         case .validateToken, .reviewList, .movieTheaterList:
             return .get
-        case .signup, .login, .saveReview:
+        case .signup, .login, .ssoLogin, .saveReview:
             return .post
         case .editReview:
             return .put
@@ -83,6 +86,8 @@ extension LoginAndMovieReviewService: TargetType, AccessTokenAuthorizable {
             return .requestJSONEncodable(emailJoinPostData)
         case .login(let emailLoginPostData):
             return .requestJSONEncodable(emailLoginPostData)
+        case .ssoLogin(let socialLoginPostData):
+            return .requestJSONEncodable(socialLoginPostData)
         case .saveReview(let reviewPostData):
             return .requestJSONEncodable(reviewPostData)
         case .editReview(let reviewPutData):
