@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DmH-S1-ZKl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DmH-S1-ZKl">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -348,6 +348,7 @@
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uAP-gB-chi">
                                                         <rect key="frame" x="0.0" y="0.0" width="334" height="40"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="Detail_Login"/>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <connections>
@@ -555,6 +556,7 @@
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y9k-iA-5RY">
                                                         <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="Login"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <connections>
                                                             <segue destination="IrW-vn-xtT" kind="show" id="Ayq-st-wHp"/>
@@ -829,14 +831,14 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="62r-q2-5OL"/>
+        <segue reference="Lae-eb-aVe"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="applelogo" catalog="system" width="103" height="128"/>
-        <image name="facebook" width="27" height="27"/>
-        <image name="kakaoTalk" width="27" height="23.5"/>
+        <image name="facebook" width="16" height="16"/>
+        <image name="kakaoTalk" width="18.5" height="16"/>
         <image name="mail" width="16" height="16"/>
-        <image name="naver" width="26.5" height="27.5"/>
+        <image name="naver" width="16" height="15"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="backgroundColor">
             <color red="0.059000000357627869" green="0.063000001013278961" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

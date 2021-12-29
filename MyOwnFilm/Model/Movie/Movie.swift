@@ -110,6 +110,20 @@ struct MovieData: Codable {
 
 
 
+extension MovieData.Result {
+    init(id: Int, backdrop_Path: String, genre_ids: [Int], overview: String, release_date: String, title: String, poster_path: String) {
+        self.id = id
+        self.backdrop_path = backdrop_Path
+        self.genre_ids = genre_ids
+        self.overview = overview
+        self.release_date = release_date
+        self.title = title
+        self.poster_path = poster_path
+    }
+}
+
+
+
 /// PosterImage 크기
 enum PosterImageSize: String {
     case w92

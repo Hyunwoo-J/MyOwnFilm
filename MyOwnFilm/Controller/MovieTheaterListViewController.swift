@@ -56,7 +56,7 @@ class MovieTheaterListViewController: CommonViewController {
                             self.basicOrganizationList.append(basicOrganization)
                         }
                     }
-
+                    
                     self.basicOrganizationList.sort { $0 < $1 }
                     
                     var filteredList: [MovieTheaterData.MovieTheater]?

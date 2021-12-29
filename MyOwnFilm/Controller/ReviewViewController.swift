@@ -81,7 +81,7 @@ class ReviewViewController: CommonViewController {
     /// - Parameter sender: 확인 버튼
     @IBAction func saveReview(_ sender: Any) {
         if starPointView.rating == 0 {
-            alertLoafMessage(message: "평점을 입력해주세요.", duration: .short)
+            alertLoafMessage(message: "별점을 입력해주세요.", duration: .short)
             return
         }
         

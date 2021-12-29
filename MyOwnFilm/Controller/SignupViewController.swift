@@ -97,7 +97,7 @@ class SignupViewController: CommonViewController {
                                 case .error(let error):
                                     self.showAlertMessage(message: error.localizedDescription)
                                     
-                                case .completed:
+                                case .next(_):
                                     self.goToMain()
                                 
                                 default:
@@ -166,7 +166,7 @@ class SignupViewController: CommonViewController {
                                                     case .error(let error):
                                                         self.showAlertMessage(message: error.localizedDescription)
                                                         
-                                                    case .completed:
+                                                    case .next(_):
                                                         self.goToMain()
                                                     
                                                     default :
@@ -301,13 +301,9 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                     case .error(let error):
                         self.showAlertMessage(message: error.localizedDescription)
                         
-                    case .completed:
-                        if let response = result.element {
-                            LoginDataManager.shared.saveAccount(responseData: response)
-                            self.goToMain()
-                        } else {
-                            self.showAlertMessage(message: "서버 응답을 받아오지 못했습니다.")
-                        }
+                    case .next(let loginResponse):
+                        LoginDataManager.shared.saveAccount(responseData: loginResponse)
+                        self.goToMain()
                         
                     default:
                         break

@@ -30,7 +30,7 @@ class JoinViewController: CommonViewController {
     /// 이메일과 비밀번호를 가지고 회원가입합니다.
     /// - Parameter sender: 회원가입 버튼
     @IBAction func signup(_ sender: Any) {
-        guard let email = emailField.text, let password = passwordField.text else { return }
+        guard let email = emailField.text, let password = passwordField.text, email.count > 0 && password.count > 0 else { return }
         
         let joinData = EmailJoinPostData(email: email, password: password)
         
@@ -41,14 +41,11 @@ class JoinViewController: CommonViewController {
                 case .error(let error):
                     self.showAlertMessage(message: error.localizedDescription)
                     
-                case .completed:
-                    if let response = result.element {
-                        LoginDataManager.shared.saveAccount(responseData: response)
-                        self.showAlertMessage(message: "회원가입에 성공하였습니다.")
-                    } else {
-                        self.showAlertMessage(message: "서버 응답을 받아오지 못했습니다.")
-                    }
-                
+                case .next(let joinResponse):
+                    LoginDataManager.shared.saveAccount(responseData: joinResponse)
+                    self.showAlertMessage(message: "회원가입에 성공하였습니다.")
+                    self.goToMain()
+                    
                 default:
                     break
                 }

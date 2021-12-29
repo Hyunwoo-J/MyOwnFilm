@@ -78,8 +78,6 @@ class MovieDetailViewController: CommonViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        [storyLabel, titleLabel, dateLabel].forEach { $0?.textColor = .white }
-        
         if let index = index {
             storyLabel.text = movieList[index].overviewStr
             titleLabel.text = movieList[index].titleStr

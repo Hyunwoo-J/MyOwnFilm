@@ -25,10 +25,13 @@ class LoginDataManager {
     ///
     /// Bearer 토큰 인증 방식을 사용합니다.
     private lazy var provider: MoyaProvider<LoginAndMovieReviewService> = {
-        let token = loginKeychain.get(AccountKeys.apiToken.rawValue) ?? ""
-        let authPlugin = AccessTokenPlugin { _ in token }
-        
-        return MoyaProvider<LoginAndMovieReviewService>(plugins: [authPlugin])
+        if let token = loginKeychain.get(AccountKeys.apiToken.rawValue) {
+            let authPlugin = AccessTokenPlugin { _ in token }
+            
+            return MoyaProvider<LoginAndMovieReviewService>(plugins: [authPlugin])
+        } else {
+            return MoyaProvider<LoginAndMovieReviewService>()
+        }
     }()
     
     

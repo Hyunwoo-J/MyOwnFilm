@@ -52,6 +52,7 @@ class MainScreenViewController: CommonViewController {
                         #if DEBUG
                         print("탈퇴 완료")
                         #endif
+                        LoginDataManager.shared.loginKeychain.clear()
                         
                         self.goToIntro()
                     })
