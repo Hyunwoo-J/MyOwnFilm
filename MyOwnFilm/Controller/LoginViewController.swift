@@ -34,12 +34,18 @@ class LoginViewController: CommonViewController {
             .observe(on: MainScheduler.instance)
             .subscribe { result in
                 switch result {
+                case .next(let loginResponse):
+                    switch loginResponse.code {
+                    case ResultCode.ok.rawValue:
+                        LoginDataManager.shared.saveAccount(responseData: loginResponse)
+                        self.goToMain()
+                        
+                    default:
+                        self.showAlertMessage(message: "로그인에 실패했습니다.")
+                    }
+                    
                 case .error(let error):
                     self.showAlertMessage(message: error.localizedDescription)
-                    
-                case .next(let loginResponse):
-                    LoginDataManager.shared.saveAccount(responseData: loginResponse)
-                    self.goToMain()
                     
                 default:
                     break

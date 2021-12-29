@@ -94,12 +94,18 @@ class SignupViewController: CommonViewController {
                             .observe(on: MainScheduler.instance)
                             .subscribe { result in
                                 switch result {
+                                case .next(let loginResponse):
+                                    switch loginResponse.code {
+                                    case ResultCode.ok.rawValue:
+                                        self.goToMain()
+                                        
+                                    default:
+                                        self.showAlertMessage(message: "소셜 로그인에 실패했습니다.")
+                                    }
+                                
                                 case .error(let error):
                                     self.showAlertMessage(message: error.localizedDescription)
                                     
-                                case .next(_):
-                                    self.goToMain()
-                                
                                 default:
                                     break
                                 }

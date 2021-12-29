@@ -38,9 +38,8 @@ class LoginDataManager {
     /// 입력한 정보로 회원가입합니다.
     /// - Parameters:
     ///   - emailJoinPostData: 회원가입 정보를 담은 객체
-    ///   - vc: 메소드를 호출하는 뷰컨트롤러
     /// - Returns: 회원가입 응답 정보를 방출하는 옵저버블
-    func singup(emailJoinPostData: EmailJoinPostData) -> Observable<JoinResponse> {
+    func signup(emailJoinPostData: EmailJoinPostData) -> Observable<JoinResponse> {
         provider.rx
             .request(.signup(emailJoinPostData))
             .map(JoinResponse.self)
@@ -52,7 +51,6 @@ class LoginDataManager {
     /// 이메일과 비밀번호로 로그인합니다.
     /// - Parameters:
     ///   - emailLoginPostData: 로그인 정보를 담은 객체
-    ///   - vc: 메소드를 호출하는 뷰컨트롤러
     /// - Returns: 로그인 응답 정보를 방출하는 옵저버블
     func login(emailLoginPostData: EmailLoginPostData) -> Observable<LoginResponse> {
         provider.rx
@@ -79,7 +77,6 @@ class LoginDataManager {
     ///
     /// 유효한 토큰일 경우, 메인 화면으로 이동합니다.
     /// 유효한 토큰이 아닐 경우, 로그인 화면으로 이동합니다.
-    /// - Parameter vc: 메소드를 호출하는 뷰컨트롤러
     /// - Returns: 네트워크 응답 정보를 방출하는 옵저버블
     func validateToken() -> Single<Response> {
         provider.rx

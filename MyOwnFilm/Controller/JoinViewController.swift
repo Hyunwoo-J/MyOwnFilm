@@ -34,17 +34,23 @@ class JoinViewController: CommonViewController {
         
         let joinData = EmailJoinPostData(email: email, password: password)
         
-        LoginDataManager.shared.singup(emailJoinPostData: joinData)
+        LoginDataManager.shared.signup(emailJoinPostData: joinData)
             .observe(on: MainScheduler.instance)
             .subscribe { result in
                 switch result {
+                case .next(let joinResponse):
+                    switch joinResponse.code {
+                    case ResultCode.ok.rawValue:
+                        LoginDataManager.shared.saveAccount(responseData: joinResponse)
+                        self.showAlertMessage(message: "회원가입에 성공하였습니다.")
+                        self.goToMain()
+                        
+                    default:
+                        self.showAlertMessage(message: "회원가입에 실패했습니다.")
+                    }
+                
                 case .error(let error):
                     self.showAlertMessage(message: error.localizedDescription)
-                    
-                case .next(let joinResponse):
-                    LoginDataManager.shared.saveAccount(responseData: joinResponse)
-                    self.showAlertMessage(message: "회원가입에 성공하였습니다.")
-                    self.goToMain()
                     
                 default:
                     break
