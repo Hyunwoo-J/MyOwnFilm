@@ -94,13 +94,12 @@ class MovieDetailViewController: CommonViewController {
         
         NotificationCenter.default.rx.notification(.reviewWillCancelled, object: nil)
             .observe(on: MainScheduler.instance)
-            .subscribe { [weak self] _ in
-                guard let self = self else { return }
-                
+            .withUnretained(self)
+            .subscribe(onNext: { _ in
                 UIView.animate(withDuration: 0.3) {
                     self.dimView.removeFromSuperview()
                 }
-            }
+            })
             .disposed(by: rx.disposeBag)
     }
 }

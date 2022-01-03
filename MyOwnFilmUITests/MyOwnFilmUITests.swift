@@ -39,6 +39,8 @@ class MyOwnFilmUITests: XCTestCase {
     
     
     func givenLogoutButtonTappedAction() {
+        Thread.sleep(forTimeInterval: 0.5)
+        
         profileButton.tap()
         
         let logoutButton = app.buttons["로그아웃"]

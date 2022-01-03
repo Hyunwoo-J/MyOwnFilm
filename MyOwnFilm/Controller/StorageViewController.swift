@@ -261,9 +261,8 @@ class StorageViewController: CommonViewController {
         
         NotificationCenter.default.rx.notification(.reviewWillCancelled, object: nil)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                
+            .withUnretained(self)
+            .subscribe(onNext: { _ in
                 UIView.animate(withDuration: 0.3) {
                     self.dimView.removeFromSuperview()
                 }
@@ -272,9 +271,8 @@ class StorageViewController: CommonViewController {
         
         NotificationCenter.default.rx.notification(.reviewDidUpdate, object: nil)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                
+            .withUnretained(self)
+            .subscribe(onNext: { _ in
                 ReviewDataManager.shared.fetchReview(vc: self) {
                     self.storageCollectionView.reloadData()
                 }

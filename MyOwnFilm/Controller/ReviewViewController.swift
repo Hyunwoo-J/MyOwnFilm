@@ -258,10 +258,9 @@ class ReviewViewController: CommonViewController {
         
         NotificationCenter.default.rx.notification(.memoDidSaved, object: nil)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] noti in
-                guard let self = self else { return }
-                
-                if let memo = noti.userInfo?[NotificationUserInfoKey.memo.rawValue] as? String {
+            .withUnretained(self)
+            .subscribe(onNext: { noti in
+                if let memo = noti.1.userInfo?[NotificationUserInfoKey.memo.rawValue] as? String {
                     self.memoTextView.text = memo
                 }
             })
@@ -269,40 +268,35 @@ class ReviewViewController: CommonViewController {
         
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillShowNotification, object: nil)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                
+            .withUnretained(self)
+            .subscribe(onNext: { _ in
                 self.memoViewTopConstraint.constant = 70
                 self.memoViewBottomConstraint.constant = 90
                 
                 UIView.animate(withDuration: 0.3) {
                     self.view.layoutIfNeeded()
                 }
-
             })
             .disposed(by: rx.disposeBag)
 
         NotificationCenter.default.rx.notification(UIResponder.keyboardWillHideNotification, object: nil)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                
+            .withUnretained(self)
+            .subscribe(onNext: { _ in
                 self.memoViewTopConstraint.constant = 80
                 self.memoViewBottomConstraint.constant = 80
                 
                 UIView.animate(withDuration: 0.3) {
                     self.view.layoutIfNeeded()
                 }
-
             })
             .disposed(by: rx.disposeBag)
         
         NotificationCenter.default.rx.notification(.movieTheaterTableViewCellDidTapped, object: nil)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] noti in
-                guard let self = self else { return }
-                
-                if let theaterName = noti.userInfo?[NotificationUserInfoKey.theaterName.rawValue] as? String {
+            .withUnretained(self)
+            .subscribe(onNext: { noti in
+                if let theaterName = noti.1.userInfo?[NotificationUserInfoKey.theaterName.rawValue] as? String {
                     self.placeLabel.text = theaterName
                     self.placeLabel.textColor = .white
                 }
