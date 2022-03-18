@@ -26,6 +26,9 @@
 		2C2FB2122759406F00DAB8DA /* LoginAndMovieReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FB2112759406F00DAB8DA /* LoginAndMovieReviewService.swift */; };
 		2C2FB217275A77A800DAB8DA /* NotificationUserInfoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FB216275A77A800DAB8DA /* NotificationUserInfoKey.swift */; };
 		2C2FB219275A7F7600DAB8DA /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2FB218275A7F7600DAB8DA /* Notification+Extension.swift */; };
+		2C3E43B827E39E4A006C6FE6 /* SettingScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C3E43B727E39E4A006C6FE6 /* SettingScreen.storyboard */; };
+		2C3E43BA27E4CC52006C6FE6 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3E43B927E4CC52006C6FE6 /* SettingTableViewCell.swift */; };
+		2C3E43BC27E4CC7F006C6FE6 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3E43BB27E4CC7F006C6FE6 /* SettingViewController.swift */; };
 		2C443A652716083700B1F5D1 /* ReviewPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C443A642716083700B1F5D1 /* ReviewPostData.swift */; };
 		2C443A672716085400B1F5D1 /* ResultCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C443A662716085400B1F5D1 /* ResultCode.swift */; };
 		2C443A692716087500B1F5D1 /* CommonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C443A682716087500B1F5D1 /* CommonResponse.swift */; };
@@ -118,6 +121,9 @@
 		2C2FB2112759406F00DAB8DA /* LoginAndMovieReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAndMovieReviewService.swift; sourceTree = "<group>"; };
 		2C2FB216275A77A800DAB8DA /* NotificationUserInfoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationUserInfoKey.swift; sourceTree = "<group>"; };
 		2C2FB218275A7F7600DAB8DA /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
+		2C3E43B727E39E4A006C6FE6 /* SettingScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingScreen.storyboard; sourceTree = "<group>"; };
+		2C3E43B927E4CC52006C6FE6 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		2C3E43BB27E4CC7F006C6FE6 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		2C443A642716083700B1F5D1 /* ReviewPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPostData.swift; sourceTree = "<group>"; };
 		2C443A662716085400B1F5D1 /* ResultCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCode.swift; sourceTree = "<group>"; };
 		2C443A682716087500B1F5D1 /* CommonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonResponse.swift; sourceTree = "<group>"; };
@@ -217,6 +223,7 @@
 				2CD6C73926AC6F0600E82A06 /* SubMovieCollectionViewCell.swift */,
 				2C2BADC126B55E3D00138E58 /* SearchMovieTableViewCell.swift */,
 				2CE2F5B326EF38DD0021C642 /* StorageCollectionViewCell.swift */,
+				2C3E43B927E4CC52006C6FE6 /* SettingTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -278,6 +285,7 @@
 				2CA0CD9326F062B6004BDA42 /* MemoViewController.swift */,
 				2C2BADBF26B54E2100138E58 /* SearchViewController.swift */,
 				2C1B4BDF26EE690A000AAE1D /* StorageViewController.swift */,
+				2C3E43BB27E4CC7F006C6FE6 /* SettingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -290,6 +298,7 @@
 				2C16A01C26AC171500802BD6 /* MainScreen.storyboard */,
 				2C2BADBD26B54CC300138E58 /* SearchScreen.storyboard */,
 				2C1B4BDD26EE617F000AAE1D /* StorageScreen.storyboard */,
+				2C3E43B727E39E4A006C6FE6 /* SettingScreen.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -573,6 +582,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C3E43B827E39E4A006C6FE6 /* SettingScreen.storyboard in Resources */,
 				2C1B4BDE26EE617F000AAE1D /* StorageScreen.storyboard in Resources */,
 				2C2BADBE26B54CC300138E58 /* SearchScreen.storyboard in Resources */,
 				2C117F1E2662304100335B74 /* LaunchScreen.storyboard in Resources */,
@@ -740,12 +750,14 @@
 				2C1432742740EF6500CF6F4F /* ActionType.swift in Sources */,
 				2C9DCD102727CED700C87810 /* ReviewPutData.swift in Sources */,
 				2C117F142662303B00335B74 /* SceneDelegate.swift in Sources */,
+				2C3E43BA27E4CC52006C6FE6 /* SettingTableViewCell.swift in Sources */,
 				2C9DCD19272862FD00C87810 /* RoundedView.swift in Sources */,
 				2CA0CD9426F062B6004BDA42 /* MemoViewController.swift in Sources */,
 				2C443A672716085400B1F5D1 /* ResultCode.swift in Sources */,
 				2C9DCD2727289F7700C87810 /* NaverResponse.swift in Sources */,
 				2C9DCD1D2728765E00C87810 /* EmailLoginPostData.swift in Sources */,
 				2C7CDC06271E6656003E1E60 /* String+Fomatter.swift in Sources */,
+				2C3E43BC27E4CC7F006C6FE6 /* SettingViewController.swift in Sources */,
 				2C1B4BE026EE690A000AAE1D /* StorageViewController.swift in Sources */,
 				2C443A652716083700B1F5D1 /* ReviewPostData.swift in Sources */,
 				2C6BE451269406E3004237C0 /* MovieDetailViewController.swift in Sources */,

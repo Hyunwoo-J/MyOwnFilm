@@ -21,58 +21,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxi-S8-JZ6">
-                                <rect key="frame" x="0.0" y="44" width="413" height="45"/>
+                                <rect key="frame" x="0.0" y="44" width="413" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Now Playing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ll-mZ-qE4">
-                                        <rect key="frame" x="30" y="5" width="144" height="35"/>
+                                        <rect key="frame" x="30" y="5" width="144" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="erT-32-wIY">
-                                        <rect key="frame" x="343" y="0.0" width="45" height="45"/>
-                                        <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gyX-QK-IvH">
-                                                <rect key="frame" x="6" y="6.5" width="33" height="32"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JHe-AB-pDL">
-                                                <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
-                                                <accessibility key="accessibilityConfiguration" identifier="Profile_Button"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <connections>
-                                                    <action selector="profileButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="I04-SX-lY8"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" name="backgroundColor"/>
-                                        <constraints>
-                                            <constraint firstItem="gyX-QK-IvH" firstAttribute="leading" secondItem="erT-32-wIY" secondAttribute="leading" constant="6" id="0z9-XZ-9Xy"/>
-                                            <constraint firstAttribute="height" constant="45" id="3fl-am-Gj0"/>
-                                            <constraint firstItem="gyX-QK-IvH" firstAttribute="top" secondItem="erT-32-wIY" secondAttribute="top" constant="6" id="5ND-xH-hhe"/>
-                                            <constraint firstAttribute="trailing" secondItem="gyX-QK-IvH" secondAttribute="trailing" constant="6" id="FQc-s6-6OZ"/>
-                                            <constraint firstAttribute="bottom" secondItem="gyX-QK-IvH" secondAttribute="bottom" constant="6" id="NTd-Bg-99Z"/>
-                                            <constraint firstItem="JHe-AB-pDL" firstAttribute="leading" secondItem="erT-32-wIY" secondAttribute="leading" id="T3F-O8-KKK"/>
-                                            <constraint firstAttribute="trailing" secondItem="JHe-AB-pDL" secondAttribute="trailing" id="USt-ft-jza"/>
-                                            <constraint firstItem="JHe-AB-pDL" firstAttribute="top" secondItem="erT-32-wIY" secondAttribute="top" id="fkI-5h-zpT"/>
-                                            <constraint firstAttribute="width" constant="45" id="p2q-ag-ITy"/>
-                                            <constraint firstAttribute="bottom" secondItem="JHe-AB-pDL" secondAttribute="bottom" id="psH-Iv-cL9"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" name="backgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="8ll-mZ-qE4" firstAttribute="centerY" secondItem="zxi-S8-JZ6" secondAttribute="centerY" id="6Bb-9T-nUG"/>
                                     <constraint firstItem="8ll-mZ-qE4" firstAttribute="top" secondItem="zxi-S8-JZ6" secondAttribute="top" constant="5" id="JzH-KN-Mq5"/>
-                                    <constraint firstAttribute="trailing" secondItem="erT-32-wIY" secondAttribute="trailing" constant="25" id="Yk6-vN-uth"/>
                                     <constraint firstAttribute="bottom" secondItem="8ll-mZ-qE4" secondAttribute="bottom" constant="5" id="bEx-f2-bxi"/>
-                                    <constraint firstAttribute="bottom" secondItem="erT-32-wIY" secondAttribute="bottom" id="pCU-3d-SEq"/>
                                     <constraint firstItem="8ll-mZ-qE4" firstAttribute="leading" secondItem="zxi-S8-JZ6" secondAttribute="leading" constant="30" id="rYX-uB-LQf"/>
-                                    <constraint firstItem="erT-32-wIY" firstAttribute="top" secondItem="zxi-S8-JZ6" secondAttribute="top" id="u6u-OB-dTA"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YCg-ea-QVh">
-                                <rect key="frame" x="0.0" y="89" width="413" height="1011"/>
+                                <rect key="frame" x="0.0" y="84" width="413" height="1016"/>
                                 <color key="backgroundColor" name="backgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MainScreenFirstSectionTableViewCell" rowHeight="650" id="Fi2-io-8OB" customClass="MainScreenFirstSectionTableViewCell" customModule="MyOwnFilm" customModuleProvider="target">
@@ -941,13 +908,12 @@
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
-        <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ReviewSceneButtonColor">
-            <color red="0.14117647058823529" green="0.14509803921568626" blue="0.16078431372549018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.14100000262260437" green="0.14499999582767487" blue="0.16099999845027924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="backgroundColor">
             <color red="0.059000000357627869" green="0.063000001013278961" blue="0.086000002920627594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
