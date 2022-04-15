@@ -171,10 +171,11 @@ class SignupViewController: CommonViewController {
                                                     switch result {
                                                     case .error(let error):
                                                         self.showAlertMessage(message: error.localizedDescription)
-                                                        
-                                                    case .next(_):
+
+                                                    case .next(let loginResponse):
+                                                        LoginDataManager.shared.saveAccount(responseData: loginResponse)
                                                         self.goToMain()
-                                                    
+
                                                     default :
                                                         break
                                                     }
