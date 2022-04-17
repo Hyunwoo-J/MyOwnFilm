@@ -22,18 +22,18 @@
 * 로그인 기능 구현
 
 ## App Screenshot
-### 1. Login
-![IMG_0093](https://user-images.githubusercontent.com/79038724/159223851-c4fba5ce-9186-48fc-b3d6-217852f0c94f.PNG)
+### 1. Login & Logout
+![Login_](https://user-images.githubusercontent.com/79038724/163719907-f5b3cea9-4e92-4922-877c-bbdb4443ab14.gif)
+![Logout_](https://user-images.githubusercontent.com/79038724/163720020-0e97a693-6cec-4770-91d4-336d8bb72acc.gif)
 
 ### 2. Main
-![IMG_0071 2](https://user-images.githubusercontent.com/79038724/159222728-d975fcc7-a79f-4230-812f-50d1e10d3dd9.png)
-![IMG_0072](https://user-images.githubusercontent.com/79038724/159223098-9013bbfc-8b32-4216-ad55-14f3d601409b.png)
+![Main_](https://user-images.githubusercontent.com/79038724/163717842-adba70e4-f888-4c07-9688-9d166301c9ff.gif)
 
 ### 3. Search
-![IMG_0073 2](https://user-images.githubusercontent.com/79038724/159222776-fb31a819-eefb-4d2b-a617-b6eeca1756ed.png)
+![Search_](https://user-images.githubusercontent.com/79038724/163722812-95fd74c7-18eb-498f-98bd-91edd2fcfad4.gif)
 
 ### 4. Review
-![IMG_0074 2](https://user-images.githubusercontent.com/79038724/159222790-5303bb61-752d-4965-9b0f-2380b7d4587d.png)
+![Review_](https://user-images.githubusercontent.com/79038724/163723975-240c8c73-7aec-49ea-968b-863bad9cd6b7.gif)
 
 ### 5. Storage
-![IMG_0075](https://user-images.githubusercontent.com/79038724/159223189-be77e287-150e-4d63-bf78-df2baaa5bf6d.png)
+![Storage_](https://user-images.githubusercontent.com/79038724/163724318-c2a45e90-9ce6-490c-852a-dd2387a99833.gif)
