@@ -825,6 +825,7 @@
                     <connections>
                         <outlet property="emailField" destination="p8J-O5-1uy" id="xgI-2Y-HaO"/>
                         <outlet property="passwordField" destination="Byl-Pp-R5e" id="1sD-dR-3wf"/>
+                        <segue destination="za3-LM-Slj" kind="custom" identifier="mainSegue" customClass="ReplaceRootSegue" customModule="MyOwnFilm" customModuleProvider="target" id="n3a-JB-WcR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xa8-KK-bc4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -833,7 +834,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Lae-eb-aVe"/>
+        <segue reference="n3a-JB-WcR"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="applelogo" catalog="system" width="103" height="128"/>

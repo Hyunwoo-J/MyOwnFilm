@@ -35,11 +35,11 @@ class CommonViewController: UIViewController {
     ///   - message: 경고창 내용
     ///   - actionTitle: 액션 타이틀
     ///   - actionStyle: 액션 스타일
-    func showAlertMessage(title: String = "알림", message: String, actionTitle: String = "확인", actionStyle: UIAlertAction.Style = .default) {
+    func showAlertMessage(title: String = "알림", message: String, actionTitle: String = "확인", actionStyle: UIAlertAction.Style = .default, completion: ((UIAlertAction) -> Void)? = nil) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             
-            let okAction = UIAlertAction(title: actionTitle, style: actionStyle, handler: nil)
+            let okAction = UIAlertAction(title: actionTitle, style: actionStyle, handler: completion)
             alert.addAction(okAction)
             
             self.present(alert, animated: true, completion: nil)

@@ -42,8 +42,9 @@ class JoinViewController: CommonViewController {
                     switch joinResponse.code {
                     case ResultCode.ok.rawValue:
                         LoginDataManager.shared.saveAccount(responseData: joinResponse)
-                        self.showAlertMessage(message: "회원가입에 성공하였습니다.")
-                        self.goToMain()
+                        self.showAlertMessage(message: "회원가입에 성공하였습니다.") { _ in
+                            self.goToMain()
+                        }
                         
                     default:
                         self.showAlertMessage(message: "회원가입에 실패했습니다.")
