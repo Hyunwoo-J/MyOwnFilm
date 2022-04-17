@@ -26,11 +26,22 @@ class SearchViewController: CommonViewController {
     }
     
     
+    /// 터치가 발생할 때 핸들러를 캐치합니다.
+    /// - Parameter sender: 탭 제스처 인식기
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            view.endEditing(true)
+        }
+        sender.cancelsTouchesInView = false
+    }
+
+
     /// 초기화 작업을 실행합니다.
     override func viewDidLoad() {
         super.viewDidLoad()
         
         searchBar.becomeFirstResponder()
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:))))
     }
 }
 
