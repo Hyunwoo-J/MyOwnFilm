@@ -19,7 +19,9 @@
 
 ## Implementations
 * API를 이용한 영화 데이터 출력
-* 로그인 기능 구현
+* 기록을 남긴 영화는 보관함에 저장되며 다양한 기준으로 정렬 가능
+* 구글, 페이스북, 카카오톡 등 소셜 로그인 기능
+* Moya/RxMoya를 이용한 네트워크 요청 서비스
 
 ## App Screenshot
 ### 1. Login & Logout
